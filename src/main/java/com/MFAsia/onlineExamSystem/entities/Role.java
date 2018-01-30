@@ -10,38 +10,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users_roles")
-public class UserRole implements Serializable{
+@Table(name = "roles")
+public class Role implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long userRoleId;
-	@Column
-	private Long userId;
-	@Column
 	private Long roleId;
+	@Column
+	private String roleName;
 	
-	public UserRole() {
+	public Role() {
 		super();
 	}
-	public UserRole(Long userRoleId, Long userId, Long roleId) {
+	public Role(Long roleId, String rolename) {
 		super();
-		this.userRoleId = userRoleId;
-		this.userId = userId;
 		this.roleId = roleId;
-	}
-	public Long getUserRoleId() {
-		return userRoleId;
-	}
-	public void setUserRoleId(Long userRoleId) {
-		this.userRoleId = userRoleId;
-	}
-	public Long getUserId() {
-		return userId;
-	}
-	public void setUserId(Long userId) {
-		this.userId = userId;
+		this.roleName = rolename;
 	}
 	public Long getRoleId() {
 		return roleId;
@@ -49,9 +34,16 @@ public class UserRole implements Serializable{
 	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
 	}
+	public String getRolename() {
+		return roleName;
+	}
+	public void setRolename(String rolename) {
+		this.roleName = rolename;
+	}
+	
 	@Override
 	public String toString() {
-		return "UserRole [userRoleId=" + userRoleId + ", userId=" + userId + ", roleId=" + roleId + "]";
+		return "Role [roleId=" + roleId + ", rolename=" + roleName + "]";
 	}
 	
 }

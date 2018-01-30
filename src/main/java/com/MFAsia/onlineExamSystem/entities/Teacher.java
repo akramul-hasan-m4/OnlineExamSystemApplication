@@ -1,23 +1,48 @@
 package com.MFAsia.onlineExamSystem.entities;
 
-public class Teacher {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "teachers")
+public class Teacher implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long teacherId;
-	private String firstName;
-	private String lastName;
-	private String phone;
-	private String contact1;
-	private String contact2;
-	private String email;
-	private String currentAddress;
-	private String permanentAddress;
-	private String photo;
+	@Column
 	private Boolean isExaminer;
-	private Boolean isQuestioner;
-	private String teacherIdentificationNo;
-	private String joinDate;
-	private String userRole;
-	private boolean isActive;
-	private String password;
-	private String securityQuestion;
-	private String securityAns;
+	
+	public Teacher() {
+		super();
+	}
+	public Teacher(Long teacherId, Boolean isExaminer) {
+		super();
+		this.teacherId = teacherId;
+		this.isExaminer = isExaminer;
+	}
+	public Long getTeacherId() {
+		return teacherId;
+	}
+	public void setTeacherId(Long teacherId) {
+		this.teacherId = teacherId;
+	}
+	public Boolean getIsExaminer() {
+		return isExaminer;
+	}
+	public void setIsExaminer(Boolean isExaminer) {
+		this.isExaminer = isExaminer;
+	}
+	@Override
+	public String toString() {
+		return "Teacher [teacherId=" + teacherId + ", isExaminer=" + isExaminer + "]";
+	}
+	
 }
