@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "questionsbank")
 public class QuestionsBank implements Serializable {
@@ -19,9 +20,9 @@ public class QuestionsBank implements Serializable {
 	private Long qbId;
 	@Column
 	private Long courseId;
-	@Column
+	@Column(nullable = true)
 	private Long bookId;
-	@Column
+	@Column(nullable = true)
 	private Long refId;
 	@Column
 	private Long chapterId;

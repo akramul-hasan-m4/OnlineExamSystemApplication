@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 
 <head>
 	<meta charset="utf-8"></meta>
@@ -10,9 +10,12 @@
 
 	<title>Question bank</title>
 	<span th:include="/includes/commons :: #commons"></span>
+	<script type="text/javascript" src="js/questionBank.js" th:src="@{js/questionBank.js}"/>
+	
+	
 </head>
 
-<body>
+<body ng-controller="myCtrl" ng-init="loadTable()">
 	<div id="wrapper">
 		<!-- Navigation -->
 		<span th:include="/includes/teachersNav :: #teachersNav"></span>
@@ -36,312 +39,33 @@
 						</div>
 						<div class="panel-body">
 							<table width="100%" class="table table-striped table-bordered table-hover" id="quesBankTable">
-                                <thead>
-                                    <tr>
-                                        <th>Rendering engine</th>
-                                        <th>Browser</th>
-                                        <th>Platform(s)</th>
-                                        <th>Engine version</th>
-                                        <th>CSS grade</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="odd gradeX">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 4.0</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">4</td>
-                                        <td class="center">X</td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">5</td>
-                                        <td class="center">C</td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.5</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">5.5</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="even gradeA">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 6</td>
-                                        <td>Win 98+</td>
-                                        <td class="center">6</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 7</td>
-                                        <td>Win XP SP2+</td>
-                                        <td class="center">7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="even gradeA">
-                                        <td>Trident</td>
-                                        <td>AOL browser (AOL desktop)</td>
-                                        <td>Win XP</td>
-                                        <td class="center">6</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 1.0</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 1.5</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 2.0</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 3.0</td>
-                                        <td>Win 2k+ / OSX.3+</td>
-                                        <td class="center">1.9</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Camino 1.0</td>
-                                        <td>OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Camino 1.5</td>
-                                        <td>OSX.3+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Netscape 7.2</td>
-                                        <td>Win 95+ / Mac OS 8.6-9.2</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Netscape Browser 8</td>
-                                        <td>Win 98SE+</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Netscape Navigator 9</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.0</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.1</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.1</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.2</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.2</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.3</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.3</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.4</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.4</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.5</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.5</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.6</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.6</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.7</td>
-                                        <td>Win 98+ / OSX.1+</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.8</td>
-                                        <td>Win 98+ / OSX.1+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Seamonkey 1.1</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Epiphany 2.20</td>
-                                        <td>Gnome</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>Safari 1.2</td>
-                                        <td>OSX.3</td>
-                                        <td class="center">125.5</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>Safari 1.3</td>
-                                        <td>OSX.3</td>
-                                        <td class="center">312.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>Safari 2.0</td>
-                                        <td>OSX.4+</td>
-                                        <td class="center">419.3</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>Safari 3.0</td>
-                                        <td>OSX.4+</td>
-                                        <td class="center">522.1</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>OmniWeb 5.5</td>
-                                        <td>OSX.4+</td>
-                                        <td class="center">420</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>iPod Touch / iPhone</td>
-                                        <td>iPod</td>
-                                        <td class="center">420.1</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>S60</td>
-                                        <td>S60</td>
-                                        <td class="center">413</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 7.0</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 7.5</td>
-                                        <td>Win 95+ / OSX.2+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 8.0</td>
-                                        <td>Win 95+ / OSX.2+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 8.5</td>
-                                        <td>Win 95+ / OSX.2+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 9.0</td>
-                                        <td>Win 95+ / OSX.3+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 9.2</td>
-                                        <td>Win 88+ / OSX.3+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 9.5</td>
-                                        <td>Win 88+ / OSX.3+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera for Wii</td>
-                                        <td>Wii</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Nokia N800</td>
-                                        <td>N800</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+								<thead>
+									<tr>
+										<th>Qus No</th>
+										<th>Questions</th>
+										<th>Created Date</th>
+										<th>Teacher Id</th>
+										<th  colspan="2">Action</th>
+									</tr>
+									</thead>
+								<tbody>
+									<tr class="odd gradeX" ng-repeat="x in allQuestion">
+										<td>{{$index + 1}}</td>
+										<td>
+											{{x.questionTitle}}<br></br>
+											<hr></hr>
+											1. {{x.option1}}<br></br>
+											2. {{x.option2}}<br></br>
+											3. {{x.option3}}<br></br>
+											4. {{x.option4}}<br></br>
+										</td>
+										<td>{{x.questionCreatedDate}}</td>
+										<td class="center">{{x.teacherIdentificationNo}}</td>
+										<td class="center"><Button class="btn btn-primary"><i class="fa fa-edit"></i></Button></td>
+										<td class="center"><Button class="btn btn-danger"><i class="fa fa-trash"></i></Button></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
@@ -349,7 +73,7 @@
 		</div>
 	</div>
 	<!-- Start Modal -->
-	<div class="modal fade" id="newQus" role="dialog" data-backdrop="static">
+	<div class="modal fade" id="newQus" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -359,87 +83,87 @@
 				<div class="modal-body">
 					<form class="form-horizontal" id="newQusForm">
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="">Select course</label>
+							<label class="col-md-4 control-label" for="courseId">Select course</label>
 							<div class="col-md-4">
-								<select id="d" name="dsd" class="form-control">
+								<select id="courseId" name="courseId" class="form-control" ng-model="courseId">
 									<option value="1">d</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="">Select Book</label>
+							<label class="col-md-4 control-label" for="bookId">Select Book</label>
 							<div class="col-md-4">
-								<select id="hh" name="dds" class="form-control">
+								<select id="bookId" name="bookId" class="form-control" ng-model="bookId">
 									<option value="1">Option one</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="">Select Chapter</label>
+							<label class="col-md-4 control-label" for="chapterId">Select Chapter</label>
 							<div class="col-md-4">
-								<select id="fdf" name="fghdf" class="form-control">
+								<select id="chapterId" name="chapterId" class="form-control" ng-model="chapterId">
 									<option value="1">Option one</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="">Select Reference</label>
+							<label class="col-md-4 control-label" for="refId">Select Reference</label>
 							<div class="col-md-4">
-								<select id="dfgf" name="hdf" class="form-control">
+								<select id="refId" name="refId" class="form-control" ng-model="refId">
 									<option value="2">Option one</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="textarea">Question Title</label>
+							<label class="col-md-4 control-label" for="questionTitle">Question Title</label>
 							<div class="col-md-4">                     
-								<textarea class="form-control" id="textarea" name="textarea"></textarea>
+								<textarea class="form-control" id="questionTitle" name="questionTitle" ng-model="questionTitle"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="">Option One</label>
+							<label class="col-md-4 control-label" for="option1">Option One</label>
 							<div class="col-md-4">
 								<div class="input-group">
-									<span class="input-group-addon"> <input type="checkbox"/>
-									</span> <input id="dsgf" name="ghsdf" class="form-control" type="text"
-										placeholder="Write an option" required="1"/>
+									<span class="input-group-addon"> <input type="radio" name="options" ng-model="ans" ng-value="'1'"/>
+									</span> <input id="option1" name="option1" class="form-control" type="text"
+										placeholder="Write an option" required="1" ng-model="option1"/>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="">Option Two</label>
+							<label class="col-md-4 control-label" for="option2">Option Two</label>
 							<div class="col-md-4">
 								<div class="input-group">
-									<span class="input-group-addon"> <input type="checkbox"/>
-									</span> <input id="fdgsd" name="fgsdsd" class="form-control" type="text"
-										placeholder="Write an option" required="1"/>
+									<span class="input-group-addon"> <input type="radio" name="options" ng-model="ans" ng-value="'2'"/>
+									</span> <input id="option2" name="option2" class="form-control" type="text"
+										placeholder="Write an option" required="1" ng-model="option2"/>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="">Option Three</label>
+							<label class="col-md-4 control-label" for="option3">Option Three</label>
 							<div class="col-md-4">
 								<div class="input-group">
-									<span class="input-group-addon"> <input type="checkbox"/>
-									</span> <input id="fdgsdgf" name="dfgdf" class="form-control" type="text"
-										placeholder="Write an option" required="1"/>
+									<span class="input-group-addon"> <input type="radio" name="options" ng-model="ans" ng-value="'3'"/>
+									</span> <input id="option3" name="option3" class="form-control" type="text"
+										placeholder="Write an option" required="1" ng-model="option3"/>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="">Option Four</label>
+							<label class="col-md-4 control-label" for="option4">Option Four</label>
 							<div class="col-md-4">
 								<div class="input-group">
-									<span class="input-group-addon"> <input type="checkbox"/>
-									</span> <input id="df" name="dfdfd" class="form-control" type="text"
-										placeholder="Write an option" required="1"></input>
+									<span class="input-group-addon"> <input type="radio" name="options" ng-model="ans" ng-value="'4'"/>
+									</span> <input id="option4" name="option4" class="form-control" type="text"
+										placeholder="Write an option" required="1" ng-model="option4"></input>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for=""></label>
 							<div class="col-md-4">
-								<button id="dfsd" name="dfdf" class="btn btn-primary">Save</button>
+								<button type="submit" class="btn btn-primary" ng-click="saveQus(ans)">Save</button>
 								<input type="reset" value="Reset" class="btn btn-danger"/>
 							</div>
 						</div>
