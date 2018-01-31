@@ -84,7 +84,7 @@
 					<form class="form-horizontal" id="newQusForm">
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="courseId">Select course</label>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<select id="courseId" name="courseId" class="form-control" ng-model="courseId">
 									<option value="1">d</option>
 								</select>
@@ -92,7 +92,7 @@
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="bookId">Select Book</label>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<select id="bookId" name="bookId" class="form-control" ng-model="bookId">
 									<option value="1">Option one</option>
 								</select>
@@ -100,7 +100,7 @@
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="chapterId">Select Chapter</label>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<select id="chapterId" name="chapterId" class="form-control" ng-model="chapterId">
 									<option value="1">Option one</option>
 								</select>
@@ -108,7 +108,7 @@
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="refId">Select Reference</label>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<select id="refId" name="refId" class="form-control" ng-model="refId">
 									<option value="2">Option one</option>
 								</select>
@@ -116,13 +116,13 @@
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="questionTitle">Question Title</label>
-							<div class="col-md-4">                     
+							<div class="col-md-6">                     
 								<textarea class="form-control" id="questionTitle" name="questionTitle" ng-model="questionTitle"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="option1">Option One</label>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<div class="input-group">
 									<span class="input-group-addon"> <input type="radio" name="options" ng-model="ans" ng-value="'1'"/>
 									</span> <input id="option1" name="option1" class="form-control" type="text"
@@ -132,7 +132,7 @@
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="option2">Option Two</label>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<div class="input-group">
 									<span class="input-group-addon"> <input type="radio" name="options" ng-model="ans" ng-value="'2'"/>
 									</span> <input id="option2" name="option2" class="form-control" type="text"
@@ -142,7 +142,7 @@
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="option3">Option Three</label>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<div class="input-group">
 									<span class="input-group-addon"> <input type="radio" name="options" ng-model="ans" ng-value="'3'"/>
 									</span> <input id="option3" name="option3" class="form-control" type="text"
@@ -152,7 +152,7 @@
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="option4">Option Four</label>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<div class="input-group">
 									<span class="input-group-addon"> <input type="radio" name="options" ng-model="ans" ng-value="'4'"/>
 									</span> <input id="option4" name="option4" class="form-control" type="text"
@@ -162,7 +162,7 @@
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for=""></label>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<button type="submit" class="btn btn-primary" ng-click="saveQus(ans)">Save</button>
 								<input type="reset" value="Reset" class="btn btn-danger"/>
 							</div>
