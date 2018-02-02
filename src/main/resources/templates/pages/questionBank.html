@@ -10,7 +10,8 @@
 
 	<title>Question bank</title>
 	<span th:include="/includes/commons :: #commons"></span>
-	<script type="text/javascript" src="js/questionBank.js" th:src="@{js/questionBank.js}"/>
+	<script type="text/javascript" src="customJS/questionBank.js" th:src="@{customJS/questionBank.js}"/>
+	<!-- <script type="text/javascript" src="customJS/course.js" th:src="@{customJS/course.js}"/>  -->
 	
 	
 </head>
@@ -45,19 +46,20 @@
 										<th>Questions</th>
 										<th>Created Date</th>
 										<th>Teacher Id</th>
-										<th  colspan="2">Action</th>
+										<th>Action</th>
+										<th>Action</th>
 									</tr>
 									</thead>
 								<tbody>
 									<tr class="odd gradeX" ng-repeat="x in allQuestion">
 										<td>{{$index + 1}}</td>
 										<td>
-											{{x.questionTitle}}<br></br>
-											<hr></hr>
+											<strong>{{x.questionTitle}}</strong><br></br><br></br>
 											1. {{x.option1}}<br></br>
 											2. {{x.option2}}<br></br>
 											3. {{x.option3}}<br></br>
 											4. {{x.option4}}<br></br>
+											<span style=" color: green;">Ans : {{x.correctAnsNo}}</span>
 										</td>
 										<td>{{x.questionCreatedDate}}</td>
 										<td class="center">{{x.teacherIdentificationNo}}</td>
@@ -79,14 +81,15 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h3 class="modal-title text-center" style="color : green;">Create a new Question</h3>
-				</div>
+				</div>{{courseId}}
 				<div class="modal-body">
 					<form class="form-horizontal" id="newQusForm">
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="courseId">Select course</label>
 							<div class="col-md-6">
-								<select id="courseId" name="courseId" class="form-control" ng-model="courseId">
-									<option value="1">d</option>
+								<select id="lunchBegins" ng-model="courseId" ng-options="courses.courseId as courses.courseName for courses in allCourses" class="form-control nya-selectpicker selectpicker show-tick" data-live-search="true" data-live-search-style="begins"  title="select course">
+									<option></option>
+									<option  ng-value="{{courses.courseId}}">{{courses.courseName}}</option>
 								</select>
 							</div>
 						</div>
@@ -94,7 +97,7 @@
 							<label class="col-md-4 control-label" for="bookId">Select Book</label>
 							<div class="col-md-6">
 								<select id="bookId" name="bookId" class="form-control" ng-model="bookId">
-									<option value="1">Option one</option>
+									<option ng-repeat="courses in allCourses" value="{{courses.courseId}}">{{courses.courseName}}</option>
 								</select>
 							</div>
 						</div>
@@ -102,6 +105,7 @@
 							<label class="col-md-4 control-label" for="chapterId">Select Chapter</label>
 							<div class="col-md-6">
 								<select id="chapterId" name="chapterId" class="form-control" ng-model="chapterId">
+									<option >--select Chapter--</option>
 									<option value="1">Option one</option>
 								</select>
 							</div>
@@ -110,6 +114,7 @@
 							<label class="col-md-4 control-label" for="refId">Select Reference</label>
 							<div class="col-md-6">
 								<select id="refId" name="refId" class="form-control" ng-model="refId">
+									<option >--select Reference--</option>
 									<option value="2">Option one</option>
 								</select>
 							</div>
@@ -163,7 +168,7 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label" for=""></label>
 							<div class="col-md-6">
-								<button type="submit" class="btn btn-primary" ng-click="saveQus(ans)">Save</button>
+								<button type="submit" class="btn btn-primary" data-dismiss="modal" ng-click="saveQus(ans)">Save</button>
 								<input type="reset" value="Reset" class="btn btn-danger"/>
 							</div>
 						</div>
@@ -178,9 +183,16 @@
 	<!-- end Modal -->
 	<script>
 		$(document).ready(function() {
-			$('#quesBankTable').DataTable({
-				responsive: true
-			});
+			setTimeout(function(){
+				var rowCount = $("#quesBankTable tr").length;
+				if (rowCount >= 0) {
+					$("window").load(
+						$("#quesBankTable").dataTable({
+						responsive: true
+						})
+					);
+				}
+			}, 1000);
 		});
 	</script>
 </body>

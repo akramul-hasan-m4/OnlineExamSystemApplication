@@ -1,8 +1,6 @@
 var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope, $http) {
-	$scope.firstname = "John";
-	$scope.lastname = "Doe";
-	
+app.controller('myCtrl', function($scope, $http, $timeout) {
+	$scope.allQuestion={};
 	$scope.loadTable = function (){
 		$http({
 			method : "GET",
@@ -13,7 +11,7 @@ app.controller('myCtrl', function($scope, $http) {
 			$scope.errorStatus = response.statusText;
 		});
 	};
-	
+	$scope.courseId = '';
 	$scope.saveQus = function(ans) {
 			var typeObj = {
 					courseId : $scope.courseId,
@@ -32,10 +30,21 @@ app.controller('myCtrl', function($scope, $http) {
 			$http.post('/quesionsBank', typeObj)
 			.success(
 				function(data, status, headers, config) {
+					$scope.loadTable();
 				})
 			/*.error(
 				function(data, status, header, config) {
 				});*/
-				$scope.loadTable();
+				
 	}
+	
+	$http({
+		method : "GET",
+		url : "/courses"
+	}).then(function mySuccess(response) {
+		$scope.allCourses = response.data;
+	}, function myError(response) {
+		$scope.errorStatus = response.statusText;
+	});
+	
 });

@@ -18,17 +18,17 @@ public class Chapter implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long chapterId;
 	@Column
-	private Long subjectId;
+	private Long bookId;
 	@Column
 	private String chapterName;
 	
 	public Chapter() {
 		super();
 	}
-	public Chapter(Long chapterId, Long subjectId, String chapterName) {
+	public Chapter(Long chapterId, Long bookId, String chapterName) {
 		super();
 		this.chapterId = chapterId;
-		this.subjectId = subjectId;
+		this.bookId = bookId;
 		this.chapterName = chapterName;
 	}
 	public Long getChapterId() {
@@ -38,10 +38,10 @@ public class Chapter implements Serializable {
 		this.chapterId = chapterId;
 	}
 	public Long getSubjectId() {
-		return subjectId;
+		return bookId;
 	}
-	public void setSubjectId(Long subjectId) {
-		this.subjectId = subjectId;
+	public void setSubjectId(Long bookId) {
+		this.bookId = bookId;
 	}
 	public String getChapterName() {
 		return chapterName;
@@ -51,7 +51,7 @@ public class Chapter implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Chapter [chapterId=" + chapterId + ", subjectId=" + subjectId + ", chapterName=" + chapterName + "]";
+		return "Chapter [chapterId=" + chapterId + ", bookId=" + bookId + ", chapterName=" + chapterName + "]";
 	}
 	
 }
