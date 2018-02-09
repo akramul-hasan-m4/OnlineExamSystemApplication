@@ -1,9 +1,11 @@
 package com.MFAsia.onlineExamSystem.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,21 +19,30 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "teachers")
+@Table(name = "exam_board")
 @Data
-public class Teacher implements Serializable {
-
+public class ExamBoard implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long teacherId;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User users;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "teachers")
-	private Set<QuestionsBank> questionBanks = new HashSet<QuestionsBank>(0);
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "teachers")
+	private Long examId;
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="course_id")
+	private Course courses;
+	@Column
+	private Date examDate;
+	@Column
+	private Long totalQuestion;
+	@Column
+	private String examDuration;
+	
+	@Column
+	private String totalMark;
+	
+	@Column
+	private String passMark;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="exam")
 	private Set<QuestionerDefination> questionerDefinations = new HashSet<QuestionerDefination>(0);
 }
