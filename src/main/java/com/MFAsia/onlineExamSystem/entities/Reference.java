@@ -21,19 +21,21 @@ import lombok.Data;
 @Table(name = "references")
 @Data
 public class Reference implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long refId;
-	@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="course_id")
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "course_id")
 	private Course courses;
+
 	@Column
 	private String reference;
-	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="reference")
-	 private Set<QuestionerDefination> questionerDefinations = new HashSet<QuestionerDefination>(0);
 
-	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "reference")
+	private Set<QuestionerDefination> questionerDefinations = new HashSet<QuestionerDefination>(0);
+
 }

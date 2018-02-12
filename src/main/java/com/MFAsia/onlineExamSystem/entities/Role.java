@@ -21,11 +21,14 @@ import lombok.Data;
 public class Role implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long roleId;
+	
 	@Column
 	private String roleName;
+	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="roles")	
 	private Set<UserRole> usersRoleas = new HashSet<UserRole>(0);
 	

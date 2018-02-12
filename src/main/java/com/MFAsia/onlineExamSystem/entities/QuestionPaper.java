@@ -20,17 +20,25 @@ import lombok.Data;
 public class QuestionPaper implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long qusId;
+
 	@Column
 	private Long examId;
-	@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="qus_bank_id")
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "qus_bank_id")
 	private QuestionsBank questionBank;
+
 	@Column
 	private Long studentId;
+
+	@Column
+	private Boolean markQuestion;
+
 	@Column
 	private Long collectedAns;
-	
+
 }

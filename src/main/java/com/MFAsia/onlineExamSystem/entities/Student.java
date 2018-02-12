@@ -42,6 +42,7 @@ public class Student implements Serializable {
 	@JoinColumn(name="user_id")
 	private User users;
 	
+	@Column
 	private String generatedStId;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="students")

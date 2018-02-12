@@ -24,16 +24,21 @@ import lombok.Data;
 public class ExamBoard implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long examId;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="course_id")
 	private Course courses;
+	
 	@Column
 	private Date examDate;
+	
 	@Column
 	private Long totalQuestion;
+	
 	@Column
 	private String examDuration;
 	

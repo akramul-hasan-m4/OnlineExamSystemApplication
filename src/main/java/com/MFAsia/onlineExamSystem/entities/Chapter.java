@@ -31,6 +31,7 @@ public class Chapter implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="book_id")
 	private Book books;
+	
 	@Column
 	private String chapterName;
 	

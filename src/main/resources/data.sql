@@ -1,5 +1,5 @@
-INSERT INTO USERS("USER_ID","FIRST_NAME","LAST_NAME","EMAIL","PHONE","PHOTO","GENDER","STATUS","CURRENT_ADDRESS","PERMANENT_ADDRESS","SECURITY_QUESTION","SECURITY_ANS")
-SELECT 1 ,'Admin', 'admin', 'admin@gmail.com', '01919223344', 'photo','male', 'Active', 'Uttara', 'Uttara dhaka', 'what is your role?', 'admin' where NOT EXISTS (SELECT 1 FROM USERS WHERE USER_ID = 1) ; 
+INSERT INTO USERS("USER_ID","FIRST_NAME","LAST_NAME","EMAIL","PHONE","PASSWORD","PHOTO","GENDER","STATUS","CURRENT_ADDRESS","PERMANENT_ADDRESS","SECURITY_QUESTION","SECURITY_ANS")
+SELECT 1 ,'Admin', 'admin', 'admin@gmail.com', '01919223344','1234', 'photo','male', 'Active', 'Uttara', 'Uttara dhaka', 'what is your role?', 'admin' where NOT EXISTS (SELECT 1 FROM USERS WHERE USER_ID = 1) ; 
 
 INSERT INTO ROLES("ROLE_ID","ROLE_NAME") SELECT 1 ,'Admin' where NOT EXISTS (SELECT 1 FROM ROLES WHERE ROLE_ID = 1);
 

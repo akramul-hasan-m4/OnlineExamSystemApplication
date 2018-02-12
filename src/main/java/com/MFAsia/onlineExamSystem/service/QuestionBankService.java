@@ -21,6 +21,7 @@ public class QuestionBankService {
 	public List<QuestionsBank> getAllQuestion (){
 		List<QuestionsBank> list = new ArrayList<>();
 		quesBankRepo.findAll().forEach(list::add);
+		//System.out.println("resulttt + = "+list.toString());
 		return list;
 	}
 	@Transactional

@@ -2,8 +2,10 @@ package com.MFAsia.onlineExamSystem.entities;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +17,9 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import lombok.Data;
 
 @Entity
@@ -23,6 +28,7 @@ import lombok.Data;
 public class Course implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,6 +53,7 @@ public class Course implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="courses")
 	private Set<QuestionerDefination> questionerDefinations = new HashSet<QuestionerDefination>(0);
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="courses")
-	private Set<QuestionsBank> questionBanks = new HashSet<QuestionsBank>(0);
+	@JsonBackReference
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="courses" , cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<QuestionsBank> questionBanks ;
 }
