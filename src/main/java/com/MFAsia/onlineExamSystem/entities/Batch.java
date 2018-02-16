@@ -1,8 +1,7 @@
 package com.MFAsia.onlineExamSystem.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 
@@ -36,7 +37,8 @@ public class Batch implements Serializable {
 	@NotEmpty
 	private Long seatLimit;
 	
+	@JsonBackReference
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="batchs")
-	private Set<Student> students = new HashSet<Student>(0);
+	private List<Student> students;
 	
 }

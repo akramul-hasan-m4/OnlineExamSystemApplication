@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 
 @Entity
@@ -24,10 +26,12 @@ public class UserRole implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userRoleId;
 
+	@JsonManagedReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private User users;
 
+	@JsonManagedReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "role_id", insertable = false, updatable = false)
 	private Role roles;

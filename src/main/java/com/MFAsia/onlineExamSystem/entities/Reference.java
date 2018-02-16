@@ -1,9 +1,9 @@
 package com.MFAsia.onlineExamSystem.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -33,9 +35,10 @@ public class Reference implements Serializable {
 	private Course courses;
 
 	@Column
-	private String reference;
+	private String referenceHeader;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "reference")
-	private Set<QuestionerDefination> questionerDefinations = new HashSet<QuestionerDefination>(0);
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ref" , cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<QuestionerDefination> questionerDefinations;
 
 }

@@ -1,8 +1,7 @@
 package com.MFAsia.onlineExamSystem.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -35,8 +36,9 @@ public class Chapter implements Serializable {
 	@Column
 	private String chapterName;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="chapters")
-	private Set<QuestionerDefination> questionerDefinations = new HashSet<QuestionerDefination>(0);
+	private List<QuestionerDefination> questionerDefinations;
 	
 	
 }

@@ -1,9 +1,7 @@
 package com.MFAsia.onlineExamSystem.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,14 +15,15 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
 @Entity
 @Table(name = "courses")
 @Data
+@JsonIgnoreProperties({"handler","hibernateLazyInitializer"})
 public class Course implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -41,19 +40,23 @@ public class Course implements Serializable {
 	@Column
 	private String description;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="courses")
-	private Set<Reference> references = new HashSet<Reference>(0);
+	private List<Reference> references;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="courses")
-	private Set<Book> books = new HashSet<Book>(0);
+	private List<Book> books;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="courses")
-	private Set<ExamBoard> exams = new HashSet<ExamBoard>(0);
+	private List<ExamBoard> exams ;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="courses")
-	private Set<QuestionerDefination> questionerDefinations = new HashSet<QuestionerDefination>(0);
+	@JsonIgnore
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="courses"  , cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<QuestionerDefination> questionerDefinations;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="courses" , cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<QuestionsBank> questionBanks ;
 }

@@ -67,13 +67,16 @@ public class User implements Serializable {
 	@Column
 	private String securityAns;
 
+	@JsonBackReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users" , cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Teacher> teacherses ;
 	
+	@JsonBackReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	private Set<UserRole> usersRoleas = new HashSet<UserRole>(0);
+	private List<UserRole> usersRoleas;
 	
+	@JsonBackReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	private Set<Student> students = new HashSet<Student>(0);
+	private List<Student> students;
 
 }

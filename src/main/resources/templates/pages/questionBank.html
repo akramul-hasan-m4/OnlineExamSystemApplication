@@ -2,7 +2,7 @@
 <html lang="en" ng-app="myApp">
 
 <head>
-	<meta charset="utf-8"></meta>
+	 <meta charset="utf-8"></meta> 
 	<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 	<meta name="description" content=""></meta>
@@ -45,7 +45,7 @@
 										<th>Qus No</th>
 										<th>Questions</th>
 										<th>Created Date</th>
-										<th>Teacher Id</th>
+										<th>Course Name</th>
 										<th>Action</th>
 										<th>Action</th>
 									</tr>
@@ -62,7 +62,7 @@
 											<span style=" color: green;">Ans : {{x.ans}}</span>
 										</td>
 										<td>{{x.questionCreatedDate}}</td>
-										<td class="center">{{x.teacherIdentificationNo}}</td>
+										<td class="center">{{x.courseName}}</td>
 										<td class="center"><Button class="btn btn-primary"><i class="fa fa-edit"></i></Button></td>
 										<td class="center"><Button class="btn btn-danger"><i class="fa fa-trash"></i></Button></td>
 									</tr>
@@ -81,47 +81,46 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h3 class="modal-title text-center" style="color : green;">Create a new Question</h3>
-				</div>{{courseId}}
+				</div>
 				<div class="modal-body">
-					<form class="form-horizontal" id="newQusForm">
+					<form class="form-horizontal" id="newQusForm" name="newQusForm" role="form" ng-submit="saveQus(ans)">
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="courseId">Select course</label>
 							<div class="col-md-6">
-								<select id="lunchBegins" ng-model="courseId" ng-options="courses.courseId as courses.courseName for courses in allCourses" class="form-control nya-selectpicker selectpicker show-tick" data-live-search="true" data-live-search-style="begins"  title="select course">
-									<option></option>
-									<option  ng-value="{{courses.courseId}}">{{courses.courseName}}</option>
+								<select requird = "true" id="courseId" name="courseId" ng-model="courseId" ng-change="selectedCourse(courseId)" ng-options="courses.courseId as courses.courseName for courses in allCourses" class="form-control" title="select course">
+									<option ng-value="{{courses.courseId}}">{{courses.courseName}}</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="bookId">Select Book</label>
 							<div class="col-md-6">
-								<select id="bookId" name="bookId" class="form-control" ng-model="bookId">
-									<option ng-repeat="courses in allCourses" value="{{courses.courseId}}">{{courses.courseName}}</option>
+								<select id="bookId" name="bookId" class="form-control" ng-change="chapters(bookId)" ng-model="bookId" ng-disabled="disableCombo">
+									<option></option>
+									<option ng-repeat="books in booksFromSelectedCourse" value="{{books.bookId}}">{{books.bookName}}</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="chapterId">Select Chapter</label>
 							<div class="col-md-6">
-								<select id="chapterId" name="chapterId" class="form-control" ng-model="chapterId">
-									<option >--select Chapter--</option>
-									<option value="1">Option one</option>
+								<select id="chapterId" name="chapterId" class="form-control" ng-model="chapterId" ng-disabled="disableCombo">
+									<option ng-repeat="chapters in chaptersFromSelectedBook" value="{{chapters.chId}}">{{chapters.chapterName}}</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="refId">Select Reference</label>
 							<div class="col-md-6">
-								<select id="refId" name="refId" class="form-control" ng-model="refId">
-									<option >--select Reference--</option>
+								<select id="refId" name="refId" ng-change="ref(refId)" class="form-control" ng-model="refId" ng-disabled="disableRef">
+									<option ng-repeat="ref in referenceFromSelectedCourse" value="{{ref.refId}}" >{{ref.reference}}</option>
 									<option value="2">Option one</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="questionTitle">Question Title</label>
-							<div class="col-md-6">                     
+							<div class="col-md-6">
 								<textarea class="form-control" id="questionTitle" name="questionTitle" ng-model="questionTitle"></textarea>
 							</div>
 						</div>
@@ -168,7 +167,7 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label" for=""></label>
 							<div class="col-md-6">
-								<button type="submit" class="btn btn-primary" data-dismiss="modal" ng-click="saveQus(ans)">Save</button>
+								<button type="submit" ng-disabled="newQusForm.option2.$invalid || newQusForm.option3.$invalid" class="btn btn-primary">Save</button>
 								<input type="reset" value="Reset" class="btn btn-danger"/>
 							</div>
 						</div>

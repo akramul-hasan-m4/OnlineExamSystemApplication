@@ -1,8 +1,7 @@
 package com.MFAsia.onlineExamSystem.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,11 +16,17 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 
 @Entity
 @Table(name = "books")
 @Data
+@JsonIgnoreProperties({"handler","hibernateLazyInitializer"})
 public class Book implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -46,9 +51,11 @@ public class Book implements Serializable {
 	@Column
 	private String edition;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="books")
-	private Set<Chapter> chapters = new HashSet<Chapter>(0);
+	private List<Chapter> chapters;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="books")
-	private Set<QuestionerDefination> questionerDefinations = new HashSet<QuestionerDefination>(0);
+	private List<QuestionerDefination> questionerDefinations;
 }

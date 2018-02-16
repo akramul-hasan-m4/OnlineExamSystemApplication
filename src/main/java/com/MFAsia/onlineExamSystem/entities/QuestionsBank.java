@@ -1,9 +1,9 @@
 package com.MFAsia.onlineExamSystem.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,8 +17,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import lombok.Data;
@@ -26,7 +24,6 @@ import lombok.Data;
 @Entity
 @Table(name = "questions_bank")
 @Data
-
 public class QuestionsBank implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -35,8 +32,7 @@ public class QuestionsBank implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long qusBankId;
 
-	@JsonManagedReference
-	@JsonIgnoreProperties({"courseName" , "description" ,"references", "references","exams","books","questionerDefinations","handler", "hibernateLazyInitializer"})
+	@JsonIgnoreProperties({"description" ,"references","exams","books","questionerDefinations","handler", "hibernateLazyInitializer"})
 	@JsonUnwrapped
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "course_id")
@@ -51,8 +47,7 @@ public class QuestionsBank implements Serializable {
 	@Column
 	private String chId;
 
-	@JsonManagedReference
-	@JsonIgnoreProperties({"users" ,"questionerDefinations","handler","hibernateLazyInitializer"})
+	@JsonIgnoreProperties({"users","questionerDefinations","handler","hibernateLazyInitializer"})
 	@JsonUnwrapped
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")
@@ -77,10 +72,10 @@ public class QuestionsBank implements Serializable {
 	private String option4;
 
 	@Column
-	private Long ans;
+	private Integer ans;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questionBank")
 	@JsonIgnore
-	private Set<QuestionPaper> questionpapers = new HashSet<QuestionPaper>(0);
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questionBank" , cascade = CascadeType.ALL)
+	private List<QuestionPaper> questionpapers;
 
 }

@@ -1,8 +1,7 @@
 package com.MFAsia.onlineExamSystem.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 
@@ -29,7 +30,8 @@ public class Role implements Serializable {
 	@Column
 	private String roleName;
 	
+	@JsonBackReference
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="roles")	
-	private Set<UserRole> usersRoleas = new HashSet<UserRole>(0);
+	private List<UserRole> usersRoleas;
 	
 }

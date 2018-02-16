@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS chapters (
 CREATE TABLE IF NOT EXISTS references ( 
 			ref_id INTEGER(11) NOT NULL AUTO_INCREMENT, 
 			course_id INTEGER(11) NOT NULL, 
-			reference varchar(45) NOT NULL,
+			reference_header varchar(255) NOT NULL,
 			PRIMARY KEY (ref_id),
 			CONSTRAINT courseid_fk_ref FOREIGN KEY (course_id) REFERENCES courses (course_id) 
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;

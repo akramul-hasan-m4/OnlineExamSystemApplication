@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+	<meta charset="utf-8"></meta> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<meta name="description" content=""></meta>
+	<meta name="author" content=""></meta>
+
+	<title>Questioner definition</title>
+	<span th:include="/includes/commons :: #commons"></span>
+<!-- 	<script type="text/javascript" src="customJS/questionBank.js" th:src="@{customJS/questionBank.js}"/>
+ -->	<script type="text/javascript" src="customJS/questionerDefination.js" th:src="@{customJS/questionerDefination.js}"/>
+	
+	
+</head>
+
+<body ng-controller="myCtrl">
+	<div id="wrapper">
+		<!-- Navigation -->
+		<span th:include="/includes/teachersNav :: #teachersNav"></span>
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header" style="color : green;">Make Questions criteria</h1>
+				</div>
+			</div>
+			<div class="row">
+				<form class="form-horizontal" id="newQusForm" name="newQusForm" role="form" ng-submit="saveQus(ans)">
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="courseId">Select Exam</label>
+							<div class="col-md-6">
+								<select requird = "true" id="examId" name="examId" ng-model="examId"  class="form-control" title="select course">
+									<option ng-repeat="exam in examBoard" ng-value="{{exam.examId}}">{{exam.examDate}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="courseId">Select course</label>
+							<div class="col-md-6">
+								<select requird = "true" id="courseId" name="courseId" ng-model="courseId" ng-change="selectedCourse(courseId)" ng-options="courses.courseId as courses.courseName for courses in allCourses" class="form-control" title="select course">
+									<option ng-value="{{courses.courseId}}">{{courses.courseName}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="bookId">Select Book</label>
+							<div class="col-md-6">
+								<select id="bookId" name="bookId" class="form-control" ng-change="chapters(bookId)" ng-model="bookId" ng-disabled="disableCombo">
+									<option></option>
+									<option ng-repeat="books in booksFromSelectedCourse" value="{{books.bookId}}">{{books.bookName}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="chapterId">Select Chapter</label>
+							<div class="col-md-6">
+								<select id="chapterId" name="chapterId" class="form-control" ng-model="chapterId" ng-disabled="disableCombo">
+									<option ng-repeat="chapters in chaptersFromSelectedBook" value="{{chapters.chId}}">{{chapters.chapterName}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="refId">Select Reference</label>
+							<div class="col-md-6">
+								<select id="refId" name="refId" ng-change="ref(refId)" class="form-control" ng-model="refId" ng-disabled="disableRef">
+									<option ng-repeat="ref in referenceFromSelectedCourse" value="{{ref.refId}}" >{{ref.reference}}</option>
+									<option value="2">Option one</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="questionTitle">Questions Limitation</label>
+							<div class="col-md-6">
+							<input type="number" class="form-control"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-4 control-label" for=""></label>
+							<div class="col-md-6">
+								<button type="submit" ng-disabled="newQusForm.option2.$invalid || newQusForm.option3.$invalid" class="btn btn-primary">Save</button>
+								<input type="reset" value="Reset" class="btn btn-danger"/>
+							</div>
+						</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		
+	</script>
+</body>
+</html>
