@@ -1,5 +1,6 @@
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope, $http, $timeout) {
+	
 	$scope.disableCombo = true ;
 	$scope.disableRef = true ;
 	
@@ -14,6 +15,7 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 			$scope.errorStatus = response.statusText;
 		});
 	};
+	
 	$scope.saveQus = function(ans) {
 			var typeObj = {
 					courseId : $scope.courseId,
@@ -32,22 +34,14 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 			typeObj = JSON.stringify(typeObj);
 			
 			$http({
-			    method: 'POST',
-			    url: '/quesionsBank',
-			    data: typeObj,
-			    headers: {'Content-Type': 'application/json'}
+				method: 'POST',
+				url: '/quesionsBank',
+				data: typeObj,
+				headers: {'Content-Type': 'application/json'}
 			}).then(
 					function(data, status, headers, config) {
+						$scope.loadTable();
 					});
-			/*$http.post('/quesionsBank', typeObj)
-			.then(
-				function(data, status, headers, config) {
-					$scope.loadTable();
-				});*/
-			/*.error(
-				function(data, status, header, config) {
-				});*/
-				
 	}
 	
 	$http({
@@ -65,6 +59,9 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 			method : "GET",
 			url : "/books/"+courseId
 		}).then(function mySuccess(response) {
+			$scope.bookId=null;
+			$scope.chapterId=null;
+			$scope.refId=null;
 			$scope.booksFromSelectedCourse = response.data;
 			$scope.disableCombo = false ;
 		}, function myError(response) {
@@ -80,7 +77,7 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 		}, function myError(response) {
 			$scope.errorStatus = response.statusText;
 		});
-	}
+	};
 	
 	$scope.chaptersFromSelectedBook={};
 	$scope.chapters = function (bookId){
@@ -97,5 +94,14 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 	
 	$scope.ref = function (refId){
 		$scope.disableCombo = true ;
+	}
+	
+	$scope.reset = function (){
+		$scope.courseId="";
+		$scope.bookId="";
+		$scope.chapterId="";
+		$scope.refId="";
+		$scope.disableCombo = true ;
+		$scope.disableRef = true ;
 	}
 });

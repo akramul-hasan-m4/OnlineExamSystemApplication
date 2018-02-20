@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS USERS ( 
-			user_id INTEGER(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS users ( 
+			user_id INTEGER(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 			first_name varchar(45) NOT NULL,
 			last_name varchar(45),
 			email varchar(45) NOT NULL UNIQUE,
@@ -11,22 +11,23 @@ CREATE TABLE IF NOT EXISTS USERS (
 			current_address varchar(45), 
 			permanent_address varchar(45),
 			security_question varchar(45) NOT NULL, 
-			security_ans varchar(45) NOT NULL, 
-			PRIMARY KEY (user_id) 
+			security_ans varchar(45) NOT NULL 
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS roles (
-			role_id INTEGER(11) NOT NULL AUTO_INCREMENT,
-			role_name varchar(45) NOT NULL,
-			PRIMARY KEY (role_id)
+			role_id INTEGER(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+			role_name varchar(45) NOT NULL
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS users_roles (
 			user_role_id INTEGER(11) NOT NULL AUTO_INCREMENT,
 			role_id INTEGER(11),
 			user_id INTEGER(11),
-			CONSTRAINT roleidfk FOREIGN KEY (role_id) REFERENCES roles (role_id),
-			CONSTRAINT useridfk FOREIGN KEY (user_id) REFERENCES users (user_id)
+			PRIMARY KEY (user_role_id),
+  			KEY roleidfk_idx (role_id ASC),
+			KEY useridfk_idx (user_id ASC),
+			CONSTRAINT roleidfk FOREIGN KEY (role_id) REFERENCES roles (role_id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+			CONSTRAINT useridfk FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE NO ACTION ON UPDATE NO ACTION
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS batchs (
@@ -79,7 +80,7 @@ CREATE TABLE IF NOT EXISTS chapters (
 			CONSTRAINT booksid_fk_chapter FOREIGN KEY (book_id) REFERENCES books (book_id)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS references ( 
+CREATE TABLE IF NOT EXISTS reference ( 
 			ref_id INTEGER(11) NOT NULL AUTO_INCREMENT, 
 			course_id INTEGER(11) NOT NULL, 
 			reference_header varchar(255) NOT NULL,
@@ -91,10 +92,10 @@ CREATE TABLE IF NOT EXISTS questions_bank (
 			qus_bank_id INTEGER(11) NOT NULL AUTO_INCREMENT, 
 			teacher_id INTEGER(11) NOT NULL,
 			book_id varchar(11) ,
-			course_id varchar(11)NOT NULL ,
+			course_id INTEGER(11)NOT NULL ,
 			ch_id varchar(11),
 			ref_id varchar(11),
-			question_created_date varchar ,
+			question_created_date varchar(255) ,
 			question_title Text NOT NULL, 
 			option1 varchar(255),
 			option2 varchar(255),
@@ -133,7 +134,7 @@ CREATE TABLE IF NOT EXISTS questioner_definations (
 			CONSTRAINT chID_FK_qd FOREIGN KEY (ch_id) REFERENCES chapters (ch_id), 
 			CONSTRAINT courseID_fk_qd FOREIGN KEY (course_id) REFERENCES courses (course_id),
 			CONSTRAINT examID_FK_qd FOREIGN KEY (exam_id) REFERENCES exam_board (exam_id),
-			CONSTRAINT refID_FK_qd FOREIGN KEY (ref_id) REFERENCES references (ref_id), 
+			CONSTRAINT refID_FK_qd FOREIGN KEY (ref_id) REFERENCES reference (ref_id), 
 			CONSTRAINT techerID_Fk_qd FOREIGN KEY (teacher_id) REFERENCES teachers (teacher_id)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -145,21 +146,20 @@ CREATE TABLE IF NOT EXISTS question_paper (
 			mark_question varchar(15),
 			collected_ans INTEGER(11),
 			PRIMARY KEY (qus_id),
-			CONSTRAINT question_bankidFK_Qpaper FOREIGN KEY (qus_bank_id) REFERENCES question_bank (qus_bank_id),
+			CONSTRAINT question_bankidFK_Qpaper FOREIGN KEY (qus_bank_id) REFERENCES questions_bank (qus_bank_id),
 			CONSTRAINT exam_ID_FK_Qpaper FOREIGN KEY (exam_id) REFERENCES exam_board (exam_id),
-			CONSTRAINT studentID_FK_Qpaper FOREIGN KEY (student_id) REFERENCES students (student_id),
-			CONSTRAINT qbfk FOREIGN KEY (qus_bank_id) REFERENCES question_bank (qus_bank_id)
+			CONSTRAINT studentID_FK_Qpaper FOREIGN KEY (student_id) REFERENCES students (student_id)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS exam_info (
 			info_id INTEGER(11) NOT NULL AUTO_INCREMENT,
 			student_id INTEGER(11) NOT NULL,
 			generated_st_id varchar(45) NOT NULL,
-			start_time time ,
-			end_time time ,
+			start_time time,
+			end_time time,
 			date date NOT NULL,
-			score varchar NOT NULL,
-			grade varchar NOT NULL, 
+			score varchar(255),
+			grade varchar(255), 
 			PRIMARY KEY (info_id),
 			CONSTRAINT studentIdFk_ES FOREIGN KEY (student_id) REFERENCES students (student_id) 
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
