@@ -54,6 +54,9 @@ public class ExamBoard implements Serializable {
 
 	@Column
 	private String passMark;
+	
+	@Column
+	private String examStatus;
 
 	@JsonIgnore
 	@OneToMany( mappedBy = "exam")

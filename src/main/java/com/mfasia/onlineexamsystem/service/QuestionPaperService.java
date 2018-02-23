@@ -1,5 +1,7 @@
 package com.mfasia.onlineexamsystem.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +18,15 @@ public class QuestionPaperService {
 	@Transactional
 	public void createQuestion (QuestionPaper questionPaper) {
 		questionPaperRepo.save(questionPaper);
+	}
+	
+	@Transactional
+	public Long findStudentIdFromQusPaper (Long studentId) {
+		return questionPaperRepo.findByStudentId(studentId);
+	}
+	
+	@Transactional
+	public List<QuestionPaper> findByQuesBankId (Long examId, Long studentId) {
+		return questionPaperRepo.findByBankId(examId, studentId);
 	}
 }

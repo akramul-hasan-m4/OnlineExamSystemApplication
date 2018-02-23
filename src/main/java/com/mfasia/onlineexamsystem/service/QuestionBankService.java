@@ -27,20 +27,23 @@ public class QuestionBankService {
 	}
 	
 	@Transactional
-	public List<QuestionsBank> getAllQuestionP (Long courseId, Long bookId,Long chId, Long refId, Pageable pageable){
-		/*Long cours = (long) 1;
-		String book = "1";
-		String ch = "1";*/
+	public List<QuestionsBank> getQuesBankIdForQuesPaper (Long courseId, String bookId,String chId, String refId, Pageable pageable){
 		List<QuestionsBank> list = new ArrayList<>();
-	//	quesBankRepo.getInfoForQuestionPaper(courseId, bookId, chId, refId,pageable)).forEach(list::add);
+		quesBankRepo.getInfoForQuestionPaper(courseId, bookId, chId, refId,pageable).forEach(list::add);
 		return list;
 	}
+	
 	@Transactional
 	public void saveQuestion (QuestionsBank quesBank) {
 		quesBankRepo.save(quesBank);
 	}
+	
 	@Transactional
 	public Optional<QuestionsBank> findById(Long id) {
 		return Optional.of(quesBankRepo.findOne(id));
+	}
+	@Transactional
+	public QuestionsBank findByBankId(Long id) {
+		return quesBankRepo.findOne(id);
 	}
 }

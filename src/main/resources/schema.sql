@@ -114,6 +114,7 @@ CREATE TABLE IF NOT EXISTS exam_board (
 			exam_date date ,
 			total_question INTEGER(11),
 			exam_duration time ,
+			exam_status varchar (50),
 			total_mark INTEGER(11) DEFAULT 100,
 			pass_mark INTEGER(11) DEFAULT 33,
 			PRIMARY KEY (exam_id),

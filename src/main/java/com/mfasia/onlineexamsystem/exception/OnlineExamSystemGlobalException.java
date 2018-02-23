@@ -10,15 +10,21 @@ public class OnlineExamSystemGlobalException extends Exception{
 
 	private static final long serialVersionUID = 1L;
 
-	@ExceptionHandler(Exception.class)
+	@ExceptionHandler(OnlineExamSystemException.class)
 	@ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
-	public String globalException(Exception e){
-		return "errorPage/global";
+	public String globalException(OnlineExamSystemException e){
+		return e.getMessage();
 	}
 	
 	@ExceptionHandler(NullPointerException.class)
 	@ResponseStatus(value=HttpStatus.BAD_REQUEST)
 	public String nullPointerException(NullPointerException e){
-		return "errorPage/nullpointer";
+		return "Null pointer Message = "+e.getMessage();
+	}
+	
+	@ExceptionHandler(InterruptedException.class)
+	@ResponseStatus(value=HttpStatus.BAD_REQUEST)
+	public String InterruptedException(InterruptedException e){
+		return "Null pointer Message = "+e.getMessage();
 	}
 }

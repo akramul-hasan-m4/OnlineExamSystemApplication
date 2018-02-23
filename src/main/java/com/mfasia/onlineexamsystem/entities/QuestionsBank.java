@@ -3,7 +3,6 @@ package com.mfasia.onlineexamsystem.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -75,7 +74,7 @@ public class QuestionsBank implements Serializable {
 	private Integer ans;
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questionBank" , cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questionBank")
 	private List<QuestionPaper> questionpapers;
 
 }

@@ -13,6 +13,6 @@ public interface QuestionBankRepository extends CrudRepository<QuestionsBank, Lo
 
 	@Query(value ="SELECT b FROM QuestionsBank b WHERE "
 			+ "b.courses.courseId =:courseId AND ((b.bookId IS :bookId AND b.chId IS :chId )"
-			+ " OR b.refId IS :refId) ORDER BY RANDOM()")
+			+ " OR b.refId IS :refId) ORDER BY RAND()")
 	public List<QuestionsBank> getInfoForQuestionPaper (@Param ("courseId") Long courseId, @Param ("bookId") String bookId, @Param ("chId") String chId, @Param ("refId") String refId, Pageable pageable);
 }

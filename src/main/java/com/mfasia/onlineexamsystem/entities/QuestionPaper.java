@@ -30,7 +30,7 @@ public class QuestionPaper implements Serializable {
 	@Column
 	private Long examId;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "qus_bank_id")
 	private QuestionsBank questionBank;
 
