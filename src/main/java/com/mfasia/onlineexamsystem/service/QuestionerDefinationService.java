@@ -23,6 +23,7 @@ public class QuestionerDefinationService {
 		qusDefinationRepo.findAll().forEach(list::add);
 		return list;
 	}
+	
 	@Transactional
 	public List<QuestionerDefination> findByexamExamId (Long examId){
 		List<QuestionerDefination> list = new ArrayList<>();

@@ -29,4 +29,9 @@ public class QuestionPaperService {
 	public List<QuestionPaper> findByQuesBankId (Long examId, Long studentId) {
 		return questionPaperRepo.findByBankId(examId, studentId);
 	}
+	
+	@Transactional
+	public void collectAns (Boolean markQuestion,Long collectedAns, Long studentId, Long qusBankId) {
+		 questionPaperRepo.collectAns(markQuestion, collectedAns, studentId, qusBankId);;
+	}
 }

@@ -30,16 +30,13 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 					option4 : $scope.option4,
 					ans : ans
 			}
-			
 			typeObj = JSON.stringify(typeObj);
-			
 			$http({
 				method: 'POST',
 				url: '/quesionsBank',
 				data: typeObj,
 				headers: {'Content-Type': 'application/json'}
-			}).then(
-					function(data, status, headers, config) {
+			}).then(function(data, status, headers, config) {
 						$scope.loadTable();
 					});
 	}

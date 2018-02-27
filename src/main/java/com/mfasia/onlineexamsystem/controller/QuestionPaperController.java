@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,12 +30,9 @@ public class QuestionPaperController {
 
 	private Logger logger = LoggerFactory.getLogger(QuestionPaperController.class);
 
-	@Autowired
-	private QuestionPaperService questionPaperService;
-	@Autowired
-	private QuestionerDefinationService qusDefinationService;
-	@Autowired
-	private QuestionBankService quesBankservice;
+	@Autowired private QuestionPaperService questionPaperService;
+	@Autowired private QuestionerDefinationService qusDefinationService;
+	@Autowired private QuestionBankService quesBankservice;
 
 	List<QuestionsBank> quesBankList = new ArrayList<>();
 	List<QuestionsBank> qusListForExam = new ArrayList<>();
@@ -66,6 +64,8 @@ public class QuestionPaperController {
 			if (!qusListForExam.isEmpty()) {
 				qusListForExam.clear();
 			}
+		}
+		if (qusListForExam.isEmpty()) {
 			try {
 				getQuestionForExam(examId, studentId);
 			} catch (OnlineExamSystemException e) {
@@ -98,6 +98,11 @@ public class QuestionPaperController {
 			qusListForExam.add(quesBankservice.findByBankId(l.getQuestionBank().getQusBankId()))
 		);
 
+	}
+	
+	@PutMapping("/{markQuestion}/{collectedAns}/{studentId}/{qusBankId}")
+	public void collectAns (@PathVariable("markQuestion") Boolean markQuestion, @PathVariable("collectedAns") Long collectedAns, @PathVariable("studentId") Long studentId, @PathVariable("qusBankId") Long qusBankId) {
+		questionPaperService.collectAns(markQuestion, collectedAns, studentId, qusBankId);
 	}
 
 }

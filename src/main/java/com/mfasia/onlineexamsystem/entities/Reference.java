@@ -37,7 +37,7 @@ public class Reference implements Serializable {
 	private String referenceHeader;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "ref" , cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "ref")
 	private List<QuestionerDefination> questionerDefinations;
 
 }

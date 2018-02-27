@@ -33,7 +33,7 @@ public class ExamBoard implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long examId;
 
-	@JsonIgnoreProperties({"courseName","description"})
+	@JsonIgnoreProperties({"description"})
 	@JsonUnwrapped
 	@ManyToOne()
 	@JoinColumn(name = "course_id")

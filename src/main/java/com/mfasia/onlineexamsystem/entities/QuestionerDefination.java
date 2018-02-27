@@ -2,6 +2,7 @@ package com.mfasia.onlineexamsystem.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,26 +42,26 @@ public class QuestionerDefination implements Serializable {
 	private Teacher teachers;
 	
 	@JsonUnwrapped
-	@JsonIgnoreProperties({"courseName","description"})
+	@JsonIgnoreProperties({"description" ,"references","exams","books","questionerDefinations","handler", "hibernateLazyInitializer"})
 	@ManyToOne()
 	@JoinColumn(name = "course_id")
 	private Course courses;
 
 	@JsonUnwrapped
-	@JsonIgnoreProperties({"courses","bookName","authorName","edition"})
+	@JsonIgnoreProperties({"courses","authorName","edition"})
 	@ManyToOne()
 	@JoinColumn(name = "book_id")
 	private Book books;
 	
 	@JsonUnwrapped
-	@JsonIgnoreProperties({"courses","handler","hibernateLazyInitializer","referenceHeader"})
+	@JsonIgnoreProperties({"courses","handler","hibernateLazyInitializer"})
 	@ManyToOne()
 	@JoinColumn(name = "ref_id")
 	private Reference ref;
 	
 	@JsonUnwrapped
-	@JsonIgnoreProperties({"books","chapterName","handler","hibernateLazyInitializer"})
-	@ManyToOne()
+	@JsonIgnoreProperties({"books","handler","hibernateLazyInitializer"})
+	@ManyToOne( )
 	@JoinColumn(name = "ch_id")
 	private Chapter chapters;
 	

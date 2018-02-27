@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" ng-app="quesPaper">
+<head>
+<meta charset="ISO-8859-1"></meta>
+ <span th:include="/includes/commons :: #commons"></span>
+<link rel="stylesheet" type="text/css" href="css/questionPaperPage.css" th:href="@{css/questionPaperPage.css}"/>
+<link  rel="stylesheet" type="text/css" href="css/bootstrap-combined.min.css" th:href="@{css/bootstrap-combined.min.css}"/>
+<script src="js/ui-bootstrap-tpls-0.3.0.min.js"></script>
+<script src="customJS/questionsPaper.js"></script>
+<title>Insert title here</title>
+<style type="text/css">
+.checkedAns {
+	background: blue;
+}
+</style>
+</head>
+<body ng-controller="quesPaperController" ng-init="loadQustions()" style="padding: 10px;">
+	<div class="page-header">
+		<h3>Online Exam</h3>
+		<p>Total Question {{currentPage}}/{{questions.length}}</p>
+	</div>
+	 	<div class="row">
+		<div class="container">
+			<div class="panel panel-default" ng-repeat="qus in filteredQues">
+				<div class="panel-heading">
+					<h3>{{qus.questionTitle}}</h3>
+				</div>
+				<div class="panel-body">
+					<div class="funkyradio">
+						<div class="funkyradio-success">
+							<input type="radio" name="radio" id="radio1" ng-model="ans" ng-value="1" ng-click="collectAns(ans, qus.qusBankId)"/> <label id="1"
+								for="radio1" ><strong>{{qus.option1}}</strong></label>
+						</div>
+						<div class="funkyradio-success">
+							<input type="radio" name="radio" id="radio2" ng-model="ans" ng-value="2" ng-click="collectAns(ans, qus.qusBankId)" /> <label
+								for="radio2"><strong>{{qus.option2}}</strong></label>
+						</div>
+						<div class="funkyradio-success">
+							<input type="radio" name="radio" id="radio3" ng-model="ans" ng-value="3" ng-click="collectAns(ans, qus.qusBankId)"/> <label
+								for="radio3"><strong>{{qus.option3}}</strong></label>
+						</div>
+						<div class="funkyradio-success ">
+							<input type="radio" name="radio" id="radio4" ng-model="ans" ng-value="4" ng-click="collectAns(ans, qus.qusBankId)"/> <label
+								for="radio4"><strong>{{qus.option4}}</strong></label>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+				<div class="row">
+						<label class="checkbox-inline " style="left: 32px;" for="checkboxes-0">
+						<input type="checkbox" name="radio" id="radio4" />Marked</label>
+    					<button id="button2id" name="button2id" class="btn btn-danger pull-right" style="top: 50px;">Finish Exam</button>
+						<button id="button1id" name="button1id" class="btn btn-success pull-right" style="top: 50px;">Review Marked</button>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div data-pagination="" data-num-pages="numPages()"
+						data-current-page="currentPage" data-max-size="maxSize"
+						data-boundary-links="true"></div>
+</body>
+</html>

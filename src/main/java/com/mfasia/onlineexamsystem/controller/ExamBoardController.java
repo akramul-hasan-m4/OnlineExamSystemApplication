@@ -20,4 +20,9 @@ public class ExamBoardController {
 	public List<ExamBoard> getAllExamBoardInfo () {
 		return examBoardService.getAllExamBoardInfo();
 	}
+	
+	@GetMapping("/active")
+	public List<ExamBoard> showAllActiveExam () {
+		return examBoardService.showAllActiveExam();
+	}
 }

@@ -24,7 +24,7 @@ public class OnlineExamSystemGlobalException extends Exception{
 	
 	@ExceptionHandler(InterruptedException.class)
 	@ResponseStatus(value=HttpStatus.BAD_REQUEST)
-	public String InterruptedException(InterruptedException e){
+	public String interruptedException(InterruptedException e){
 		return "Null pointer Message = "+e.getMessage();
 	}
 }

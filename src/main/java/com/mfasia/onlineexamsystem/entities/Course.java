@@ -53,7 +53,7 @@ public class Course implements Serializable {
 	private List<ExamBoard> exams ;
 	
 	@JsonIgnore
-	@OneToMany( mappedBy="courses"  , cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany( mappedBy="courses")
 	private List<QuestionerDefination> questionerDefinations;
 	
 	@JsonIgnore
