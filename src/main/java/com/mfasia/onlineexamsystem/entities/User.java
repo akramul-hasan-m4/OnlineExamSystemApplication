@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,7 +27,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long userId;
 	
 	@Column
@@ -68,12 +70,40 @@ public class User implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users" , cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Teacher> teacherses ;
 	
-	@JsonBackReference
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	private List<UserRole> usersRoleas;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "role_name", joinColumns =
+    @JoinColumn(name = "user_id"), inverseJoinColumns =
+    @JoinColumn(name = "role_id"))
+	private List<UserRole> usersRoles;
 	
 	@JsonBackReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
 	private List<Student> students;
+
+	public User(User user) {
+		super();
+		this.userId = user.userId;
+		this.firstName = user.firstName;
+		this.lastName = user.lastName;
+		this.email = user.email;
+		this.phone = user.phone;
+		this.photo = user.photo;
+		this.password = user.password;
+		this.gender = user.gender;
+		this.currentAddress = user.currentAddress;
+		this.permanentAddress = user.permanentAddress;
+		this.status = user.status;
+		this.securityQuestion = user.securityQuestion;
+		this.securityAns = user.securityAns;
+		this.teacherses = user.teacherses;
+		this.usersRoles = user.usersRoles;
+		this.students = user.students;
+	}
+
+	public User() {
+		super();
+	}
+	
+	
 
 }

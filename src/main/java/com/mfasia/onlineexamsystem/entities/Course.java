@@ -30,7 +30,7 @@ public class Course implements Serializable {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long courseId;
 	
 	@Column
@@ -41,7 +41,7 @@ public class Course implements Serializable {
 	private String description;
 	
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="courses")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="courses")
 	private List<Reference> references;
 	
 	@JsonIgnore

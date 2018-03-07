@@ -3,10 +3,10 @@
 <head>
 <meta charset="ISO-8859-1"></meta>
  <span th:include="/includes/commons :: #commons"></span>
-<link rel="stylesheet" type="text/css" href="css/questionPaperPage.css" th:href="@{css/questionPaperPage.css}"/>
-<link  rel="stylesheet" type="text/css" href="css/bootstrap-combined.min.css" th:href="@{css/bootstrap-combined.min.css}"/>
-<script src="js/ui-bootstrap-tpls-0.3.0.min.js"></script>
-<script src="customJS/questionsPaper.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/questionPaperPage.css" th:href="@{/css/questionPaperPage.css}"/>
+<link  rel="stylesheet" type="text/css" href="/css/bootstrap-combined.min.css" th:href="@{/css/bootstrap-combined.min.css}"/>
+<script src="/js/ui-bootstrap-tpls-0.3.0.min.js"></script>
+<script src="/customJS/questionsPaper.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
 .checkedAns {
@@ -17,7 +17,7 @@
 <body ng-controller="quesPaperController" ng-init="loadQustions()" style="padding: 10px;">
 	<div class="page-header">
 		<h3>Online Exam</h3>
-		<p>Total Question {{currentPage}}/{{questions.length}}</p>
+		<p th:text="#{question.paper.TotalQuestion.title}"> {{currentPage}}/{{questions.length}}</p>
 	</div>
 	 	<div class="row">
 		<div class="container">
@@ -47,10 +47,10 @@
 				</div>
 				<div class="panel-footer">
 				<div class="row">
-						<label class="checkbox-inline " style="left: 32px;" for="checkboxes-0">
-						<input type="checkbox" name="radio" id="radio4" />Marked</label>
-    					<button id="button2id" name="button2id" class="btn btn-danger pull-right" style="top: 50px;">Finish Exam</button>
-						<button id="button1id" name="button1id" class="btn btn-success pull-right" style="top: 50px;">Review Marked</button>
+						<label class="checkbox-inline " style="left: 32px;" for="checkboxes-0" th:text="#{question.paper.Marked.label}">
+						<input type="checkbox" name="radio" id="radio4" /></label>
+    					<button id="button2id" name="button2id" class="btn btn-danger pull-right" style="top: 50px;" th:text="#{question.paper.FinishExam.btn}"></button>
+						<button id="button1id" name="button1id" class="btn btn-success pull-right" style="top: 50px;" th:text="#{question.paper.ReviewMarked.btn}"></button>
 				</div>
 				</div>
 			</div>

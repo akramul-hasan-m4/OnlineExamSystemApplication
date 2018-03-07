@@ -16,7 +16,7 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 		});
 	};
 	
-	$scope.saveQus = function(ans) {
+	$scope.saveQus = function() {
 			var typeObj = {
 					courseId : $scope.courseId,
 					bookId : $scope.bookId,
@@ -28,9 +28,10 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 					option2 : $scope.option2,
 					option3 : $scope.option3,
 					option4 : $scope.option4,
-					ans : ans
+					ans 	: $scope.ans
 			}
 			typeObj = JSON.stringify(typeObj);
+			console.log(typeObj);
 			$http({
 				method: 'POST',
 				url: '/quesionsBank',

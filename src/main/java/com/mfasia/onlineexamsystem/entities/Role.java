@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -24,13 +24,13 @@ public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long roleId;
 	
 	@Column
 	private String roleName;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="roles")	
 	private List<UserRole> usersRoleas;
 	
