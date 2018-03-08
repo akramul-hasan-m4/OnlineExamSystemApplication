@@ -21,18 +21,16 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter{
 		http.requestMatchers()
 		.and()
 		.authorizeRequests()
-		.antMatchers("/login", "/questionBankPage", "questionerDefinationPage", "questionsPaperPage","/books")
-		.authenticated()
-		.antMatchers("resources/**")
-		.permitAll()
-		.anyRequest()
-		.authenticated()
+		.antMatchers("/courses","/login", "/questionBankPage", "questionerDefinationPage", "questionsPaperPage","/books").authenticated()
+		.antMatchers("/courses/p").access("hasRole('ADMIN')") //hasRole("Admin")     //
+		.antMatchers("resources/**").permitAll()
+		.anyRequest().authenticated()
 		.and()
-		.formLogin()
-		.permitAll()
+		.formLogin().permitAll()
 		.and()
-		.csrf()
-		.disable();;
+		.logout().permitAll()
+		.and()
+		.csrf().disable();;
 	}
 
 	@Override

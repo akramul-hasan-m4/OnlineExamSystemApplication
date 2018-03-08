@@ -23,10 +23,16 @@ public class ExamBoardService {
 		examBoardRepo.findAll().forEach(list::add);
 		return list;
 	}
+	
 	@Transactional
 	public List<ExamBoard> showAllActiveExam (){
 		List<ExamBoard> list = new ArrayList<>();
 		examBoardRepo.showAllActiveExam().forEach(list::add);
 		return list;
+	}
+	
+	@Transactional
+	public void saveExamdeclaration (ExamBoard board) {
+		examBoardRepo.save(board);
 	}
 }

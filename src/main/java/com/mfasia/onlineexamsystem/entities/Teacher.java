@@ -38,6 +38,6 @@ public class Teacher implements Serializable {
 	private List<QuestionsBank> questionBanks;
 	
 	@JsonIgnore
-	@OneToMany( mappedBy = "teachers")
+	@OneToMany( mappedBy = "teachers",cascade = CascadeType.ALL)
 	private List<QuestionerDefination> questionerDefinations;
 }

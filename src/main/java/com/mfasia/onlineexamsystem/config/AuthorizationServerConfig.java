@@ -24,18 +24,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.tokenKeyAccess("permitAll()")
-          		  .checkTokenAccess("isAuthenticated()");
+				.checkTokenAccess("isAuthenticated()");
 	}
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
-        clients.inMemory()
-                .withClient("ClientId")
-                .secret("secret")
-                .authorizedGrantTypes("authorization_code")
-                .scopes("user_info")
-                .autoApprove(true);
+			clients.inMemory()
+				.withClient("ClientId")
+				.secret("secret")
+				.authorizedGrantTypes("authorization_code")
+				.scopes("user_info")
+				.autoApprove(true);
 	}
 
 }
