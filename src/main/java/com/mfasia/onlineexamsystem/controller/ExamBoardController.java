@@ -35,6 +35,8 @@ public class ExamBoardController {
 	
 	@PostMapping()
 	public ResponseEntity<ExamBoard> saveQuesion(@RequestBody ExamBoard board) {
+		//System.out.println("========="+board.getExamDuration().toString());
+		//System.out.println("========="+board.getExamDate().toString());
 		examBoardService.saveExamdeclaration(board);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(board.getExamId()).toUri();

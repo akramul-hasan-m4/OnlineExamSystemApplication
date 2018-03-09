@@ -9,7 +9,12 @@
 
 	<title>Question bank</title>
 	<span th:include="/includes/commons :: #commons"></span>
+	<script type="text/javascript" src="/js/jquery-ui.min-1.11.0.js" th:src="@{/js/jquery-ui.min-1.11.0.js}"/>
+	<script type="text/javascript" src="/js/jquery-ui-timepicker-addon.js" th:src="@{/js/jquery-ui-timepicker-addon.js}"/>
 	<script type="text/javascript" src="/customJS/examBoard.js" th:src="@{/customJS/examBoard.js}"/>
+	<link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.11.0.css" th:href="@{/css/jquery-ui-1.11.0.css}"/>
+	<link rel="stylesheet" type="text/css" href="/css/jquery-ui-timepicker-addon.css" th:href="@{/css/jquery-ui-timepicker-addon.css}"/>
+	
 	
 </head>
 
@@ -29,7 +34,7 @@
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-primary pull-right" title="Add a new Exam" data-toggle="modal" data-target="#newQus">
+									<button class="btn btn-primary pull-right" title="Add a new Exam" data-toggle="modal" ng-click="EditRow(null)" data-target="#newQus">
 										<i class="fa fa-plus"></i>
 									</button>
 								</div>
@@ -61,7 +66,7 @@
 										<td class="center">{{x.totalMark}}</td>
 										<td class="center">{{x.passMark}}</td>
 										<td class="center">{{x.examStatus}}</td>
-										<td class="center"><Button class="btn btn-primary"><i class="fa fa-edit"></i></Button></td>
+										<td class="center"><Button class="btn btn-primary" data-toggle="modal" data-target="#newQus" ng-click="EditRow(x)"><i class="fa fa-edit"></i></Button></td>
 										<td class="center"><Button class="btn btn-danger"><i class="fa fa-trash"></i></Button></td>
 									</tr>
 								</tbody>
@@ -73,19 +78,24 @@
 		</div>
 	</div>
 	<!-- Start Modal -->
-	<div class="modal fade" id="newQus" role="dialog">
+	<div class="modal fade" id = "newQus" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h3 class="modal-title text-center" style="color : green;" th:text="#{exam.board.createNew.title}"></h3>
+					<div ng-if="rowData == null">
+						<h3 class="modal-title text-center" style="color : green;" th:text="#{exam.board.createNew.title}"></h3>
+					</div>
+					<div ng-if="rowData != null">
+						<h3 class="modal-title text-center" style="color : green;" th:text="#{exam.board.update.title}"></h3>
+					</div>
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal" id="newExamForm1" name="newExamForm" role="form" >
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="courseId" th:text="#{commons.CourseName.label}"></label>
 							<div class="col-md-6">
-								<select ng-required="true" id="courseId" name="courseId" ng-model="courseId" ng-change="selectedCourse(courseId)" ng-options="courses.courseId as courses.courseName for courses in allCourses" class="form-control" title="select course">
+								<select ng-required="true"  id="courseId" name="courseId" ng-model="courseId" ng-change="selectedCourse(courseId)" ng-options="courses.courseId as courses.courseName for courses in allCourses" class="form-control" title="select course">
 									<option ng-value="{{courses.courseId}}">{{courses.courseName}}</option>
 								</select>
 							</div>
@@ -93,50 +103,52 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="examDate" th:text="#{exam.board.examDate.label}"></label>
 							<div class="col-md-6">
-								<input id="examDate" name="examDate" class="form-control" type="date"
-								placeholder="Exam date" ng-required="true" ng-model="examDate" />
+								<input id="examDate" name="examDate" class="form-control" type="text"
+								placeholder="Exam date" ng-required="true" ng-value="rowData.examDate" ng-model="examDate" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="totalQuestion" th:text="#{exam.board.totalQuestion.label}"></label>
 							<div class="col-md-6">
 								<input id="totalQuestion" name="totalQuestion" class="form-control" type="number"
-								placeholder="Total question" ng-required="true" ng-model="totalQuestion"/>
+								placeholder="Total question" ng-required="true" ng-value="rowData.totalQuestion" ng-model="totalQuestion"/>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="examDuration" th:text="#{exam.board.examDuration.label}"></label>
 							<div class="col-md-6">
-								<input id="examDuration" name="examDuration" class="form-control" type="time"
-										placeholder="Declare exam Duration" ng-required="true" ng-model="examDuration"/>
+								<input id="examDuration" name="examDuration" class="form-control" type="text"
+										placeholder="Declare exam Duration" ng-required="true" ng-value="rowData.examDuration" ng-model="examDuration"/>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="totalMark" th:text="#{exam.board.totalMark.label}"></label>
 							<div class="col-md-6">
 								<input id="totalMark" name="totalMark" class="form-control" type="number"
-								placeholder="Declare Total Mark" ng-required="true" ng-model="totalMark"/>
+								placeholder="Declare Total Mark" ng-required="true" ng-value="rowData.totalMark" ng-model="totalMark"/>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="passMark" th:text="#{exam.board.passMark.label}"></label>
 							<div class="col-md-6">
 								<input id="passMark" name="passMark" class="form-control" type="number"
-								placeholder="Declare Pass Mark" ng-required="true" ng-model="passMark"/>
+								placeholder="Declare Pass Mark" ng-required="true" ng-value="rowData.passMark" ng-model="passMark"/>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="examStatus" th:text="#{exam.board.examStatus.label}"></label>
 							<div class="col-md-6">
-								<select ng-required="true" id="examStatus" name="examStatus" ng-options="x for x in examStatuss" ng-model="examStatus" class="form-control" title="select Status">
+								<select ng-required="true" id="examStatus" name="examStatus" ng-value="rowData.examStatus" ng-options="x for x in examStatuss" ng-model="examStatus" class="form-control" title="select Status">
 								</select>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group form-inline">
 							<label class="col-md-4 control-label" for=""></label>
 							<div class="col-md-6">
-								<button type="submit" ng-click="saveExamDeclaration()" data-dismiss="modal" 
-								 class="btn btn-primary" th:text="#{commons.Save.btn}"></button>
+									<button ng-show="!rowData" type="submit" ng-click="saveExamDeclaration()" data-dismiss="modal" 
+									 class="btn btn-primary" th:text="#{commons.Save.btn}"></button>
+									<button ng-show="rowData" type="submit" ng-click="updateExamDeclaration()" data-dismiss="modal" 
+								 	class="btn btn-success" th:text="#{commons.update.btn}"></button>
 								<input type="reset" ng-click="reset()" class="btn btn-danger" th:value="#{commons.Reset.btn}"></input>
 							</div>
 						</div>
@@ -161,7 +173,7 @@
 					);
 				}
 			}, 1000);
-		});
+		}); 
 	</script>
 </body>
 </html>

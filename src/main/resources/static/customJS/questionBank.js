@@ -31,7 +31,7 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 					ans 	: $scope.ans
 			}
 			typeObj = JSON.stringify(typeObj);
-			console.log(typeObj);
+			
 			$http({
 				method: 'POST',
 				url: '/quesionsBank',

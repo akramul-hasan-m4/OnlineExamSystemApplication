@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -50,10 +49,10 @@ public class ExamBoard implements Serializable {
 	private String examDuration;
 
 	@Column
-	private String totalMark;
+	private Integer totalMark;
 
 	@Column
-	private String passMark;
+	private Integer passMark;
 	
 	@Column
 	private String examStatus;

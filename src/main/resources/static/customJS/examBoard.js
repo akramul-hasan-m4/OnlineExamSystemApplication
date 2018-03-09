@@ -1,7 +1,26 @@
 var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope, $http) {
+app.controller('myCtrl', function ($scope, $http) {
 	
 	$scope.examStatuss = ["Active", "Inactive"];
+	$scope.examDuration = '';
+	
+	
+	
+	$("#examDuration").timepicker({
+		onSelect: function(data) {
+			$scope.$apply(function () {
+				$scope.examDuration = data;
+			});
+		}
+	});
+	
+	$("#examDate").datepicker({
+		onSelect: function(data) {
+			$scope.$apply(function () {
+				$scope.examDate = data;
+			});
+		}
+	});
 	
 	$scope.allExamBoardInfo={};
 	$scope.loadTable = function (){
@@ -9,7 +28,7 @@ app.controller('myCtrl', function($scope, $http) {
 			method : "GET",
 			url : "/examboard"
 		}).then(function mySuccess(response) {
-			$scope.allExamBoardInfo = response.data;
+			$scope.allExamBoardInfo = response.data;		
 		}, function myError(response) {
 			$scope.errorStatus = response.statusText;
 		});
@@ -25,7 +44,7 @@ app.controller('myCtrl', function($scope, $http) {
 		$scope.errorStatus = response.statusText;
 	});
 	
-	$scope.saveExamDeclaration = function() {
+	$scope.saveExamDeclaration = function () {
 		var dataObj = {
 				courseId : $scope.courseId,
 				examDate : $scope.examDate,
@@ -33,7 +52,7 @@ app.controller('myCtrl', function($scope, $http) {
 				examDuration : $scope.examDuration,
 				totalMark : $scope.totalMark,
 				passMark : $scope.passMark,
-				examStatus : $scope.examStatus,
+				examStatus : $scope.examStatus
 		}
 		dataObj = JSON.stringify(dataObj);
 		console.log(dataObj);
@@ -42,9 +61,21 @@ app.controller('myCtrl', function($scope, $http) {
 			url: '/examboard',
 			data: dataObj,
 			headers: {'Content-Type': 'application/json'}
-		}).then(function(data, status, headers, config) {
+		}).then(function (data, status, headers, config) {
 					$scope.loadTable();
 				});
-}
-
+	}
+	
+	$scope.rowData = {};
+	$scope.EditRow=function (data){
+		$scope.rowData = data;
+		console.log(data);
+		/*$scope.courseId = data.courseId ;
+		$scope.examDate = data.examDate ;
+		$scope.totalQuestion = data.totalQuestion ;
+		$scope.examDuration = data.examDuration ;
+		$scope.totalMark = data.totalMark ;
+		$scope.passMark = data.passMark ;
+		$scope.examStatus = data.examStatus ;*/
+	}
 });

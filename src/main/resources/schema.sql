@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS exam_board (
 			course_id INTEGER, 
 			exam_date date ,
 			total_question INTEGER,
-			exam_duration time ,
+			exam_duration varchar (80) ,
 			exam_status varchar (50),
 			total_mark INTEGER DEFAULT 100,
 			pass_mark INTEGER DEFAULT 33,
