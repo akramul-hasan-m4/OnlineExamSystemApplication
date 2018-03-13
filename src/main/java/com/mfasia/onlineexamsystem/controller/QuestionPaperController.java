@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mfasia.onlineexamsystem.commons.Messages;
 import com.mfasia.onlineexamsystem.entities.QuestionPaper;
 import com.mfasia.onlineexamsystem.entities.QuestionerDefination;
 import com.mfasia.onlineexamsystem.entities.QuestionsBank;
@@ -33,6 +33,7 @@ public class QuestionPaperController {
 	@Autowired private QuestionPaperService questionPaperService;
 	@Autowired private QuestionerDefinationService qusDefinationService;
 	@Autowired private QuestionBankService quesBankservice;
+	@Autowired private MessageSource msgSource ;
 
 	List<QuestionsBank> quesBankList = new ArrayList<>();
 	List<QuestionsBank> qusListForExam = new ArrayList<>();
@@ -89,10 +90,10 @@ public class QuestionPaperController {
 		}
 	}
 
-	public void getQuestionForExam(Long examId, Long studentId) throws OnlineExamSystemException {
+	private void getQuestionForExam(Long examId, Long studentId) throws OnlineExamSystemException {
 		List<QuestionPaper> qusBankIdList = questionPaperService.findByQuesBankId(examId, studentId);
 		if (qusBankIdList.isEmpty()) {
-			throw new OnlineExamSystemException(Messages.FIND_BY_ERROR_MSG+studentId);
+			throw new OnlineExamSystemException(msgSource.getMessage("commons.findByidErrorMsg", null, null)+studentId);
 		}
 		qusBankIdList.forEach(l -> 
 			qusListForExam.add(quesBankservice.findByBankId(l.getQuestionBank().getQusBankId()))
@@ -101,7 +102,7 @@ public class QuestionPaperController {
 	}
 	
 	@PutMapping("/{markQuestion}/{collectedAns}/{studentId}/{qusBankId}")
-	public void collectAns (@PathVariable("markQuestion") Boolean markQuestion, @PathVariable("collectedAns") Long collectedAns, @PathVariable("studentId") Long studentId, @PathVariable("qusBankId") Long qusBankId) {
+	private void collectAns (@PathVariable("markQuestion") Boolean markQuestion, @PathVariable("collectedAns") Long collectedAns, @PathVariable("studentId") Long studentId, @PathVariable("qusBankId") Long qusBankId) {
 		questionPaperService.collectAns(markQuestion, collectedAns, studentId, qusBankId);
 	}
 

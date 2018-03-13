@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,9 @@ import com.mfasia.onlineexamsystem.service.QuestionBankService;
 @RequestMapping("/quesionsBank")
 public class QuestionBankController {
 	
-	@Autowired
-	private QuestionBankService quesService;
+	
+	@Autowired private QuestionBankService quesService;
+	@Autowired private MessageSource msgSource ;
 	
 	@PostMapping()
 	public ResponseEntity<QuestionsBank> saveQuesion(@RequestBody QuestionsBank quesBank) {
@@ -38,7 +40,7 @@ public class QuestionBankController {
 				.buildAndExpand(quesBank.getQusBankId()).toUri();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(location);
-		headers.add(Messages.SUCCESS_MSG, "Question"+Messages.SAVE_SUCCESS_MSG+"Questions Bank");
+		headers.add(Messages.SUCCESS_MSG, msgSource.getMessage("commons.saveErrorMsg", null, null));
 		return ResponseEntity.created(location).headers(headers).build();
 	}
 	
@@ -46,7 +48,7 @@ public class QuestionBankController {
 	public ResponseEntity<List<QuestionsBank>> getAllQuesions () {
 		List<QuestionsBank> list = quesService.getAllQuestion();
 		HttpHeaders headers = new HttpHeaders();
-		headers.add(Messages.ERROR_MSG, Messages.GET_ALL_ERROR_MSG);
+		headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.getAllErrorMsg", null, null));
 		if (list.isEmpty()) {
 			return new ResponseEntity<>(headers,HttpStatus.NOT_FOUND);
 		}
@@ -58,18 +60,26 @@ public class QuestionBankController {
 		Optional<QuestionsBank> findQus = quesService.findById(qbid);
 		HttpHeaders headers = new HttpHeaders();
 		if (!findQus.isPresent()) {
-			headers.add(Messages.ERROR_MSG, Messages.FIND_BY_ERROR_MSG+qbid);
+			headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.findByidErrorMsg", null, null)+qbid);
 			return ResponseEntity.notFound().headers(headers).build();
 		}
 		
-		headers.add(Messages.SUCCESS_MSG, "Question"+Messages.UPDATE_SUCCESS_MSG+qbid);
+		headers.add(Messages.SUCCESS_MSG, msgSource.getMessage("commons.updatemsg", null, null));
 		questionbank.setQusBankId(qbid);
 		quesService.saveQuestion(questionbank);
 		return ResponseEntity.noContent().headers(headers).build();
 	}
 	
-	@DeleteMapping("/{id}")
-	public Boolean deleteQuestion (@PathVariable("id") Long qbid) {
-		return Boolean.TRUE;
+	@DeleteMapping("/{bankId}")
+	public ResponseEntity<Void> deleteBook (@PathVariable Long bankId) {
+		Optional<QuestionsBank> findQusFromBank = quesService.findById(bankId);
+		HttpHeaders headers = new HttpHeaders();
+		if(bankId != null && findQusFromBank.isPresent()) {
+			headers.add(Messages.SUCCESS_MSG, msgSource.getMessage("commons.deleteSuccessMsg", null, null));
+			quesService.deleteQusFromBank(bankId);
+			return ResponseEntity.noContent().headers(headers).build();
+		}
+		headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.deleteFailedMsg ", null, null));
+		return ResponseEntity.notFound().headers(headers).build();
 	}
 }

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8"></meta> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<meta name="description" content=""></meta>
+	<meta name="author" content=""></meta>
+
+	<title>Book Details</title>
+	<span th:include="/includes/commons :: #commons"></span>
+	<script type="text/javascript" src="/customJS/book.js" th:src="@{/customJS/book.js}"/>
+	
+</head>
+
+<body ng-controller="myCtrl" ng-init="loadTable()">
+	<div id="wrapper">
+		<!-- Navigation -->
+		<span th:include="/includes/adminPanelNav :: #adminNav"></span>
+		<!-- Message -->
+		<div ng-show="SuccessMSG" class="alert alert-success" id="success-alert">
+			<button type="button" class="close" data-dismiss="alert">x</button>
+			<strong>Success! </strong> {{SuccessMSG}}
+		</div>
+		<div ng-show="ErrorMSG" class="alert alert-danger" id="error-alert">
+			<button type="button" class="close" data-dismiss="alert">x</button>
+			<strong>Error! </strong> {{ErrorMSG}}
+		</div>
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header" style="color : green;"><label th:text="#{book.courseheader.title}"></label></h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-md-12">
+									<button class="btn btn-primary pull-right" title="Add a new Book" data-toggle="modal" ng-click="EditRow(null)" data-target="#newBook">
+										<i class="fa fa-plus"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<table width="100%" class="table table-striped table-bordered table-hover" id="bookTable">
+								<thead>
+									<tr>
+										<th th:text="#{commons.SlNo.label}"></th>
+										<th th:text="#{commons.CourseName.label}"></th>
+										<th th:text="#{commons.BookName.label}"></th>
+										<th th:text="#{book.authorName.label}"></th>
+										<th th:text="#{book.edition.label}"></th>
+										<th th:text="#{commons.Action.label}"></th>
+										<th th:text="#{commons.Action.label}"></th>
+									</tr>
+									</thead>
+								<tbody>
+									<tr class="odd gradeX" ng-repeat="x in allBooks">
+										<td>{{$index + 1}}</td>
+										<td>{{x.courses.courseName}}</td>
+										<td>{{x.bookName}}</td>
+										<td>{{x.authorName}}</td>
+										<td>{{x.edition}}</td>
+										<td class="center"><Button class="btn btn-primary" data-toggle="modal" data-target="#newBook" ng-click="EditRow(x)"><i class="fa fa-edit"></i></Button></td>
+										<td class="center"><Button class="btn btn-danger" ng-click="DeleteRow(x.bookId)"><i class="fa fa-trash"></i></Button></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Start Modal -->
+	<div class="modal fade" id = "newBook" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<div ng-if="rowData == null">
+						<h3 class="modal-title text-center" style="color : green;" th:text="#{book.createNew.title}"></h3>
+					</div>
+					<div ng-if="rowData != null">
+						<h3 class="modal-title text-center" style="color : green;" th:text="#{book.update.title}"></h3>
+					</div>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" id="BookForm" name="newCourseForm" role="form" >
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="courseId" th:text="#{commons.CourseName.label}"></label>
+							<div class="col-md-6">
+								<select requird = "true" id="courseId" name="courseId" ng-model="courseId" ng-options="courses.courseId as courses.courseName for courses in allCourses" class="form-control" title="select course">
+									<option ng-value="{{courses.courseId}}">{{courses.courseName}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="bookName" th:text="#{commons.BookName.label}"></label>
+							<div class="col-md-6">
+								<input id="bookName" name="bookName" class="form-control" type="text"
+										placeholder="Write course description" ng-required="true"  ng-model="bookName"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="authorName" th:text="#{book.authorName.label}"></label>
+							<div class="col-md-6">
+								<input id="authorName" name="authorName" class="form-control" type="text"
+										placeholder="Write course description" ng-required="true"  ng-model="authorName"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="edition" th:text="#{book.edition.label}"></label>
+							<div class="col-md-6">
+								<input id="edition" name="edition" class="form-control" type="text"
+										placeholder="Write course description" ng-required="true"  ng-model="edition"/>
+							</div>
+						</div>
+						<div class="form-group form-inline">
+							<label class="col-md-4 control-label" for=""></label>
+							<div class="col-md-6">
+									<button ng-show="!rowData" type="submit" ng-click="saveBook()" data-dismiss="modal" 
+									 class="btn btn-primary" th:text="#{commons.Save.btn}"></button>
+									<button ng-show="rowData" type="submit" ng-click="updateBookInfo()" data-dismiss="modal" 
+								 	class="btn btn-success" th:text="#{commons.update.btn}"></button>
+								<input type="reset" class="btn btn-danger"  th:value="#{commons.Reset.btn}"></input>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{commons.Close.btn}"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end Modal -->
+	<script>
+		$(document).ready(function() {
+			setTimeout(function(){
+				var rowCount = $("#bookTable tr").length;
+				if (rowCount >= 0) {
+					$("window").load(
+						$("#bookTable").dataTable({
+							responsive: true
+						})
+					);
+				}
+			}, 1000);
+			
+		}); 
+	</script>
+</body>
+</html>

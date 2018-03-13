@@ -46,4 +46,9 @@ public class QuestionBankService {
 	public QuestionsBank findByBankId(Long id) {
 		return quesBankRepo.findOne(id);
 	}
+	
+	@Transactional
+	public void deleteQusFromBank (Long bankId) {
+		quesBankRepo.delete(bankId);
+	}
 }

@@ -57,6 +57,6 @@ public class Course implements Serializable {
 	private List<QuestionerDefination> questionerDefinations;
 	
 	@JsonIgnore
-	@OneToMany( mappedBy="courses" , cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany( mappedBy="courses" , cascade = CascadeType.ALL)
 	private List<QuestionsBank> questionBanks ;
 }

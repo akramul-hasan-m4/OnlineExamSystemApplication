@@ -2,6 +2,7 @@ package com.mfasia.onlineexamsystem.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -29,5 +30,18 @@ public class BooksService {
 		List<Book> list= new ArrayList<>();
 		booksRepo.findAllByCourseId(courseId).forEach(list::add);
 		return list;
+	}
+	
+	@Transactional
+	public void saveBook (Book book) {
+		booksRepo.save(book);
+	}
+	
+	public Optional<Book> findByBookId (Long bookId){
+		return Optional.of(booksRepo.findOne(bookId));
+	}
+	
+	public void deleteBook (Long bookId) {
+		booksRepo.delete(bookId);
 	}
 }

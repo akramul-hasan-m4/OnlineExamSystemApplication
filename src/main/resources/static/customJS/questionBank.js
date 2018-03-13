@@ -13,6 +13,7 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 			$scope.allQuestion = response.data;
 		}, function myError(response) {
 			$scope.errorStatus = response.statusText;
+			console.log("headers "+ response.headers('ErrorMSG'));
 		});
 	};
 	
@@ -39,6 +40,8 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 				headers: {'Content-Type': 'application/json'}
 			}).then(function(data, status, headers, config) {
 						$scope.loadTable();
+						console.log(typeof headers, 'successmsg');
+						console.log(status);
 					});
 	}
 	

@@ -1,31 +1,43 @@
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope, $http) {
-
+	
 	$scope.SuccessMSG = '';
 	$scope.ErrorMSG = '';
 
 	$scope.loadTable = function() {
 		$http({
 			method : "GET",
-			url : "/courses"
+			url : "/books"
 		}).then(function mySuccess(response) {
-			$scope.allCourses = response.data;
+			$scope.allBooks = response.data;
 		}, function myError(response) {
 			$scope.ErrorMSG = response.headers('ErrorMSG');
 			$scope.messageAlart();
 		});
 	};
 
-	$scope.saveCourse = function() {
+	$http({
+		method : "GET",
+		url : "/courses"
+	}).then(function mySuccess(response) {
+		$scope.allCourses = response.data;
+		
+	}, function myError(response) {
+		$scope.errorStatus = response.statusText;
+	});
+	
+	$scope.saveBook = function() {
 		var dataObj = {
-			courseName : $scope.courseName,
-			description : $scope.description
+				courseId : $scope.courseId,
+				bookName : $scope.bookName,
+				authorName : $scope.authorName,
+				edition : $scope.edition
 		}
 		dataObj = JSON.stringify(dataObj);
 		console.log(dataObj);
 		$http({
 			method : 'POST',
-			url : '/courses',
+			url : '/books',
 			data : dataObj,
 			headers : {
 				'Content-Type' : 'application/json'
@@ -39,31 +51,35 @@ app.controller('myCtrl', function($scope, $http) {
 			$scope.messageAlart();
 		});
 	}
-
-	$scope.courseId = '';
+	
+	$scope.bookId = '';
 	$scope.EditRow = function(data) {
 		$scope.rowData = data;
 		if (data != null) {
-			$scope.courseId = data.courseId;
-			$scope.courseName = data.courseName;
-			$scope.description = data.description;
+			$scope.bookId = data.bookId;
+			$scope.courseId = data.courses.courseId;
+			$scope.bookName = data.bookName;
+			$scope.authorName = data.authorName;
+			$scope.edition = data.edition;
 		} else {
 			$scope.clearform();
 		}
 	}
-
-	$scope.updateCourse = function() {
+	
+	$scope.updateBookInfo = function() {
 
 		var dataObj = {
-			courseId : $scope.courseId,
-			courseName : $scope.courseName,
-			description : $scope.description
+				bookId : $scope.bookId,
+				courseId : $scope.courseId,
+				bookName : $scope.bookName,
+				authorName : $scope.authorName,
+				edition : $scope.edition
 		}
 		dataObj = JSON.stringify(dataObj);
 		console.log(dataObj);
 		$http({
 			method : 'PUT',
-			url : '/courses/' + $scope.courseId,
+			url : '/books/' + $scope.bookId,
 			data : dataObj,
 			headers : {
 				'Content-Type' : 'application/json'
@@ -77,12 +93,12 @@ app.controller('myCtrl', function($scope, $http) {
 			$scope.messageAlart();
 		});
 	}
-
+	
 	$scope.DeleteRow = function(courseId) {
-		if (confirm('Are you sure to delete this course ?')) {
+		if (confirm('Are you sure to delete this book ?')) {
 			$http({
 				method : 'DELETE',
-				url : '/courses/' + courseId,
+				url : '/books/' + courseId,
 			}).then(function(response) {
 				$scope.SuccessMSG = response.headers('SuccessMSG');
 				$scope.messageAlart();
@@ -94,12 +110,14 @@ app.controller('myCtrl', function($scope, $http) {
 		}
 	}
 
+	
 	$scope.clearform = function() {
 		$scope.courseId = "";
-		$scope.courseName = "";
-		$scope.description = "";
+		$scope.bookName = "";
+		$scope.authorName = "";
+		$scope.edition = "";
 	}
-
+	
 	$scope.messageAlart = function() {
 		if ($scope.SuccessMSG != undefined) {
 			$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {

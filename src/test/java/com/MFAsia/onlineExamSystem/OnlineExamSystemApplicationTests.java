@@ -19,7 +19,7 @@ public class OnlineExamSystemApplicationTests {
 	QuesinerDefinationController qd;
 	@Test
 	public void contextLoads() {
-		List<QuestionerDefination> list = qd.getAllQuesionDefination();
+		List<QuestionerDefination> list = (List<QuestionerDefination>) qd.getAllQuesionDefination();
 		list.forEach(l-> System.out.println(
 				" teacher id = "+l.getTeachers().getTeacherId().toString()
 				+", exam id = "+l.getExam().getExamId()

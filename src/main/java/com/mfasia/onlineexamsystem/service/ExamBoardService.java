@@ -2,6 +2,7 @@ package com.mfasia.onlineexamsystem.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -34,5 +35,15 @@ public class ExamBoardService {
 	@Transactional
 	public void saveExamdeclaration (ExamBoard board) {
 		examBoardRepo.save(board);
+	}
+	
+	@Transactional
+	public Optional<ExamBoard> findByExamId (Long examid) {
+		return Optional.of(examBoardRepo.findOne(examid));
+	}
+	
+	@Transactional
+	public void deleteByExamId (Long examId) {
+		examBoardRepo.delete(examId);
 	}
 }

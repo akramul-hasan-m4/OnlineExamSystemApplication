@@ -102,6 +102,6 @@ INSERT INTO questions_bank (qus_bank_id, teacher_id, book_id, course_id, ch_id, 
 SELECT 20, 1, null, 1, null, 1, '2018-02-20', 'Exception generated in try block is caught in ........... block.', 'catch', 'throw', 'throws', 'finally', 1 where NOT EXISTS (SELECT * FROM questions_bank WHERE qus_bank_id = 20);
 
 --initial data for exam board
-INSERT INTO  exam_board(course_id, exam_date, total_question, exam_duration, exam_status, total_mark, pass_mark) SELECT 1, '2018-10-05', 10, '02:00:00', 'Active', 50, 30 where NOT EXISTS (SELECT * FROM exam_board WHERE exam_id = 1);
+
 
 

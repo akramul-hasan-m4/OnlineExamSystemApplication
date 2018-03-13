@@ -4,7 +4,9 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,18 +23,24 @@ import com.mfasia.onlineexamsystem.service.QuestionerDefinationService;
 @RestController
 @RequestMapping("/questionerDefination")
 public class QuesinerDefinationController {
-
-	@Autowired
-	private QuestionerDefinationService quseDefinationService;
 	
-	@GetMapping
-	public List<QuestionerDefination> getAllQuesionDefination () {
-		return quseDefinationService.getAllQuestionerDefination();
-	}
+	@Autowired private QuestionerDefinationService quseDefinationService;
+	@Autowired private MessageSource msgSource ;
 	
 	@GetMapping("/{examId}")
 	public List<QuestionerDefination> findByExamId (@PathVariable("examId") Long examId) {
 		return quseDefinationService.findByexamExamId(examId);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<QuestionerDefination>> getAllQuesionDefination () {
+		List<QuestionerDefination> list = quseDefinationService.getAllQuestionerDefination();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.getAllErrorMsg", null, null));
+		if (list.isEmpty()) {
+			return new ResponseEntity<>(headers,HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
 	
 	@PostMapping()
@@ -53,7 +61,7 @@ public class QuesinerDefinationController {
 				.buildAndExpand(quesDefination.getDefinationId()).toUri();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(location);
-		headers.add(Messages.SUCCESS_MSG, "Question Definition"+Messages.SAVE_SUCCESS_MSG+"Questions Defination");
+		headers.add(Messages.SUCCESS_MSG,  msgSource.getMessage("commons.saveSuccessMsg", null, null));
 		return ResponseEntity.created(location).headers(headers).build();
 	}
 	
