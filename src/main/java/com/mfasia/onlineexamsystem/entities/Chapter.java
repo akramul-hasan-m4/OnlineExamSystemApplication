@@ -3,6 +3,7 @@ package com.mfasia.onlineexamsystem.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,7 +38,7 @@ public class Chapter implements Serializable {
 	private String chapterName;
 	
 	@JsonIgnore
-	@OneToMany( mappedBy="chapters")
+	@OneToMany( mappedBy="chapters", cascade = CascadeType.ALL)
 	private List<QuestionerDefination> questionerDefinations;
 	
 	

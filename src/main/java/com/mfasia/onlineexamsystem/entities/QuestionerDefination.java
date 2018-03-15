@@ -2,6 +2,7 @@ package com.mfasia.onlineexamsystem.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import lombok.Data;
 
@@ -28,39 +30,33 @@ public class QuestionerDefination implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long definationId;
 	
-	@JsonUnwrapped
 	@JsonIgnoreProperties({"courses","examDate","totalQuestion","examDuration","totalMark","passMark","handler","hibernateLazyInitializer"})
-	@ManyToOne()
+	@ManyToOne( cascade = CascadeType.DETACH)
 	@JoinColumn(name = "exam_id")
 	private ExamBoard exam;
 
-	@JsonUnwrapped
 	@JsonIgnoreProperties({"users","handler","hibernateLazyInitializer"})
-	@ManyToOne()
+	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "teacher_id")
 	private Teacher teachers;
 	
-	@JsonUnwrapped
 	@JsonIgnoreProperties({"description" ,"references","exams","books","questionerDefinations","handler", "hibernateLazyInitializer"})
-	@ManyToOne()
+	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "course_id")
 	private Course courses;
 
-	@JsonUnwrapped
 	@JsonIgnoreProperties({"courses","authorName","edition"})
-	@ManyToOne()
+	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "book_id")
 	private Book books;
 	
-	@JsonUnwrapped
 	@JsonIgnoreProperties({"courses","handler","hibernateLazyInitializer"})
-	@ManyToOne()
-	@JoinColumn(name = "ref_id")
+	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.PERSIST})
+	@JoinColumn(columnDefinition="Long",name = "ref_id")
 	private Reference ref;
 	
-	@JsonUnwrapped
 	@JsonIgnoreProperties({"books","handler","hibernateLazyInitializer"})
-	@ManyToOne( )
+	@ManyToOne(cascade =  CascadeType.DETACH)
 	@JoinColumn(name = "ch_id")
 	private Chapter chapters;
 	

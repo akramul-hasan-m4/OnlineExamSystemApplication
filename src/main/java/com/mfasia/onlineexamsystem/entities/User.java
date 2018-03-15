@@ -67,7 +67,7 @@ public class User implements Serializable {
 	@Column
 	private String securityAns;
 
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users" , cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Teacher> teacherses ;
 	
@@ -78,7 +78,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private List<UserRole> usersRoles;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
 	private List<Student> students;
 

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +35,7 @@ public class ExamBoard implements Serializable {
 
 	@JsonIgnoreProperties({"description"})
 	@JsonUnwrapped
-	@ManyToOne()
+	@ManyToOne( cascade = CascadeType.ALL)
 	@JoinColumn(name = "course_id")
 	private Course courses;
 
@@ -58,6 +59,6 @@ public class ExamBoard implements Serializable {
 	private String examStatus;
 
 	@JsonIgnore
-	@OneToMany( mappedBy = "exam")
+	@OneToMany( mappedBy = "exam", cascade = CascadeType.ALL)
 	private List<QuestionerDefination> questionerDefinations;
 }

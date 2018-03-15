@@ -39,10 +39,8 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 				data: typeObj,
 				headers: {'Content-Type': 'application/json'}
 			}).then(function(data, status, headers, config) {
-						$scope.loadTable();
-						console.log(typeof headers, 'successmsg');
-						console.log(status);
-					});
+				$scope.loadTable();
+			});
 	}
 	
 	$http({

@@ -28,10 +28,12 @@ app.controller('myCtrl', function($scope, $http) {
 	
 	$scope.saveBook = function() {
 		var dataObj = {
-				courseId : $scope.courseId,
-				bookName : $scope.bookName,
-				authorName : $scope.authorName,
-				edition : $scope.edition
+				courses 	: {
+					courseId : $scope.courseId
+					},
+				bookName 	: $scope.bookName,
+				authorName 	: $scope.authorName,
+				edition 	: $scope.edition
 		}
 		dataObj = JSON.stringify(dataObj);
 		console.log(dataObj);
@@ -69,11 +71,13 @@ app.controller('myCtrl', function($scope, $http) {
 	$scope.updateBookInfo = function() {
 
 		var dataObj = {
-				bookId : $scope.bookId,
-				courseId : $scope.courseId,
-				bookName : $scope.bookName,
-				authorName : $scope.authorName,
-				edition : $scope.edition
+				bookId 		: $scope.bookId,
+				courses 	: {
+					courseId : $scope.courseId
+					},
+				bookName 	: $scope.bookName,
+				authorName 	: $scope.authorName,
+				edition 	: $scope.edition
 		}
 		dataObj = JSON.stringify(dataObj);
 		console.log(dataObj);

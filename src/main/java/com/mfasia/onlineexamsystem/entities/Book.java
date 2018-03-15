@@ -3,6 +3,7 @@ package com.mfasia.onlineexamsystem.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,7 +39,6 @@ public class Book implements Serializable {
 	private Course courses;
 	
 	@Column
-	@NotNull
 	@Size(min = 2, max = 20 , message = "Books Name should be {min} charecter to {max} charecter")
 	private String bookName;
 	
@@ -54,6 +54,6 @@ public class Book implements Serializable {
 	private List<Chapter> chapters;
 	
 	@JsonIgnore
-	@OneToMany( mappedBy="books")
+	@OneToMany( mappedBy="books", cascade = CascadeType.ALL)
 	private List<QuestionerDefination> questionerDefinations;
 }

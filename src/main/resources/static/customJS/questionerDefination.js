@@ -85,15 +85,28 @@ app.controller('myCtrl', function($scope, $http) {
 	
 	$scope.saveDefinition = function (ans) {
 		var examDefinitionData = {
-				examId : $scope.examId,
-				courseId : $scope.courseId,
-				bookId : $scope.bookId,
-				refId: $scope.refId,
-				chId : $scope.chapterId,
 				qusLimitation : $scope.qusLimitation,
-				teacherId : 1
+				exam :{
+					examId : $scope.examId
+					},
+				teachers :{
+					teacherId : 1
+					},
+				courses :{
+					courseId : $scope.courseId
+					},
+				books :{
+					bookId : $scope.bookId
+					},
+				ref :{
+					refId: $scope.refId
+					},
+				chapters : {
+					chId : $scope.chapterId
+					}
 		}
 		examDefinitionData = JSON.stringify(examDefinitionData);
+		
 		console.log(examDefinitionData);
 		$http({
 			method: 'POST',
@@ -102,6 +115,6 @@ app.controller('myCtrl', function($scope, $http) {
 			headers: {'Content-Type': 'application/json'}
 		}).then(function (data, status, headers, config) {
 					$scope.loadDefination();
-				});
+		});
 	}
 });

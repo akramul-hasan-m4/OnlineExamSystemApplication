@@ -36,4 +36,9 @@ public class QuestionerDefinationService {
 	public void saveQuestionDefination (QuestionerDefination quesDefination) {
 		qusDefinationRepo.save(quesDefination);
 	}
+	
+	@Transactional
+	public void saveQuesDefination (Long examId, Long teacherId, Long courseId, Long bookId, Long chId, Integer refId, Long qusLimitation) {
+		qusDefinationRepo.saveQuesDefination(examId, teacherId, courseId, bookId, chId, refId, qusLimitation);
+	}
 }

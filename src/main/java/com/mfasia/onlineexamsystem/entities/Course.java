@@ -49,11 +49,11 @@ public class Course implements Serializable {
 	private List<Book> books;
 	
 	@JsonIgnore
-	@OneToMany( mappedBy="courses")
+	@OneToMany( mappedBy="courses", cascade = CascadeType.ALL)
 	private List<ExamBoard> exams ;
 	
 	@JsonIgnore
-	@OneToMany( mappedBy="courses")
+	@OneToMany( mappedBy="courses", cascade = CascadeType.ALL)
 	private List<QuestionerDefination> questionerDefinations;
 	
 	@JsonIgnore

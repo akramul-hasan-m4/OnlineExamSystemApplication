@@ -28,7 +28,6 @@ public class Teacher implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long teacherId;
 
-	@JsonIgnore
 	@ManyToOne()
 	@JoinColumn(name = "user_id")
 	private User users;
