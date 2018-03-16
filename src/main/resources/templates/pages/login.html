@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="utf-8"></meta> 
@@ -7,23 +7,21 @@
 	<meta name="description" content=""></meta>
 	<meta name="author" content=""></meta>
 
-	<title>Exam Board</title>
+	<title>Login</title>
 	<span th:include="/includes/commons :: #commons"></span>
-<script type="text/javascript" src="/customJS/login.js" th:src="@{/customJS/login.js}"/> 
-<link rel="stylesheet" type="text/css" href="/css/loginpage.css" th:href="@{/css/loginpage.css}" />
-<style type="text/css">
-	#login {
-		background-color: rgba(231, 232, 232, 0.73);
-		border: 3px none;
-		width: 100%;
-		box-shadow: #333 9px 9px 30px 3px inset;
-		margin-top: 0px;
-		margin-bottom: 0px;
-		padding: 20px 0;
-}
-</style>
+	<style type="text/css">
+		#login {
+			background-color: rgba(231, 232, 232, 0.73);
+			border: 3px none;
+			width: 60%;
+			box-shadow: #333 9px 9px 30px 3px inset;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			padding: 20px 0;
+		}
+	</style>
 </head>
-<body ng-controller="myCtrl">
+<body >
 	<nav class="navbar navbar-default navbar-inverse" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -39,10 +37,10 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">About</a></li>
-					<li><a href="#">FAQ</a></li>
-					<li><a href="#">Contact</a></li>
+					<li class="active"><a href="#" th:text="#{page.nav.Home}"></a></li>
+					<li><a href="#" th:text="#{page.nav.About}"></a></li>
+					<li><a href="#" th:text="#{page.nav.FAQ}"></a></li>
+					<li><a href="#" th:text="#{page.nav.Contact}"></a></li>
 				</ul>
 			</div>
 		</div>
@@ -54,10 +52,10 @@
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<div class="panel-title" style="color: green;">Sign In</div>
+					<div class="panel-title" style="color: green;" th:text="#{login.message.SignIn}"></div>
 					<div
 						style="float: right; font-size: 80%; position: relative; top: -10px">
-						<a href="#">Forgot password?</a>
+						<a href="#" th:text="#{login.message.forgetPassword}"></a>
 					</div>
 				</div>
 
@@ -68,35 +66,33 @@
 
 					<form id="loginform" class="form-horizontal" role="form" th:action="@{/login}" method="post">
 
+						<div th:if="${param.error}" class="alert alert-danger" th:text="#{login.message.failed}"> </div>
+						<div th:if="${param.logout}" class="alert alert-success" th:text="#{logout.message.success}"> </div>
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon">
 								<i class="glyphicon glyphicon-user"></i>
 							</span> 
-							<input id="login-email" type="text" class="form-control" name="email" ng-model="email" placeholder="Enter your email" />
+							<input id="username" type="text" class="form-control" name="username" placeholder="Enter your email" />
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon">
 								<i class="glyphicon glyphicon-lock"></i>
 							</span> 
-							<input id="login-password" type="password" class="form-control" name="password" ng-model="password" placeholder="Enter your password" />
+							<input id="login-password" type="password" class="form-control" name="password" placeholder="Enter your password" />
 						</div>
 
 						<div class="input-group">
 							<div class="checkbox">
-								<label> <input id="login-remember" type="checkbox"
-									name="remember" value="1" /> Remember me
+								<label>
+								 <input id="login-remember" type="checkbox" name="remember" value="1" th:text="#{login.message.RememberMe}" /> 
 								</label>
 							</div>
 						</div>
 
 						<div style="margin-top: 10px" class="form-group">
 							<div class="col-sm-12 controls">
-							<input type="submit"></input>
-								<a id="btn-login" href="#" class="btn btn-success" >Login </a> 
-								<a id="btn-fblogin" href="#" class="btn btn-primary">
-									<i class="glyphicon glyphicon-envelope"></i> Login with Gmail
-								</a>
+								<input type="submit" class="btn btn-primary" value="th:text='#{login.message.loginBtn}'"></input>
 							</div>
 						</div>
 

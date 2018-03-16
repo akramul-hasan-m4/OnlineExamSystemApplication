@@ -18,8 +18,8 @@ public class CustomUserDetailsService implements UserDetailsService{
 	@Autowired private UserRepository usersRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String firstName) {
-		Optional<User> usersOptional = usersRepository.findByFirstName(firstName);
+	public UserDetails loadUserByUsername(String email) {
+		Optional<User> usersOptional = usersRepository.findByEmail(email);
 			return usersOptional
 					.map(CustomUserDetails::new)
 					.orElseThrow(()->new UsernameNotFoundException("Username not found!"));
