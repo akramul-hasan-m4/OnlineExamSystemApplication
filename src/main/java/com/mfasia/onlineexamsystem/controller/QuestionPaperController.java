@@ -76,7 +76,7 @@ public class QuestionPaperController {
 		return new ResponseEntity<>(qusListForExam, HttpStatus.OK);
 	}
 
-	public void insertIntoQusPaper(Long examId, Long studentId) {
+	private void insertIntoQusPaper(Long examId, Long studentId) {
 		if (!quesBankList.isEmpty()) {
 			quesBankList.forEach(l -> {
 				QuestionPaper qusPaper = new QuestionPaper();

@@ -3,16 +3,16 @@ CREATE TABLE IF NOT EXISTS users (
 			user_id serial PRIMARY KEY,
 			first_name varchar(45) NOT NULL,
 			last_name varchar(45),
-			email varchar(45) NOT NULL UNIQUE,
+			email varchar(60) NOT NULL UNIQUE,
 			phone varchar(45) NOT NULL UNIQUE,
-			password varchar(45) NOT NULL,
-			photo varchar(45) ,
+			password varchar(255) NOT NULL,
+			photo varchar(255) ,
 			gender varchar(45),
 			status varchar(45) ,
-			current_address varchar(45), 
-			permanent_address varchar(45),
-			security_question varchar(45) NOT NULL, 
-			security_ans varchar(45) NOT NULL 
+			current_address varchar(255), 
+			permanent_address varchar(255),
+			security_question varchar(255) NOT NULL, 
+			security_ans varchar(255) NOT NULL 
 			);
 			
 CREATE TABLE IF NOT EXISTS roles (
@@ -123,8 +123,8 @@ CREATE TABLE IF NOT EXISTS exam_board (
 CREATE TABLE IF NOT EXISTS questioner_definations ( 
 			defination_id serial,
 			exam_id INTEGER NOT NULL,
+            course_id INTEGER,
 			teacher_id INTEGER,
-			course_id INTEGER,
 			book_id INTEGER,
 			ch_id INTEGER,
 			ref_id INTEGER ,

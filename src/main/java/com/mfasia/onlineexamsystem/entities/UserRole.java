@@ -26,11 +26,11 @@ public class UserRole implements Serializable {
 	private Long userRoleId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id", insertable = false, updatable = false)
+	@JoinColumn(name = "user_id")
 	private User users;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "role_id", insertable = false, updatable = false)
+	@JoinColumn(name = "role_id")
 	private Role roles;
 
 }

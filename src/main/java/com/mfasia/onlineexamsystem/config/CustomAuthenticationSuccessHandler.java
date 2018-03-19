@@ -63,9 +63,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			}
 		}
 		if (isTeacher) {
-			return "/pages/questionBank";
+			return "/pages/teachersPanel";
 		} else if (isAdmin) {
-			return "/pages/courseDetails";
+			return "/pages/adminPanel";
 		} else {
 			throw new IllegalStateException();
 		}

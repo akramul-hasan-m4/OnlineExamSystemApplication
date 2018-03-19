@@ -2,6 +2,7 @@ package com.mfasia.onlineexamsystem.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -22,5 +23,25 @@ public class ReferencesService {
 		List<Reference> list= new ArrayList<>();
 		referenceRepo.findAllRefByCourseId(courseId).forEach(list::add);
 		return list;
+	}
+	
+	@Transactional
+	public List<Reference> getAllReference (){
+		return referenceRepo.findAll();
+	}
+	
+	@Transactional
+	public void saveRefrence (Reference reference) {
+		referenceRepo.save(reference);
+	}
+	
+	@Transactional
+	public Optional<Reference> findByRefId (Long refId){
+		return Optional.of(referenceRepo.findOne(refId));
+	}
+	
+	@Transactional
+	public void deleteReference (Long refId) {
+		referenceRepo.delete(refId);
 	}
 }

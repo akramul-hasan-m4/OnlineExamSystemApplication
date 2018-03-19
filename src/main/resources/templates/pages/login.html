@@ -92,14 +92,14 @@
 
 						<div style="margin-top: 10px" class="form-group">
 							<div class="col-sm-12 controls">
-								<input type="submit" class="btn btn-primary" value="th:text='#{login.message.loginBtn}'"></input>
+								<button type="submit" class="btn btn-primary" th:text="#{login.message.loginBtn}"></button>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-md-12 control">
 								<div style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-									Don't have an account! <a href="/pages/regestration"> Sign Up Here </a>
+									<p th:text="#{login.message.DontHaveAnAccount}"></p> <a href="/pages/regestration"> <p th:text="#{login.message.SignUpHere}"></p> </a>
 								</div>
 							</div>
 						</div>
