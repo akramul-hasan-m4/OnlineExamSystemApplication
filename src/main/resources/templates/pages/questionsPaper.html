@@ -17,10 +17,11 @@
 <body ng-controller="quesPaperController" ng-init="loadQustions()" style="padding: 10px;">
 	<div class="page-header">
 		<h3>Online Exam</h3>
-		<p th:text="#{question.paper.TotalQuestion.title}"> {{currentPage}}/{{questions.length}}</p>
+		<p th:text="#{question.paper.TotalQuestion.title}"> </p>{{currentPage}}/{{questions.length}}
 	</div>
 	 	<div class="row">
-		<div class="container">
+	 	<button ng-click = "startNow()" class="col-md-offset-5 btn btn-primary text-center" ng-show="startButton">Start Exam</button>
+		<div class="container" ng-show="startExam">
 			<div class="panel panel-default" ng-repeat="qus in filteredQues">
 				<div class="panel-heading">
 					<h3>{{qus.questionTitle}}</h3>
@@ -49,8 +50,8 @@
 				<div class="row">
 						<label class="checkbox-inline " style="left: 32px;" for="checkboxes-0" th:text="#{question.paper.Marked.label}">
 						<input type="checkbox" name="radio" id="radio4" /></label>
-    					<button id="button2id" name="button2id" class="btn btn-danger pull-right" style="top: 50px;" th:text="#{question.paper.FinishExam.btn}"></button>
-						<button id="button1id" name="button1id" class="btn btn-success pull-right" style="top: 50px;" th:text="#{question.paper.ReviewMarked.btn}"></button>
+    					<button id="button2id" name="button2id" class="btn btn-danger pull-right" style="top: 50px;" th:text="#{question.paper.FinishExam.btn}"></button>&nbsp;
+						<button id="button1id" name="button1id" class="btn btn-primary pull-right" style="top: 50px;" th:text="#{question.paper.ReviewMarked.btn}"></button>
 				</div>
 				</div>
 			</div>

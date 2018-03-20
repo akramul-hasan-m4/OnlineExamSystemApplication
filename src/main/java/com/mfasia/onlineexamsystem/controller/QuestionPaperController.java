@@ -39,8 +39,7 @@ public class QuestionPaperController {
 	List<QuestionsBank> qusListForExam = new ArrayList<>();
 
 	@GetMapping("/{examId}/{studentId}")
-	public ResponseEntity<List<QuestionsBank>> createQuestionPaper(@PathVariable("examId") Long examId,
-			@PathVariable("studentId") Long studentId) {
+	public ResponseEntity<List<QuestionsBank>> createQuestionPaper(@PathVariable Long examId, @PathVariable Long studentId) {
 		List<QuestionerDefination> quesDefinationList = qusDefinationService.findByexamExamId(examId);
 		Long studentIdfromQpaper = questionPaperService.findStudentIdFromQusPaper(studentId);
 		if (!quesBankList.isEmpty() && studentIdfromQpaper == null) {

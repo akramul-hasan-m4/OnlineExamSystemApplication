@@ -39,6 +39,17 @@ public class UserController {
 	@Autowired private MessageSource msgSource ;
 	@Autowired private MailService mailService ;
 	
+	@GetMapping
+	public ResponseEntity<List<User>> getAlluser () {
+		List<User> list = userService.getAllUser();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.getAllErrorMsg", null, null));
+		if (list.isEmpty()) {
+			return new ResponseEntity<>(headers,HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(list,HttpStatus.OK);
+	}
+	
 	@PostMapping()
 	public ResponseEntity<Object> saveUserRegistrationInfo(HttpServletRequest request, @RequestParam("file") MultipartFile photo) throws IOException {
 		Optional<Optional<User>> email = userService.findByEmail(request.getParameter("email"));
@@ -54,17 +65,12 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	
-	@GetMapping
-	public List<User> getAllUser() {
-		return userService.getAllUser();
-	}
-
 	private String uploadPath () throws UnsupportedEncodingException {
-		String mainPath ="\\src\\main\\resources\\static\\uploads\\";
+		String mainPath = File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"uploads"+File.separator;
 		String path = this.getClass().getClassLoader().getResource("").getPath();
 		String fullPath = URLDecoder.decode(path, "UTF-8");
-		String pathArr[] = fullPath.split("/target/classes/");
+		String pathArr[] = fullPath.split(File.separator+"target"+File.separator+"classes"+File.separator);
+		LOGGER.info(pathArr[0]);
 		return new File(pathArr[0]).getPath()+mainPath;
 	}
 }

@@ -10,8 +10,8 @@ INSERT INTO roles(role_id,role_name) SELECT 1 ,'Admin' where NOT EXISTS (SELECT 
 INSERT INTO roles(role_id,role_name) SELECT 2,'Teacher' where NOT EXISTS (SELECT * FROM roles WHERE role_id = 2);
 
 -- Initial Data for users_role
-INSERT INTO users_roles(user_role_id, role_id, user_id) SELECT 1, 1, 1 where NOT EXISTS (SELECT * FROM users_roles WHERE user_role_id = 1);
-INSERT INTO users_roles(user_role_id, role_id, user_id) SELECT 2, 2, 2 where NOT EXISTS (SELECT * FROM users_roles WHERE user_role_id = 2);
+INSERT INTO users_roles(user_roleid, role_id, user_id) SELECT 1, 1, 1 where NOT EXISTS (SELECT * FROM users_roles WHERE user_roleid = 1);
+INSERT INTO users_roles(user_roleid, role_id, user_id) SELECT 2, 2, 2 where NOT EXISTS (SELECT * FROM users_roles WHERE user_roleid = 2);
 
 -- Initial Data for teachers
 INSERT INTO teachers(teacher_id, user_id) SELECT 1, 1 where NOT EXISTS (SELECT * FROM teachers WHERE teacher_id = 1);

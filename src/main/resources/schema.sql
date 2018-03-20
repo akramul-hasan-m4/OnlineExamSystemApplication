@@ -21,10 +21,10 @@ CREATE TABLE IF NOT EXISTS roles (
 			);
 
 CREATE TABLE IF NOT EXISTS users_roles (
-			user_role_id serial,
+			user_roleid serial,
 			role_id INTEGER,
 			user_id INTEGER,
-			PRIMARY KEY (user_role_id),
+			PRIMARY KEY (user_roleid),
 			CONSTRAINT roleidfk FOREIGN KEY (role_id) REFERENCES roles (role_id),
 			CONSTRAINT useridfk FOREIGN KEY (user_id) REFERENCES users (user_id)
 			);

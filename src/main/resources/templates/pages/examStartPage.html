@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8"></meta> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<meta name="description" content=""></meta>
+	<meta name="author" content=""></meta>
+
+	<title>Book Details</title>
+	<span th:include="/includes/commons :: #commons"></span>
+	<script type="text/javascript" src="/customJS/book.js" th:src="@{/customJS/book.js}"/>
+	
+</head>
+
+<body ng-controller="myCtrl">
+	<div id="wrapper">
+		<!-- Navigation -->
+		<span th:include="/includes/studentNav :: #studentNav"></span>
+		<!-- Message -->
+		<div ng-show="SuccessMSG" class="alert alert-success" id="success-alert">
+			<button type="button" class="close" data-dismiss="alert">x</button>
+			<strong>Success! </strong> {{SuccessMSG}}
+		</div>
+		<div ng-show="ErrorMSG" class="alert alert-danger" id="error-alert">
+			<button type="button" class="close" data-dismiss="alert">x</button>
+			<strong>Error! </strong> {{ErrorMSG}}
+		</div>
+		
+	</div>
+	<div id="page-wrapper">
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header" style="color : green;"><label th:text="#{exam.examInfoheader.title}"></label></h1>
+			</div>
+		</div>
+		<div class="h-100 row align-items-center">
+			<a href="/pages/questionsPaper" class="col-md-offset-5 btn btn-primary text-center" style="vertical-align: middle;">Start Exam</a>
+		</div>
+	</div>
+</body>
+</html>

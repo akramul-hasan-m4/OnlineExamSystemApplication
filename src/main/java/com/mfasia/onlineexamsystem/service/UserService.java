@@ -26,13 +26,13 @@ public class UserService {
 	@Autowired BCryptPasswordEncoder passwordEncoder;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
-	private static final String SAPARATOR = "_" ;
+	private static final String SEPARATOR = "_" ;
 	
 	@Transactional
 	public void saveUserRegistrationInfo (HttpServletRequest request, MultipartFile photo, String uploadPath) throws IOException {
 		
 		String firstName = request.getParameter("firstName");
-		String photoName = firstName + SAPARATOR + photo.getOriginalFilename();
+		String photoName = firstName + SEPARATOR + photo.getOriginalFilename();
 		String encodedPassword = passwordEncoder.encode(request.getParameter("password"));
 		User user = new User();
 		

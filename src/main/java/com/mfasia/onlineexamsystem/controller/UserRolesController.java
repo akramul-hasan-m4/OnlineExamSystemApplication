@@ -21,20 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mfasia.onlineexamsystem.commons.Messages;
-import com.mfasia.onlineexamsystem.entities.Course;
-import com.mfasia.onlineexamsystem.service.CourseService;
+import com.mfasia.onlineexamsystem.entities.UserRole;
+import com.mfasia.onlineexamsystem.service.UserRolesService;
 
 @RestController
-@RequestMapping("/courses")
+@RequestMapping("/users_roles")
+public class UserRolesController {
 
-public class CourseController {
-
-	@Autowired private CourseService courseService;
+	@Autowired private UserRolesService userRoleService ;
 	@Autowired private MessageSource msgSource ;
 	
 	@GetMapping
-	public ResponseEntity<List<Course>> getAllCourses () {
-		List<Course> list = courseService.getAllCourse();
+	public ResponseEntity<List<UserRole>> getAlluserRoles () {
+		List<UserRole> list = userRoleService.getAllUserRole();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.getAllErrorMsg", null, null));
 		if (list.isEmpty()) {
@@ -44,40 +43,40 @@ public class CourseController {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Course> saveCourse(@RequestBody Course course, BindingResult result) {
-		courseService.savCourse(course);
+	public ResponseEntity<UserRole> saveUserRole(@RequestBody UserRole userRole, BindingResult result) {
+		userRoleService.saveUserRole(userRole);
 		HttpHeaders headers = new HttpHeaders();
 		if (result.hasErrors()) {
 			headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.saveErrorMsg", null, null));
 			return ResponseEntity.noContent().headers(headers).build();
 		}
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(course.getCourseId()).toUri();
+				.buildAndExpand(userRole.getUserRoleid()).toUri();
 		headers.setLocation(location);
 		headers.add(Messages.SUCCESS_MSG, msgSource.getMessage("commons.saveSuccessMsg", null, null));
 		return ResponseEntity.created(location).headers(headers).build();
-	} 
+	}
 	
-	@PutMapping("/{courseId}")
-	public ResponseEntity<Course> updateCourse (@RequestBody Course course, @PathVariable Long courseId) {
-		Optional<Course> findCourse = courseService.findBycourseId(courseId);
+	@PutMapping("/{userRoleId}")
+	public ResponseEntity<UserRole> updateUserRole (@RequestBody UserRole userRole, @PathVariable Long userRoleId) {
+		Optional<UserRole> findUserRole = userRoleService.findByUserRoleid(userRoleId);
 		HttpHeaders headers = new HttpHeaders();
-		if (!findCourse.isPresent()) {
-			headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.findByidErrorMsg", null, null)+courseId);
+		if (!findUserRole.isPresent()) {
+			headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.findByidErrorMsg", null, null)+userRoleId);
 			return ResponseEntity.notFound().headers(headers).build();
 		}
 		headers.add(Messages.SUCCESS_MSG, msgSource.getMessage("commons.updatemsg", null, null));
-		courseService.savCourse(course);
+		userRoleService.saveUserRole(userRole);
 		return ResponseEntity.noContent().headers(headers).build();
 	}
 	
-	@DeleteMapping("/{courseId}")
-	public ResponseEntity<Void> deleteCourse (@PathVariable Long courseId) {
-		Optional<Course> findCourse = courseService.findBycourseId(courseId);
+	@DeleteMapping("/{userRoleId}")
+	public ResponseEntity<Void> deleteUserRole (@PathVariable Long userRoleId) {
+		Optional<UserRole> finduserRole = userRoleService.findByUserRoleid(userRoleId);
 		HttpHeaders headers = new HttpHeaders();
-		if(courseId != null && findCourse.isPresent()) {
+		if(finduserRole.isPresent()) {
 			headers.add(Messages.SUCCESS_MSG, msgSource.getMessage("commons.deleteSuccessMsg", null, null));
-			courseService.deleteCourse(courseId);
+			userRoleService.deleteUserRole(userRoleId);
 			return ResponseEntity.noContent().headers(headers).build();
 		}
 		headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.deleteFailedMsg ", null, null));

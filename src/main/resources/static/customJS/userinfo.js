@@ -30,6 +30,9 @@ app.service('multipartForm', ['$http', function($http){
 
 app.controller('myCtrl', function($scope, $http, multipartForm) {
 	
+	$scope.SuccessMSG = '';
+	$scope.ErrorMSG = '';
+	
 	$scope.securityQuestions = [
 					"What is Your Favourite Teacher name ?",
 					"what is your Primary School name ?",
@@ -41,57 +44,34 @@ app.controller('myCtrl', function($scope, $http, multipartForm) {
 	
 	$scope.userInfo = {};
 	$scope.saveUserRegitrationInfo = function(){
-		/*var dataObj = {
-				firstName 		 : $scope.firstName,
-				lastName 		 : $scope.lastName,
-				email 			 : $scope.email,
-				phone 			 : $scope.phone,
-				photo			 : $scope.photo,
-				password		 : $scope.password,
-				gender			 : $scope.gender,
-				currentAddress 	 : $scope.currentAddress,
-				permanentAddress : $scope.permanentAddress,
-				status			 : 'Active',
-				securityQuestion : $scope.securityQuestion,
-				securityAns		 : $scope.securityAns
-		}
-		dataObj = JSON.stringify(dataObj);*/
 		console.log($scope.userInfo);
 		var uploadUrl = '/user';
 		multipartForm.post(uploadUrl, $scope.userInfo);
 	}
 	
-	/*$scope.saveUserRegitrationInfo = function() {
-		var dataObj = {
-				firstName 		 : $scope.firstName,
-				lastName 		 : $scope.lastName,
-				email 			 : $scope.email,
-				phone 			 : $scope.phone,
-				photo			 : $scope.photo,
-				password		 : $scope.password,
-				gender			 : $scope.gender,
-				currentAddress 	 : $scope.currentAddress,
-				permanentAddress : $scope.permanentAddress,
-				status			 : 'Active',
-				securityQuestion : $scope.securityQuestion,
-				securityAns		 : $scope.securityAns
-		}
-		dataObj = JSON.stringify(dataObj);
-		console.log(dataObj);
+	$scope.loadTable = function() {
 		$http({
-			method : 'POST',
-			url : '/user',
-			data : dataObj,
-			headers : {
-				'Content-Type' : 'application/json'
-			}
-		}).then(function(response) {
-			//$scope.SuccessMSG = response.headers('SuccessMSG');
-			//$scope.messageAlart();
-			//$scope.loadTable();
+			method : "GET",
+			url : "/user"
+		}).then(function mySuccess(response) {
+			$scope.allUsers = response.data;
 		}, function myError(response) {
-			//$scope.ErrorMSG = response.headers('ErrorMSG');
-			//$scope.messageAlart();
+			$scope.ErrorMSG = response.headers('ErrorMSG');
+			$scope.messageAlart();
 		});
-	}*/
+	};
+	
+	$scope.messageAlart = function() {
+		if ($scope.SuccessMSG != undefined) {
+			$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+				$("#success-alert").slideUp(500);
+			});
+		}
+		if ($scope.ErrorMSG != undefined) {
+			$("#error-alert").fadeTo(2000, 500).slideUp(500, function() {
+				$("#error-alert").slideUp(500);
+			});
+		}
+	}
+	
 });
