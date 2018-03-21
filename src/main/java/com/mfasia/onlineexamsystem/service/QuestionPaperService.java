@@ -31,7 +31,12 @@ public class QuestionPaperService {
 	}
 	
 	@Transactional
-	public void collectAns (Boolean markQuestion,Long collectedAns, Long studentId, Long qusBankId) {
-		 questionPaperRepo.collectAns(markQuestion, collectedAns, studentId, qusBankId);;
+	public void collectAns (Long collectedAns, Long studentId, Long qusBankId) {
+		 questionPaperRepo.collectAns( collectedAns, studentId, qusBankId);;
+	}
+	
+	@Transactional
+	public List<QuestionPaper> getAllQustions (){
+		return questionPaperRepo.findAll();
 	}
 }

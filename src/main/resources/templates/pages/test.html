@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" ng-app="quesPaper">
+<head>
+	<meta charset="ISO-8859-1"></meta>
+	<span th:include="/includes/commons :: #commons"></span>
+	<script src="/customJS/test.js"></script>
+	<title>Questions Paper </title>
+
+</head>
+<body ng-controller="quesPaperController as currentPage" style="padding: 10px;">
+	<div class="page-header">
+		<h3 class="text-center" style="color: green;">Total Questions = {{currentQus}}/{{totalQus}}</h3>
+	</div>
+	<div class="row">
+		<div class="container">
+			<div class="panel panel-default" ng-repeat="qus in filteredQues track by $index"
+				ng-show="(($index &lt; (currentPage.page * currentPage.numRecords)) &amp;&amp; ($index &gt;= ((currentPage.page - 1) * currentPage.numRecords)))">
+				<div class="panel-heading">
+					<h3>{{$index+1}}&nbsp; . {{qus.questionTitle}}</h3>
+				</div>
+				<div class="panel-body">
+					<div class="funkyradio">
+						<div class="funkyradio-success">
+							<input type="radio" name="radio" id="radio1" ng-model="ans" ng-value="1"/> 
+							<label id="1" for="radio1">
+								<strong>{{qus.option1}}</strong>
+							</label>
+						</div>
+						<div class="funkyradio-success">
+							<input type="radio" name="radio" id="radio2" ng-model="ans" ng-value="2" /> 
+							<label for="radio2">
+								<strong>{{qus.option2}}</strong>
+							</label>
+						</div>
+						<div class="funkyradio-success">
+							<input type="radio" name="radio" id="radio3" ng-model="ans" ng-value="3"/> 
+							<label for="radio3">
+								<strong>{{qus.option3}}</strong>
+							</label>
+						</div>
+						<div class="funkyradio-success ">
+							<input type="radio" name="radio" id="radio4" ng-model="ans" ng-value="4"/> 
+							<label for="radio4">
+								<strong>{{qus.option4}}</strong>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="row">
+						<ion-footer-bar class="bar-assertive">
+							<button class="btn btn-default" ng-disabled="backButtonDisable" ng-click="currentPage.back($index);"> Previous </button>
+							<button class="btn btn-default" ng-disabled="nextButtonDisable" ng-click="currentPage.next($index, ans, qus);"> Next </button>
+							<button class="btn btn-danger pull-right" ng-click = "finish(ans, qus.qusBankId)" > Finish </button>
+						</ion-footer-bar>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

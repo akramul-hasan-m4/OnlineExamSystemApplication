@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -100,9 +101,15 @@ public class QuestionPaperController {
 
 	}
 	
-	@PutMapping("/{markQuestion}/{collectedAns}/{studentId}/{qusBankId}")
-	private void collectAns (@PathVariable("markQuestion") Boolean markQuestion, @PathVariable("collectedAns") Long collectedAns, @PathVariable("studentId") Long studentId, @PathVariable("qusBankId") Long qusBankId) {
-		questionPaperService.collectAns(markQuestion, collectedAns, studentId, qusBankId);
+	@PutMapping
+	private void collectAns (@RequestBody QuestionPaper paper) {
+		paper.setStudentId(1l);
+		questionPaperService.collectAns( paper.getCollectedAns(), paper.getStudentId(), paper.getQuestionBank().getQusBankId());
+	}
+	
+	@GetMapping
+	public List<QuestionPaper> getall (){
+		return questionPaperService.getAllQustions();
 	}
 
 }
