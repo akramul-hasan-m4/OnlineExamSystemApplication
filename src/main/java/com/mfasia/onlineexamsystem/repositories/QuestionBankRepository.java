@@ -15,4 +15,7 @@ public interface QuestionBankRepository extends CrudRepository<QuestionsBank, Lo
 			+ "b.courses.courseId =:courseId AND ((b.bookId IS :bookId AND b.chId IS :chId )"
 			+ " OR b.refId IS :refId) ORDER BY RANDOM()")
 	public List<QuestionsBank> getInfoForQuestionPaper (@Param ("courseId") Long courseId, @Param ("bookId") String bookId, @Param ("chId") String chId, @Param ("refId") String refId, Pageable pageable);
+
+	@Query(value = "SELECT al FROM QuestionsBank al WHERE qusBankId =:qusBankId AND ans =:ans")
+	public QuestionsBank countResult (@Param ("qusBankId") Long qusBankId, @Param ("ans") Integer ans);
 }

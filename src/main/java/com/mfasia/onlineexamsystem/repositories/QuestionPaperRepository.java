@@ -21,6 +21,8 @@ public interface QuestionPaperRepository extends JpaRepository<QuestionPaper, Lo
 	@Modifying
 	@Query(value = "UPDATE question_paper SET collected_ans = :collectedAns "
 			+ "WHERE student_id =:studentId AND qus_bank_id =:qusBankId", nativeQuery = true)
-	public void collectAns (@Param("collectedAns") Long collectedAns, 
-			@Param("studentId") Long studentId, @Param("qusBankId") Long qusBankId);
+	public void collectAns (@Param("collectedAns") Integer collectedAns, 
+							@Param("studentId") Integer studentId, 
+							@Param("qusBankId") Integer qusBankId);
+	
 }

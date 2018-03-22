@@ -31,8 +31,8 @@ public class QuestionPaperService {
 	}
 	
 	@Transactional
-	public void collectAns (Long collectedAns, Long studentId, Long qusBankId) {
-		 questionPaperRepo.collectAns( collectedAns, studentId, qusBankId);;
+	public void collectAns (Integer collectedAns, Integer studentId, Integer qusBankId) {
+		 questionPaperRepo.collectAns( collectedAns, studentId, qusBankId);
 	}
 	
 	@Transactional

@@ -51,4 +51,9 @@ public class QuestionBankService {
 	public void deleteQusFromBank (Long bankId) {
 		quesBankRepo.delete(bankId);
 	}
+	
+	@Transactional
+	public Optional<QuestionsBank> countResult (Long qusBankId, Integer ans) {
+		return Optional.of(quesBankRepo.countResult(qusBankId, ans));
+	}
 }

@@ -1,6 +1,6 @@
 var todos = angular.module('quesPaper', []);
 
-todos.controller('quesPaperController', function($scope, $http, $filter) {
+todos.controller('quesPaperController', function($scope, $http) {
 
 	$scope.backButtonDisable = true;
 	$scope.nextButtonDisable = false;
@@ -13,34 +13,29 @@ todos.controller('quesPaperController', function($scope, $http, $filter) {
 	$scope.currentQus = 1;
 	var collectAns = [];
 
-		$http({
-			method : "GET",
-			url : "/questionPaper/1/1"
-		}).then(function mySuccess(response) {
-			$scope.filteredQues = response.data;
-			$scope.totalQus = response.data.length;
-			console.log(response.data);
-		}, function myError(response) {
-			$scope.errorStatus = response.statusText;
-		});
+	$http({
+		method : "GET",
+		url : "/questionPaper/1/1"
+	}).then(function mySuccess(response) {
+		$scope.filteredQues = response.data;
+		$scope.totalQus = response.data.length;
+		console.log(response.data);
+	}, function myError(response) {
+		$scope.errorStatus = response.statusText;
+	});
 
-	currentPage.next = function (index, ans, qus) {
-		if (ans != undefined){
-			collectAns.push({
-				questionBank : {quesBankId : qus.qusBankId},
-				collectedAns : ans
-			});
-		}
+	currentPage.next = function(index, ans, qus) {
+		
 		$scope.currentQus = index + 2;
 		var currentpageindex = index + 1;
 		$scope.backButtonDisable = false;
-		if (currentpageindex == $scope.filteredQues.length - 1){
+		if (currentpageindex == $scope.filteredQues.length - 1) {
 			$scope.nextButtonDisable = true;
 		}
 		currentPage.page = currentPage.page + 1;
 	};
 
-	currentPage.back = function (index) {
+	currentPage.back = function(index) {
 		if (index > 0) {
 			$scope.currentQus = index;
 			$scope.nextButtonDisable = false;
@@ -50,25 +45,47 @@ todos.controller('quesPaperController', function($scope, $http, $filter) {
 
 	};
 
-	$scope.finish = function(ans, qusBankId) {
-		collectAns = JSON.stringify(collectAns);
-		console.log('colletd = '+collectAns);
-		
-		$http({
-			method : 'PUT',
-			url : '/questionPaper',
-			data : collectAns,
-			headers : {
-				'Content-Type' : 'application/json'
+	$scope.clickedAns = function(ans, bankId) {
+
+		var data = {
+			questionBank : {
+				qusBankId : bankId
+			},
+			collectedAns : ans
+		}
+
+		if (collectAns.length > 0) {
+			var ansIsExist = collectAns.find(function(v) {
+				return v.questionBank.qusBankId == bankId;
+			});
+			if (ansIsExist) {
+				collectAns.find(function(v) {
+					return v.questionBank.qusBankId == bankId;
+				}).collectedAns = ans;
+			} else {
+				collectAns.push(data);
 			}
-		}).then(function(response) {
-			//$scope.SuccessMSG = response.headers('SuccessMSG');
-			//$scope.messageAlart();
-			//$scope.loadTable();
-		}, function myError(response) {
-			//$scope.ErrorMSG = response.headers('ErrorMSG');
-			//$scope.messageAlart();
-		});
+		} else {
+			collectAns.push(data);
+		}
+
+	}
+
+	$scope.finish = function(ans, qusBankId) {
+		//collectAns = JSON.stringify(collectAns);
+		//console.log('colletd = ' + collectAns);
+		
+		  $http({ method : 'PUT', url : '/questionPaper',
+		  data : JSON.stringify(collectAns),
+		  headers : { 'Content-Type' : 'application/json' }
+		  }).then(function(response) { 
+			  
+		  });
+		  //response.headers('SuccessMSG'); //$scope.messageAlart();
+		  //$scope.loadTable(); }, function myError(response) {
+		  //$scope.ErrorMSG = response.headers('ErrorMSG');
+		 //$scope.messageAlart(); });
+		 
 	}
 
 });

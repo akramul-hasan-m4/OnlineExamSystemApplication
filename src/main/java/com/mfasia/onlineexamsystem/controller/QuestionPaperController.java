@@ -1,7 +1,9 @@
 package com.mfasia.onlineexamsystem.controller;
 
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +30,7 @@ import com.mfasia.onlineexamsystem.service.QuestionerDefinationService;
 @RestController
 @RequestMapping("/questionPaper")
 public class QuestionPaperController {
-
+	int correctAns = 0 ;
 	private Logger logger = LoggerFactory.getLogger(QuestionPaperController.class);
 
 	@Autowired private QuestionPaperService questionPaperService;
@@ -102,9 +104,17 @@ public class QuestionPaperController {
 	}
 	
 	@PutMapping
-	private void collectAns (@RequestBody QuestionPaper paper) {
-		paper.setStudentId(1l);
-		questionPaperService.collectAns( paper.getCollectedAns(), paper.getStudentId(), paper.getQuestionBank().getQusBankId());
+	private void collectAns (@RequestBody List<QuestionPaper> paper) {
+		if (!paper.isEmpty()) {
+		paper.forEach(question -> questionPaperService.collectAns( question.getCollectedAns().intValue(), 1, question.getQuestionBank().getQusBankId().intValue()));
+		paper.forEach(bank ->{
+			Optional<QuestionsBank> result = quesBankservice.countResult(bank.getQuestionBank().getQusBankId(), bank.getCollectedAns().intValue());
+			if (result.isPresent()) {
+				correctAns ++;
+			} 
+		});
+		}
+		System.out.println("correct ans = "+correctAns);
 	}
 	
 	@GetMapping
@@ -112,4 +122,11 @@ public class QuestionPaperController {
 		return questionPaperService.getAllQustions();
 	}
 
+	
+	/*
+	 * 	public Result playQuiz(@PathVariable long quiz_id, @RequestBody List<Response> answersBundle) {
+		Quiz quiz = quizService.find(quiz_id);
+		return quizService.checkAnswers(quiz, answersBundle);
+		select * from questions_bank  where qus_bank_id = 3 and ans = 
+	 * */
 }
