@@ -4,6 +4,9 @@ todos.controller('quesPaperController', function($scope, $http) {
 
 	$scope.backButtonDisable = true;
 	$scope.nextButtonDisable = false;
+	$scope.showResult = false ;
+	$scope.showQus = true ;
+	
 	var currentPage = this;
 	currentPage.numRecords = 1;
 	currentPage.page = 1;
@@ -15,7 +18,7 @@ todos.controller('quesPaperController', function($scope, $http) {
 
 	$http({
 		method : "GET",
-		url : "/questionPaper/1/1"
+		url : "/questionPaper/showCreatedQuestion"
 	}).then(function mySuccess(response) {
 		$scope.filteredQues = response.data;
 		$scope.totalQus = response.data.length;
@@ -72,20 +75,17 @@ todos.controller('quesPaperController', function($scope, $http) {
 	}
 
 	$scope.finish = function(ans, qusBankId) {
-		//collectAns = JSON.stringify(collectAns);
-		//console.log('colletd = ' + collectAns);
-		
-		  $http({ method : 'PUT', url : '/questionPaper',
-		  data : JSON.stringify(collectAns),
-		  headers : { 'Content-Type' : 'application/json' }
-		  }).then(function(response) { 
-			  
-		  });
-		  //response.headers('SuccessMSG'); //$scope.messageAlart();
-		  //$scope.loadTable(); }, function myError(response) {
-		  //$scope.ErrorMSG = response.headers('ErrorMSG');
-		 //$scope.messageAlart(); });
-		 
+		$http({ 
+			method : 'PUT', url : '/questionPaper',
+			data : JSON.stringify(collectAns),
+			headers : { 'Content-Type' : 'application/json' }
+		}).then(function(response) { 
+			$scope.correctAns = response.data.CorrectAns;
+			$scope.wrongAns = response.data.wrongAns;
+			$scope.showResult = true ;
+			$scope.showQus = false ;
+			$scope.resultParcentage = ($scope.correctAns / $scope.totalQus) * 100;
+		});
 	}
 
 });

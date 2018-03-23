@@ -5,6 +5,7 @@ public class EmailNotification {
 	private String toAddress;
 	private String subject;
 	private String body;
+	
 	public String getToAddress() {
 		return toAddress;
 	}

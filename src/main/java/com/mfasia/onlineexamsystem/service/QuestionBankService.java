@@ -53,7 +53,7 @@ public class QuestionBankService {
 	}
 	
 	@Transactional
-	public Optional<QuestionsBank> countResult (Long qusBankId, Integer ans) {
-		return Optional.of(quesBankRepo.countResult(qusBankId, ans));
+	public QuestionsBank countResult (Long qusBankId, Integer ans) {
+		return quesBankRepo.countResult(qusBankId, ans);
 	}
 }

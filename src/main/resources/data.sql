@@ -1,9 +1,9 @@
 -- Initial Data for users
 INSERT INTO users(user_id,first_name,last_name,email,phone,password,photo,gender,status,current_address,permanent_address,security_question,security_ans)
-SELECT 1 ,'Admin', 'admin', 'admin@gmail.com', '01919223344','1234', 'photo','male', 'Active', 'Uttara', 'Uttara dhaka', 'what is your role?', 'admin' where NOT EXISTS (SELECT * FROM users WHERE user_id = 1) ; 
+SELECT 1 ,'Admin', 'admin', 'admin@gmail.com', '01919223344','$2a$10$wjy/srTZ4JipizyIrRl8H.vv/thSfelj2VPWD.2ssIX2iWVPN4N5G', 'photo','male', 'Active', 'Uttara', 'Uttara dhaka', 'what is your role?', 'admin' where NOT EXISTS (SELECT * FROM users WHERE user_id = 1) ; 
 
 INSERT INTO users(user_id,first_name,last_name,email,phone,password,photo,gender,status,current_address,permanent_address,security_question,security_ans)
-SELECT 2 ,'Teacher', 'Teacher', 'Teacher@gmail.com', '01919223355','1234', 'photo','male', 'Active', 'Uttara', 'Uttara dhaka', 'what is your role?', 'Teacher' where NOT EXISTS (SELECT * FROM users WHERE user_id = 2) ; 
+SELECT 2 ,'Teacher', 'Teacher', 'Teacher@gmail.com', '01919223355','$2a$10$wjy/srTZ4JipizyIrRl8H.vv/thSfelj2VPWD.2ssIX2iWVPN4N5G', 'photo','male', 'Active', 'Uttara', 'Uttara dhaka', 'what is your role?', 'Teacher' where NOT EXISTS (SELECT * FROM users WHERE user_id = 2) ; 
 
 -- Initial Data for roles
 INSERT INTO roles(role_id,role_name) SELECT 1 ,'Admin' where NOT EXISTS (SELECT * FROM roles WHERE role_id = 1);

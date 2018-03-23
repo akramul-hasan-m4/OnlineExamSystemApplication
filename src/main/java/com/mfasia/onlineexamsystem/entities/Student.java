@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
@@ -36,12 +37,10 @@ public class Student implements Serializable {
 	@NotEmpty
 	private String selectedCourse;
 	
-	@JsonManagedReference
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="batch_id")
 	private Batch batchs;
 	
-	@JsonManagedReference
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User users;
@@ -49,8 +48,8 @@ public class Student implements Serializable {
 	@Column
 	private String generatedStId;
 	
-	@JsonBackReference
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="students")
+	@JsonIgnore
 	private List<ExamInfo> examShedulars;
 	
 }

@@ -164,3 +164,11 @@ CREATE TABLE IF NOT EXISTS exam_info (
 			CONSTRAINT studentIdFk_ES FOREIGN KEY (student_id) REFERENCES students (student_id) 
 			);
 
+CREATE TABLE IF NOT EXISTS email_verification ( 
+			verification_id serial, 
+			user_id INTEGER , 
+			verification_code  varchar(255) NOT NULL,
+			PRIMARY KEY (verification_id),
+			CONSTRAINT userd_fk_verification  FOREIGN KEY (user_id) REFERENCES users (user_id) 
+			);
+

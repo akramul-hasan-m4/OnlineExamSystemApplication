@@ -51,6 +51,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	private String determineTargetUrl(Authentication authentication) {
 		boolean isTeacher = false;
 		boolean isAdmin = false;
+		boolean isStudent = false;
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
 		for (GrantedAuthority grantedAuthority : authorities) {
@@ -61,12 +62,19 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 				isAdmin = true;
 				break;
 			}
+			 else if (grantedAuthority.getAuthority().equals("ROLE_STUDENT")) {
+				isStudent = true;
+				break;
+			}
 		}
 		if (isTeacher) {
 			return "/pages/teachersPanel";
 		} else if (isAdmin) {
 			return "/pages/adminPanel";
-		} else {
+		} else if (isStudent) {
+			return "/pages/studentWelcomePage";
+		}
+		else {
 			throw new IllegalStateException();
 		}
 	}

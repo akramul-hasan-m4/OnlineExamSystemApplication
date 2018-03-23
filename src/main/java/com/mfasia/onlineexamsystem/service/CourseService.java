@@ -38,4 +38,9 @@ public class CourseService {
 	public void deleteCourse (Long courseId) {
 		courseRepo.delete(courseId);
 	}
+	
+	@Transactional
+	public Course findByCourseName(String courseName) {
+		return courseRepo.findByCourseName(courseName);
+	}
 }

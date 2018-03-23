@@ -9,7 +9,7 @@
 		#signUpForm {
 			background-color: rgba(231, 232, 232, 0.73);
 			border: 3px none;
-			width: 70%;
+			width: 80%;
 			box-shadow: #333 9px 9px 30px 3px inset;
 			margin-top: 0px;
 			margin-bottom: 0px;
@@ -43,7 +43,7 @@
 	</nav>
 	<br></br>
 	<!-- body  -->
-	<div class="container" id="signUpForm">
+	<div class="container" id="signUpForm" ng-show="showRegistrationForm">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 			<div class="panel panel-default">
@@ -163,6 +163,24 @@
 				<div class="panel-footer"></div>
 			</div>
 		</div>
+	</div>
+	<div class="container" ng-show="showVerificationForm">
+		<h1 class = "text-center" style="color: green;">Submit Your Verification code</h1>
+		<h3>Please Check your Email We Send a verification to your email</h3>
+		
+		<form id="vericationform" class="form-horizontal" role="form" method="post">
+			<div style="margin-bottom: 25px" class="input-group">
+				<span class="input-group-addon">
+					<i class="glyphicon glyphicon-lock"></i>
+				</span> 
+				<input id="login-password" type="text" class="form-control" name="verificationCode" placeholder="Enter your verification Code" />
+			</div>
+			<div style="margin-top: 10px" class="form-group">
+				<div class="col-sm-12 controls">
+					<button type="submit" class="btn btn-primary" value="submit"></button>
+				</div>
+			</div>
+		</form>
 	</div>
 </body>
 </html>

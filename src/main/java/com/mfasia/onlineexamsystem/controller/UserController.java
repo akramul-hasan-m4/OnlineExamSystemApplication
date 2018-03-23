@@ -64,7 +64,7 @@ public class UserController {
 		mailService.sendNotification(notification);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
+	
 	private String uploadPath () throws UnsupportedEncodingException {
 		String mainPath = File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"uploads"+File.separator;
 		String path = this.getClass().getClassLoader().getResource("").getPath();

@@ -43,6 +43,10 @@ public class ExamBoardService {
 	}
 	
 	@Transactional
+	public ExamBoard findActiveExamBycourseId (Long courseId) {
+		return examBoardRepo.findActiveExamBycourseId(courseId);
+	}
+	@Transactional
 	public void deleteByExamId (Long examId) {
 		examBoardRepo.delete(examId);
 	}

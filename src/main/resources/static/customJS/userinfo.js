@@ -24,14 +24,22 @@ app.service('multipartForm', ['$http', function($http){
 		$http.post(uploadUrl, fd, {
 			transformRequest: angular.indentity,
 			headers: { 'Content-Type': undefined }
+		}).then(function mySuccess(response) {
+			
+			//$scope.showVerificationForm = true ;
+			//$scope.showRegistrationForm = false ;
+		}, function myError(response) {
+
 		});
 	}
 }]);
 
-app.controller('myCtrl', function($scope, $http, multipartForm) {
+app.controller('myCtrl', function($scope, $http,$window, $location, multipartForm) {
 	
 	$scope.SuccessMSG = '';
 	$scope.ErrorMSG = '';
+	$scope.showRegistrationForm = true ;
+	$scope.showVerificationForm = false ;
 	
 	$scope.securityQuestions = [
 					"What is Your Favourite Teacher name ?",
@@ -44,9 +52,9 @@ app.controller('myCtrl', function($scope, $http, multipartForm) {
 	
 	$scope.userInfo = {};
 	$scope.saveUserRegitrationInfo = function(){
-		console.log($scope.userInfo);
 		var uploadUrl = '/user';
 		multipartForm.post(uploadUrl, $scope.userInfo);
+		$window.location.assign('/pages/emailVerification');
 	}
 	
 	$scope.loadTable = function() {

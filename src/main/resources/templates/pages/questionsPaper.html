@@ -1,64 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" ng-app="quesPaper">
 <head>
-<meta charset="ISO-8859-1"></meta>
- <span th:include="/includes/commons :: #commons"></span>
-<link rel="stylesheet" type="text/css" href="/css/questionPaperPage.css" th:href="@{/css/questionPaperPage.css}"/>
-<link  rel="stylesheet" type="text/css" href="/css/bootstrap-combined.min.css" th:href="@{/css/bootstrap-combined.min.css}"/>
-<script src="/js/ui-bootstrap-tpls-0.3.0.min.js"></script>
-<script src="/customJS/questionsPaper.js"></script>
-<title>Insert title here</title>
-<style type="text/css">
-.checkedAns {
-	background: blue;
-}
-</style>
+	<meta charset="ISO-8859-1"></meta>
+	<span th:include="/includes/commons :: #commons"></span>
+	<script src="/customJS/questionsPaper.js"></script>
+	<title>Questions Paper </title>
 </head>
-<body ng-controller="quesPaperController" ng-init="loadQustions()" style="padding: 10px;">
-	<div class="page-header">
-		<h3>Online Exam</h3>
-		<p th:text="#{question.paper.TotalQuestion.title}"> </p>{{currentPage}}/{{questions.length}}
+<body ng-controller="quesPaperController as currentPage" style="padding: 10px;">
+	<div class="page-header" ng-show = "showQus">
+		<h3 class="text-center" style="color: green;">Total Questions = {{currentQus}}/{{totalQus}}</h3>
 	</div>
-	 	<div class="row">
-	 	<button ng-click = "startNow()" class="col-md-offset-5 btn btn-primary text-center" ng-show="startButton">Start Exam</button>
-		<div class="container" ng-show="startExam">
-			<div class="panel panel-default" ng-repeat="qus in filteredQues">
+	<div class="row" ng-show = "showQus">
+		<div class="container">
+			<div class="panel panel-default" ng-repeat="qus in filteredQues track by $index"
+				ng-show="(($index &lt; (currentPage.page * currentPage.numRecords)) &amp;&amp; ($index &gt;= ((currentPage.page - 1) * currentPage.numRecords)))">
 				<div class="panel-heading">
-					<h3>{{qus.questionTitle}}</h3>
+					<h3>{{$index+1}}&nbsp; . {{qus.questionTitle}}</h3>
 				</div>
 				<div class="panel-body">
 					<div class="funkyradio">
 						<div class="funkyradio-success">
-							<input type="radio" name="radio" id="radio1" ng-model="ans" ng-value="1" ng-click="collectAns(ans, qus.qusBankId)"/> <label id="1"
-								for="radio1" ><strong>{{qus.option1}}</strong></label>
+							<input type="radio" name="radio" id="radio1" ng-model="ans" ng-value="1" ng-click ="clickedAns(ans, qus.qusBankId)"/> 
+							<label id="1" for="radio1">
+								<strong>{{qus.option1}}</strong>
+							</label>
 						</div>
 						<div class="funkyradio-success">
-							<input type="radio" name="radio" id="radio2" ng-model="ans" ng-value="2" ng-click="collectAns(ans, qus.qusBankId)" /> <label
-								for="radio2"><strong>{{qus.option2}}</strong></label>
+							<input type="radio" name="radio" id="radio2" ng-model="ans" ng-value="2" ng-click ="clickedAns(ans, qus.qusBankId)"/> 
+							<label for="radio2">
+								<strong>{{qus.option2}}</strong>
+							</label>
 						</div>
 						<div class="funkyradio-success">
-							<input type="radio" name="radio" id="radio3" ng-model="ans" ng-value="3" ng-click="collectAns(ans, qus.qusBankId)"/> <label
-								for="radio3"><strong>{{qus.option3}}</strong></label>
+							<input type="radio" name="radio" id="radio3" ng-model="ans" ng-value="3" ng-click ="clickedAns(ans, qus.qusBankId)"/> 
+							<label for="radio3">
+								<strong>{{qus.option3}}</strong>
+							</label>
 						</div>
 						<div class="funkyradio-success ">
-							<input type="radio" name="radio" id="radio4" ng-model="ans" ng-value="4" ng-click="collectAns(ans, qus.qusBankId)"/> <label
-								for="radio4"><strong>{{qus.option4}}</strong></label>
+							<input type="radio" name="radio" id="radio4" ng-model="ans" ng-value="4" ng-click ="clickedAns(ans, qus.qusBankId)"/> 
+							<label for="radio4">
+								<strong>{{qus.option4}}</strong>
+							</label>
 						</div>
 					</div>
 				</div>
 				<div class="panel-footer">
-				<div class="row">
-						<label class="checkbox-inline " style="left: 32px;" for="checkboxes-0" th:text="#{question.paper.Marked.label}">
-						<input type="checkbox" name="radio" id="radio4" /></label>
-    					<button id="button2id" name="button2id" class="btn btn-danger pull-right" style="top: 50px;" th:text="#{question.paper.FinishExam.btn}"></button>&nbsp;
-						<button id="button1id" name="button1id" class="btn btn-primary pull-right" style="top: 50px;" th:text="#{question.paper.ReviewMarked.btn}"></button>
-				</div>
+					<div class="row">
+						<ion-footer-bar class="bar-assertive">
+							<button class="btn btn-default" ng-disabled="backButtonDisable" ng-click="currentPage.back($index);"> Previous </button>
+							<button class="btn btn-default" ng-disabled="nextButtonDisable" ng-click="currentPage.next($index, ans, qus);"> Next </button>
+							<button class="btn btn-danger pull-right" ng-click = "finish(ans, qus.qusBankId)" > Finish </button>
+						</ion-footer-bar>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div data-pagination="" data-num-pages="numPages()"
-						data-current-page="currentPage" data-max-size="maxSize"
-						data-boundary-links="true"></div>
+	<div class="panel panel-primary" ng-show = "showResult">
+		<div class="panel-heading">Result</div>
+		<div class="panel-body">
+			<h2 class="text-center"><strong>Total Questions = {{totalQus}}</strong></h2>
+			<h3 class="text-center" style="color: green;">Total Correct Answer = {{correctAns}} </h3>
+			<h3 class="text-center" style="color: red;">Total Wrong Answer = {{wrongAns}} </h3>
+			<h3 class="text-center" >You got {{resultParcentage}}&#37; Mark </h3>
+		</div>
+		<div class="panel-footer">
+			<div class="row">
+				<a class="btn btn-primaray pull-right" href="/pages/examStartPage">Back to home</a>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

@@ -8,10 +8,10 @@
 
 </head>
 <body ng-controller="quesPaperController as currentPage" style="padding: 10px;">
-	<div class="page-header">
+	<div class="page-header" ng-show = "showQus">
 		<h3 class="text-center" style="color: green;">Total Questions = {{currentQus}}/{{totalQus}}</h3>
 	</div>
-	<div class="row">
+	<div class="row" ng-show = "showQus">
 		<div class="container">
 			<div class="panel panel-default" ng-repeat="qus in filteredQues track by $index"
 				ng-show="(($index &lt; (currentPage.page * currentPage.numRecords)) &amp;&amp; ($index &gt;= ((currentPage.page - 1) * currentPage.numRecords)))">
@@ -57,6 +57,16 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="panel panel-primary" ng-show = "showResult">
+		<div class="panel-heading">Result</div>
+		<div class="panel-body">
+			<h2 class="text-center"><strong>Total Questions = {{totalQus}}</strong></h2>
+			<h3 class="text-center" style="color: green;">Total Correct Answer = {{correctAns}} </h3>
+			<h3 class="text-center" style="color: red;">Total Wrong Answer = {{wrongAns}} </h3>
+			<h3 class="text-center" >You got {{resultParcentage}}&#37; Mark </h3>
+		</div>
+		<div class="panel-footer"><a class="pull-right" href="/pages/examStartPage">Back to home</a></div>
 	</div>
 </body>
 </html>
