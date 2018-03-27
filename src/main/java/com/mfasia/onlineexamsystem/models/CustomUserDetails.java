@@ -55,7 +55,11 @@ public class CustomUserDetails extends User implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		if (super.getStatus().contains("Active")) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

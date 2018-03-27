@@ -36,7 +36,6 @@ app.controller('myCtrl', function($scope, $http) {
 				edition 	: $scope.edition
 		}
 		dataObj = JSON.stringify(dataObj);
-		console.log(dataObj);
 		$http({
 			method : 'POST',
 			url : '/books',

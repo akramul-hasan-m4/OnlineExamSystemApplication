@@ -58,11 +58,11 @@
 							<span class="input-group-addon">
 								<i class="glyphicon glyphicon-lock"></i>
 							</span> 
-						<input id="login-password" type="text" class="form-control" name="verificationCode" placeholder="Enter your verification Code" />
+						<input id="verificationCode" type="text" class="form-control" ng-model="verificationCode" name="verificationCode" placeholder="Enter your verification Code" />
 						</div>
 						<div style="margin-top: 10px" class="form-group">
 							<div class="col-sm-12 controls">
-								<button type="submit" class="btn btn-primary" >Verify</button>
+								<button type="submit" class="btn btn-primary" ng-click="verify(verificationCode)" >Verify</button>
 							</div>
 						</div>
 					</form>

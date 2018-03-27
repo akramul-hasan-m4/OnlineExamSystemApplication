@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -37,8 +38,8 @@ public class Batch implements Serializable {
 	@NotEmpty
 	private Long seatLimit;
 	
-	@JsonBackReference
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="batchs")
+	@JsonIgnore
 	private List<Student> students;
 	
 }

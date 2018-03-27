@@ -17,6 +17,15 @@
 	<div id="wrapper">
 		<!-- Navigation -->
 		<span th:include="/includes/teachersNav :: #teachersNav"></span>
+		<!-- Message -->
+		<div ng-show="SuccessMSG" class="alert alert-success" id="success-alert">
+			<button type="button" class="close" data-dismiss="alert">x</button>
+			<strong>Success! </strong> {{SuccessMSG}}
+		</div>
+		<div ng-show="ErrorMSG" class="alert alert-danger" id="error-alert">
+			<button type="button" class="close" data-dismiss="alert">x</button>
+			<strong>Error! </strong> {{ErrorMSG}}
+		</div>
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
@@ -29,7 +38,7 @@
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-primary pull-right" title="Add a new Question" data-toggle="modal" data-target="#newQus">
+									<button class="btn btn-primary pull-right" title="Add a new Question" data-toggle="modal" data-target="#newQus" ng-click="EditRow(null)">
 										<i class="fa fa-plus"></i>
 									</button>
 								</div>
@@ -60,8 +69,8 @@
 										</td>
 										<td>{{x.questionCreatedDate}}</td>
 										<td class="center">{{x.courseName}}</td>
-										<td class="center"><Button class="btn btn-primary"><i class="fa fa-edit"></i></Button></td>
-										<td class="center"><Button class="btn btn-danger"><i class="fa fa-trash"></i></Button></td>
+										<td class="center"><Button class="btn btn-primary" data-toggle="modal" data-target="#newQus" ng-click="EditRow(x)"><i class="fa fa-edit"></i></Button></td>
+										<td class="center"><Button class="btn btn-danger" ng-click="DeleteRow(x.qusBankId)"><i class="fa fa-trash"></i></Button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -77,7 +86,12 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h3 class="modal-title text-center" style="color : green;" th:text="#{question.bank.CreateAnewQuestion.title}"></h3>
+					<div ng-if="rowData == null">
+						<h3 class="modal-title text-center" style="color : green;" th:text="#{question.bank.CreateAnewQuestion.title}"></h3>
+					</div>
+					<div ng-if="rowData != null">
+						<h3 class="modal-title text-center" style="color : green;" th:text="#{question.bank.UpdateQuestion.title}"></h3>
+					</div>
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal" id="newQusForm" name="newQusForm" role="form" >
@@ -158,8 +172,11 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label" for=""></label>
 							<div class="col-md-6">
-								<button type="submit" ng-click="saveQus()" data-dismiss="modal" ng-disabled="newQusForm.option2.$invalid || newQusForm.option3.$invalid" class="btn btn-primary" th:text="#{commons.Save.btn}"></button>
-								<input type="reset" ng-click="reset()" class="btn btn-danger" th:value="#{commons.Reset.btn}"></input>
+									<button ng-show="!rowData" type="submit" ng-click="saveQus()" data-dismiss="modal" 
+									 class="btn btn-primary" th:text="#{commons.Save.btn}"></button>
+									<button ng-show="rowData" type="submit" ng-click="updateQusInfo()" data-dismiss="modal" 
+								 	class="btn btn-success" th:text="#{commons.update.btn}"></button>
+								<input type="reset" class="btn btn-danger"  th:value="#{commons.Reset.btn}"></input>
 							</div>
 						</div>
 					</form>

@@ -25,9 +25,7 @@ app.service('multipartForm', ['$http', function($http){
 			transformRequest: angular.indentity,
 			headers: { 'Content-Type': undefined }
 		}).then(function mySuccess(response) {
-			
-			//$scope.showVerificationForm = true ;
-			//$scope.showRegistrationForm = false ;
+			$window.location.assign('/pages/emailVerification');
 		}, function myError(response) {
 
 		});
@@ -52,7 +50,7 @@ app.controller('myCtrl', function($scope, $http,$window, $location, multipartFor
 	
 	$scope.userInfo = {};
 	$scope.saveUserRegitrationInfo = function(){
-		var uploadUrl = '/user';
+		var uploadUrl = '/user/save';
 		multipartForm.post(uploadUrl, $scope.userInfo);
 		$window.location.assign('/pages/emailVerification');
 	}
@@ -69,7 +67,7 @@ app.controller('myCtrl', function($scope, $http,$window, $location, multipartFor
 		});
 	};
 	
-	$scope.messageAlart = function() {
+	$scope.messageAlart = function () {
 		if ($scope.SuccessMSG != undefined) {
 			$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
 				$("#success-alert").slideUp(500);
@@ -80,6 +78,19 @@ app.controller('myCtrl', function($scope, $http,$window, $location, multipartFor
 				$("#error-alert").slideUp(500);
 			});
 		}
+	}
+	
+	$scope.verify = function (verificationCode) {
+		$http({
+			method : "GET",
+			url : "/user/"+verificationCode
+		}).then(function mySuccess(response) {
+			$scope.SuccessMSG = response.headers('SuccessMSG');
+			$scope.messageAlart();
+		}, function myError(response) {
+			$scope.ErrorMSG = response.headers('ErrorMSG');
+			$scope.messageAlart();
+		});
 	}
 	
 });

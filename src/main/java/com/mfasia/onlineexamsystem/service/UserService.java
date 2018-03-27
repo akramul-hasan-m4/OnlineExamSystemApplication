@@ -81,5 +81,10 @@ public class UserService {
 		return Optional.of(userRepo.findByEmail(email));
 	}
 	
+	@Transactional
+	public User findByEmailAddress (String email){
+		return userRepo.findByEmailAddress(email);
+	}
+	
 }
 

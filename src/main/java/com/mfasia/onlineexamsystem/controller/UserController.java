@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,8 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mfasia.onlineexamsystem.commons.Messages;
+import com.mfasia.onlineexamsystem.entities.EmailVerification;
 import com.mfasia.onlineexamsystem.entities.User;
 import com.mfasia.onlineexamsystem.models.EmailNotification;
+import com.mfasia.onlineexamsystem.service.EmailVerificationService;
 import com.mfasia.onlineexamsystem.service.MailService;
 import com.mfasia.onlineexamsystem.service.UserService;
 
@@ -38,6 +40,7 @@ public class UserController {
 	@Autowired private UserService userService;
 	@Autowired private MessageSource msgSource ;
 	@Autowired private MailService mailService ;
+	@Autowired private EmailVerificationService emailVerificationService ;
 	
 	@GetMapping
 	public ResponseEntity<List<User>> getAlluser () {
@@ -50,19 +53,39 @@ public class UserController {
 		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
 	
-	@PostMapping()
+	@PostMapping("/save")
 	public ResponseEntity<Object> saveUserRegistrationInfo(HttpServletRequest request, @RequestParam("file") MultipartFile photo) throws IOException {
-		Optional<Optional<User>> email = userService.findByEmail(request.getParameter("email"));
+		User email = userService.findByEmailAddress(request.getParameter("email"));
 		HttpHeaders headers = new HttpHeaders();
-		if (!email.isPresent()) {
-			headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.getAllErrorMsg", null, null));
+		if (email != null) {
+			headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.userFound", null, null));
 			return new ResponseEntity<>(headers,HttpStatus.OK);
 		}
 		userService.saveUserRegistrationInfo(request, photo, uploadPath ());
 		EmailNotification notification = new EmailNotification();
 		notification.setToAddress(request.getParameter("email"));
-		mailService.sendNotification(notification);
+		mailService.sendNotification(notification, request);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@GetMapping("/{verificationCode}")
+	public ResponseEntity<EmailVerification> verifyEmail (@PathVariable String verificationCode) {
+		EmailVerification findvericationCode = emailVerificationService.findByVerificationCode(verificationCode);
+		HttpHeaders headers = new HttpHeaders();	
+		if (findvericationCode != null) {
+				EmailVerification emailVerification = new EmailVerification();
+				User user = new User ();
+				user.setUserId(findvericationCode.getUsers().getUserId());
+				emailVerification.setVerificationId(findvericationCode.getVerificationId());
+				emailVerification.setUsers(user);
+				emailVerification.setVerificationStatus("Verified");
+				emailVerificationService.saveVerificationCode(emailVerification);
+				
+				headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.emailVerified", null, null));
+				return new ResponseEntity<>(headers,HttpStatus.OK);
+		}
+		headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.emailNotVerified", null, null));
+		return new ResponseEntity<>(headers,HttpStatus.NOT_FOUND);
 	}
 	
 	private String uploadPath () throws UnsupportedEncodingException {

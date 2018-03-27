@@ -24,9 +24,9 @@ public class OnlineExamSystemApplicationTests {
 				" teacher id = "+l.getTeachers().getTeacherId().toString()
 				+", exam id = "+l.getExam().getExamId()
 				+", course id = "+l.getCourses().getCourseId()
-				+", book id = "+l.getBooks().getBookId()
-				+", ref id = "+l.getRef().getRefId()
-				+", chapter id = "+l.getChapters().getChId()
+				+", book id = "+l.getBookId()
+				+", ref id = "+l.getRefId()
+				+", chapter id = "+l.getChId()
 				+", question limitation = "+l.getQusLimitation()));
 	}
 

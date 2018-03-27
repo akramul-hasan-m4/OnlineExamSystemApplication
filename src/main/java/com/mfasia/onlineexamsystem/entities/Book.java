@@ -53,7 +53,7 @@ public class Book implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="books")
 	private List<Chapter> chapters;
 	
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany( mappedBy="books", cascade = CascadeType.ALL)
-	private List<QuestionerDefination> questionerDefinations;
+	private List<QuestionerDefination> questionerDefinations;*/
 }

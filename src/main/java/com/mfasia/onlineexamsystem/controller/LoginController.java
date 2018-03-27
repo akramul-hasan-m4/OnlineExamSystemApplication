@@ -33,7 +33,6 @@ public class LoginController {
 	@PostMapping("/{email}/{password}")
 	public String loginDb(@PathVariable String email, @PathVariable String password) {
 		List<User> list = userService.login(email, password);
-		System.out.println(list.get(0).getFirstName());
 		if (!list.isEmpty()) {
 			return "/pages/questionBank";
 		}

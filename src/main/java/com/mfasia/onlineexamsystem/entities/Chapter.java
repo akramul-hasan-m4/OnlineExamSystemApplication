@@ -37,9 +37,9 @@ public class Chapter implements Serializable {
 	@Column
 	private String chapterName;
 	
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany( mappedBy="chapters", cascade = CascadeType.ALL)
-	private List<QuestionerDefination> questionerDefinations;
+	private List<QuestionerDefination> questionerDefinations;*/
 	
 	
 }

@@ -1,7 +1,6 @@
 package com.mfasia.onlineexamsystem.controller;
 
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +57,7 @@ public class QuestionPaperController {
 	public ResponseEntity<List<QuestionsBank>> createQuestionPaper( Authentication authentication) {
 		User user = (User) authentication.getPrincipal();
 		Long userId = user.getUserId();
+		System.out.println("userId == " + userId);
 		Student studentInfo = studentsService.findStudentByUserId(userId);
 		Course courseinfo = courseService.findByCourseName(studentInfo.getSelectedCourse());
 		ExamBoard findExamId = examBoardService.findActiveExamBycourseId(courseinfo.getCourseId());
@@ -68,13 +68,13 @@ public class QuestionPaperController {
 		}
 		if (quesBankList.isEmpty()) {
 			quesDefinationList.forEach(d -> {
-				if (d.getRef() == null) {
+				if (d.getRefId() == null) {
 					quesBankList.addAll(quesBankservice.getQuesBankIdForQuesPaper(d.getCourses().getCourseId(),
-							d.getBooks().getBookId().toString(), d.getChapters().getChId().toString(), null,
+							d.getBookId().toString(), d.getChId().toString(), null,
 							new PageRequest(0, d.getQusLimitation().intValue())));
 				} else {
 					quesBankList.addAll(quesBankservice.getQuesBankIdForQuesPaper(d.getCourses().getCourseId(), null,
-							null, d.getRef().getRefId().toString(),
+							null, d.getRefId().toString(),
 							new PageRequest(0, d.getQusLimitation().intValue())));
 				}
 			});

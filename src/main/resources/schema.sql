@@ -168,7 +168,15 @@ CREATE TABLE IF NOT EXISTS email_verification (
 			verification_id serial, 
 			user_id INTEGER , 
 			verification_code  varchar(255) NOT NULL,
+            verification_status  varchar(255),
 			PRIMARY KEY (verification_id),
 			CONSTRAINT userd_fk_verification  FOREIGN KEY (user_id) REFERENCES users (user_id) 
 			);
+
+CREATE TABLE IF NOT EXISTS persistent_logins (
+	        username varchar(64) not null, 
+	        series varchar(64) primary key, 	
+	        token varchar(64) not null,
+	        last_used timestamp not null
+);
 

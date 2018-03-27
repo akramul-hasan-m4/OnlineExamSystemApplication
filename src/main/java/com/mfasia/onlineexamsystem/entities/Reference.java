@@ -36,8 +36,8 @@ public class Reference implements Serializable {
 	@Column
 	private String referenceHeader;
 
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(mappedBy = "ref")
-	private List<QuestionerDefination> questionerDefinations;
+	private List<QuestionerDefination> questionerDefinations;*/
 
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -45,20 +44,14 @@ public class QuestionerDefination implements Serializable {
 	@JoinColumn(name = "course_id")
 	private Course courses;
 
-	@JsonIgnoreProperties({"courses","authorName","edition"})
-	@ManyToOne(cascade = CascadeType.DETACH)
-	@JoinColumn(name = "book_id")
-	private Book books;
+	@Column(name = "book_id")
+	private Integer bookId;
 	
-	@JsonIgnoreProperties({"courses","handler","hibernateLazyInitializer"})
-	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.PERSIST})
-	@JoinColumn(columnDefinition="Long",name = "ref_id")
-	private Reference ref;
+	@Column(name ="ref_id")
+	private Integer refId;
 	
-	@JsonIgnoreProperties({"books","handler","hibernateLazyInitializer"})
-	@ManyToOne(cascade =  CascadeType.DETACH)
-	@JoinColumn(name = "ch_id")
-	private Chapter chapters;
+	@Column(name ="ch_id")
+	private Integer chId;
 	
 	@Column
 	private Long qusLimitation;

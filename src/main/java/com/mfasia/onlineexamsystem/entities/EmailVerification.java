@@ -31,4 +31,7 @@ public class EmailVerification implements Serializable{
 	
 	@Column
 	private String verificationCode;
+	
+	@Column
+	private String verificationStatus;
 }

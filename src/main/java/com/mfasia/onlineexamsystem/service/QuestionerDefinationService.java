@@ -38,6 +38,16 @@ public class QuestionerDefinationService {
 	}
 	
 	@Transactional
+	public Optional<QuestionerDefination> findBydefinationId (Long definationId) {
+		return Optional.of(qusDefinationRepo.findOne(definationId));
+	}
+	
+	@Transactional
+	public void deleteDefination (Long definationId) {
+		qusDefinationRepo.delete(definationId);
+	}
+	
+	@Transactional
 	public void saveQuesDefination (Long examId, Long teacherId, Long courseId, Long bookId, Long chId, Integer refId, Long qusLimitation) {
 		qusDefinationRepo.saveQuesDefination(examId, teacherId, courseId, bookId, chId, refId, qusLimitation);
 	}
