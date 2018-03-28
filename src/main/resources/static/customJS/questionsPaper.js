@@ -71,17 +71,19 @@ todos.controller('quesPaperController', function($scope, $http) {
 	}
 
 	$scope.finish = function(ans, qusBankId) {
-		$http({ 
-			method : 'PUT', url : '/questionPaper',
-			data : JSON.stringify(collectAns),
-			headers : { 'Content-Type' : 'application/json' }
-		}).then(function(response) { 
-			$scope.correctAns = response.data.CorrectAns;
-			$scope.wrongAns = response.data.wrongAns;
-			$scope.showResult = true ;
-			$scope.showQus = false ;
-			$scope.resultParcentage = ($scope.correctAns / $scope.totalQus) * 100;
+		if (confirm('Are you sure to finish the exam ?')) {
+			$http({ 
+				method : 'PUT', url : '/questionPaper',
+				data : JSON.stringify(collectAns),
+				headers : { 'Content-Type' : 'application/json' }
+			}).then(function(response) { 
+				$scope.correctAns = response.data.CorrectAns;
+				$scope.wrongAns = response.data.wrongAns;
+				$scope.showResult = true ;
+				$scope.showQus = false ;
+				$scope.resultParcentage = ($scope.correctAns / $scope.totalQus) * 100;
 		});
+		}
 	}
 
 });

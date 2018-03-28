@@ -30,7 +30,6 @@ public class UserService {
 	
 	@Transactional
 	public void saveUserRegistrationInfo (HttpServletRequest request, MultipartFile photo, String uploadPath) throws IOException {
-		
 		String firstName = request.getParameter("firstName");
 		String photoName = firstName + SEPARATOR + photo.getOriginalFilename();
 		String encodedPassword = passwordEncoder.encode(request.getParameter("password"));
@@ -47,7 +46,6 @@ public class UserService {
 		user.setPermanentAddress(request.getParameter("permanentAddress"));
 		user.setSecurityQuestion(request.getParameter("securityQuestion"));
 		user.setSecurityAns(request.getParameter("securityAns"));
-		user.setStatus("Active");
 		
 		File dir = new File(uploadPath+photoName);
 		boolean createNewFile = dir.createNewFile();
@@ -86,5 +84,28 @@ public class UserService {
 		return userRepo.findByEmailAddress(email);
 	}
 	
+	@Transactional
+	public User findByuserId (long userId) {
+		return userRepo.findOne(userId);
+	}
+	
+	public void updateUserStatus (User usr) {
+		User user = new User();
+		user.setUserId(usr.getUserId());
+		user.setFirstName(usr.getFirstName());
+		user.setLastName(usr.getLastName());
+		user.setEmail(usr.getEmail());
+		user.setPassword(usr.getPassword());
+		user.setPhone(usr.getPhone());
+		user.setPhoto(usr.getPhoto());
+		user.setGender(usr.getGender());
+		user.setCurrentAddress(usr.getCurrentAddress());
+		user.setPermanentAddress(usr.getPermanentAddress());
+		user.setSecurityQuestion(usr.getSecurityQuestion());
+		user.setSecurityAns(usr.getSecurityAns());
+		user.setStatus("Active");
+		
+		userRepo.save(user);
+	}
 }
 

@@ -37,21 +37,26 @@ app.controller('myCtrl', function($scope, $http,$window, $location, multipartFor
 	$scope.SuccessMSG = '';
 	$scope.ErrorMSG = '';
 	$scope.showRegistrationForm = true ;
-	$scope.showVerificationForm = false ;
+	$scope.showVerificationForm = true ;
+	$scope.verified = false;
+	$scope.teacherMsg = false;
+	$scope.studentMsg = false;
+	$scope.userId = '';
 	
 	$scope.securityQuestions = [
-					"What is Your Favourite Teacher name ?",
-					"what is your Primary School name ?",
-					"what is your best friend name ?",
-					"what is your first phone number ?",
-					"what is your favourite game ?",
-					"what is your hobby ?"
-		];
+		"What is Your Favourite Teacher name ?",
+		"what is your Primary School name ?",
+		"what is your best friend name ?",
+		"what is your first phone number ?",
+		"what is your favourite game ?",
+		"what is your hobby ?"
+	];
 	
 	$scope.userInfo = {};
 	$scope.saveUserRegitrationInfo = function(){
 		var uploadUrl = '/user/save';
 		multipartForm.post(uploadUrl, $scope.userInfo);
+		console.log($scope.userInfo);
 		$window.location.assign('/pages/emailVerification');
 	}
 	
@@ -81,11 +86,74 @@ app.controller('myCtrl', function($scope, $http,$window, $location, multipartFor
 	}
 	
 	$scope.verify = function (verificationCode) {
+		console.log('verificationCode '+ verificationCode)
 		$http({
 			method : "GET",
-			url : "/user/"+verificationCode
+			url : "/user/code/"+verificationCode
 		}).then(function mySuccess(response) {
+			$scope.userId = response.data.users.userId;
 			$scope.SuccessMSG = response.headers('SuccessMSG');
+			$scope.showVerificationForm = false ;
+			$scope.verified = true;
+			$scope.messageAlart();
+		}, function myError(response) {
+			$scope.ErrorMSG = response.headers('ErrorMSG');
+			$scope.messageAlart();
+		});
+	}
+	
+	$http({
+		method : "GET",
+		url : "/courses"
+	}).then(function mySuccess(response) {
+		$scope.allCourses = response.data;
+		
+	}, function myError(response) {
+		$scope.ErrorMSG = response.headers('ErrorMSG');
+	});
+	
+	$http({
+		method : "GET",
+		url : "/batch"
+	}).then(function mySuccess(response) {
+		$scope.allbatches = response.data;
+		
+	}, function myError(response) {
+		$scope.ErrorMSG = response.headers('ErrorMSG');
+	});
+	
+	$scope.clickTeacher = function () {
+		$scope.verified = false;
+		$scope.teacherMsg = true;
+		$scope.studentMsg = false;
+	}
+	
+	$scope.clickStudent = function () {
+		$scope.verified = false;
+		$scope.studentMsg = true;
+		$scope.teacherMsg = false;
+	}
+	
+	$scope.savestudentInfo = function (){
+		var typeObj = {
+				users : {
+					userId : $scope.userId
+				},
+				batchs :{
+					batchId : $scope.batchId
+				},
+				selectedCourse : $scope.selectedCourse
+		}
+		typeObj = JSON.stringify(typeObj);
+		
+		$http({
+			method: 'POST',
+			url: '/student',
+			data: typeObj,
+			headers: {'Content-Type': 'application/json'}
+		}).then(function(response) {
+			$scope.SuccessMSG = response.headers('SuccessMSG');
+			$window.location.assign('/pages/login');
 			$scope.messageAlart();
 		}, function myError(response) {
 			$scope.ErrorMSG = response.headers('ErrorMSG');

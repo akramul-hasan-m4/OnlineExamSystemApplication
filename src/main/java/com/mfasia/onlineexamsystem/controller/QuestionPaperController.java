@@ -57,7 +57,6 @@ public class QuestionPaperController {
 	public ResponseEntity<List<QuestionsBank>> createQuestionPaper( Authentication authentication) {
 		User user = (User) authentication.getPrincipal();
 		Long userId = user.getUserId();
-		System.out.println("userId == " + userId);
 		Student studentInfo = studentsService.findStudentByUserId(userId);
 		Course courseinfo = courseService.findByCourseName(studentInfo.getSelectedCourse());
 		ExamBoard findExamId = examBoardService.findActiveExamBycourseId(courseinfo.getCourseId());

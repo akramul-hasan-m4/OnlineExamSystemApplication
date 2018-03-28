@@ -68,21 +68,23 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@GetMapping("/{verificationCode}")
+	@GetMapping("/code/{verificationCode}")
 	public ResponseEntity<EmailVerification> verifyEmail (@PathVariable String verificationCode) {
-		EmailVerification findvericationCode = emailVerificationService.findByVerificationCode(verificationCode);
+		EmailVerification vCode = emailVerificationService.findByVerificationCode(verificationCode);
 		HttpHeaders headers = new HttpHeaders();	
-		if (findvericationCode != null) {
-				EmailVerification emailVerification = new EmailVerification();
-				User user = new User ();
-				user.setUserId(findvericationCode.getUsers().getUserId());
-				emailVerification.setVerificationId(findvericationCode.getVerificationId());
-				emailVerification.setUsers(user);
-				emailVerification.setVerificationStatus("Verified");
-				emailVerificationService.saveVerificationCode(emailVerification);
-				
-				headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.emailVerified", null, null));
-				return new ResponseEntity<>(headers,HttpStatus.OK);
+		if (vCode != null) {
+			EmailVerification emailVerification = new EmailVerification();
+			User user = new User ();
+			user.setUserId(vCode.getUsers().getUserId());
+			emailVerification.setVerificationId(vCode.getVerificationId());
+			emailVerification.setUsers(user);
+			emailVerification.setVerificationCode(verificationCode);
+			emailVerification.setVerificationStatus("Verified");
+			emailVerificationService.saveVerificationCode(emailVerification);
+			User userinfo = userService.findByuserId(vCode.getUsers().getUserId());
+			userService.updateUserStatus(userinfo);
+			headers.add(Messages.SUCCESS_MSG, msgSource.getMessage("commons.emailVerified", null, null));
+			return new ResponseEntity<>(vCode,headers,HttpStatus.OK);
 		}
 		headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.emailNotVerified", null, null));
 		return new ResponseEntity<>(headers,HttpStatus.NOT_FOUND);

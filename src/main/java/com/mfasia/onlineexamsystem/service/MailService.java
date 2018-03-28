@@ -25,7 +25,6 @@ public class MailService {
 	private String fromAddress;
 
 	public void sendNotification(EmailNotification notification, HttpServletRequest request) {
-		
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 			User newUser = userService.findByEmailAddress(request.getParameter("email"));
 			Long userid = newUser.getUserId();

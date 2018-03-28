@@ -16,4 +16,9 @@ public class StudentsService {
 	public Student findStudentByUserId (Long userId) {
 		return studentRepo.findByUsersUserId(userId);
 	}
+	
+	@Transactional
+	public void saveStudent (Student student) {
+		studentRepo.save(student);
+	}
 }

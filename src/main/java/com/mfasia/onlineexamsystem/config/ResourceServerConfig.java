@@ -32,7 +32,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/pages/teachersPanel", "/pages/questionBank", "/pages/questionerDefination").hasAnyAuthority("ROLE_TEACHER")
 			.antMatchers("/pages/adminPanel", "/pages/book", "/pages/courseDetails", "/pages/examBoard").hasAnyAuthority("ROLE_ADMIN")
 			.antMatchers("/resources/**","/fonts/**", "/customJS/**").permitAll()
-			.antMatchers("/pages/regestration","/pages/emailVerification","/user/save").permitAll()
+			.antMatchers("/pages/regestration","/pages/emailVerification","/user/code/**","/user/save","/courses","/batch").permitAll()
 			.anyRequest().authenticated()
 		.and()
 			.formLogin()
