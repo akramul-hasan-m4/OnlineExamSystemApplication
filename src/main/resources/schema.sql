@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS users_roles (
 			role_id INTEGER,
 			user_id INTEGER,
 			PRIMARY KEY (user_roleid),
-			CONSTRAINT roleidfk FOREIGN KEY (role_id) REFERENCES roles (role_id),
-			CONSTRAINT useridfk FOREIGN KEY (user_id) REFERENCES users (user_id)
+			CONSTRAINT roleidfk FOREIGN KEY (role_id) REFERENCES roles (role_id) ON DELETE CASCADE ON UPDATE CASCADE,
+			CONSTRAINT useridfk FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE
 			);
 
 CREATE TABLE IF NOT EXISTS batchs (
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS teachers (
 			teacher_id serial,
 			user_id INTEGER NOT NULL,
 			PRIMARY KEY (teacher_id),
-			CONSTRAINT user_ID_fk FOREIGN KEY (user_id) REFERENCES users (user_id) 
+			CONSTRAINT user_ID_fk FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE
 			);
 			
 CREATE TABLE IF NOT EXISTS students (
@@ -50,8 +50,8 @@ CREATE TABLE IF NOT EXISTS students (
 			selected_course varchar(45) NOT NULL,
 			generated_st_id varchar(45) DEFAULT NULL,
 			PRIMARY KEY (student_id),
-			CONSTRAINT user_ID_student_fk FOREIGN KEY (user_id) REFERENCES users (user_id),
-			CONSTRAINT batchfk FOREIGN KEY (batch_id) REFERENCES batchs (batch_id) 
+			CONSTRAINT user_ID_student_fk FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+			CONSTRAINT batchfk FOREIGN KEY (batch_id) REFERENCES batchs (batch_id) ON DELETE CASCADE ON UPDATE CASCADE
 			);
 
 CREATE TABLE IF NOT EXISTS courses ( 
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS books (
 			author_name varchar(45) NOT NULL, 
 			edition varchar(45),
 			PRIMARY KEY (book_id),
-			CONSTRAINT courseidfk FOREIGN KEY (course_id) REFERENCES courses (course_id) 
+			CONSTRAINT courseidfk FOREIGN KEY (course_id) REFERENCES courses (course_id) ON DELETE CASCADE ON UPDATE CASCADE
 			);
 
 CREATE TABLE IF NOT EXISTS chapters ( 
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS chapters (
 			book_id INTEGER NOT NULL, 
 			chapter_name varchar(45) NOT NULL,
 			PRIMARY KEY (ch_id),
-			CONSTRAINT booksid_fk_chapter FOREIGN KEY (book_id) REFERENCES books (book_id)
+			CONSTRAINT booksid_fk_chapter FOREIGN KEY (book_id) REFERENCES books (book_id) ON DELETE CASCADE ON UPDATE CASCADE
 			);
 
 CREATE TABLE IF NOT EXISTS reference ( 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS reference (
 			course_id INTEGER NOT NULL, 
 			reference_header varchar(255) NOT NULL,
 			PRIMARY KEY (ref_id),
-			CONSTRAINT courseid_fk_ref FOREIGN KEY (course_id) REFERENCES courses (course_id) 
+			CONSTRAINT courseid_fk_ref FOREIGN KEY (course_id) REFERENCES courses (course_id) ON DELETE CASCADE ON UPDATE CASCADE
 			);
 
 CREATE TABLE IF NOT EXISTS questions_bank (
@@ -102,8 +102,8 @@ CREATE TABLE IF NOT EXISTS questions_bank (
 			option4 varchar(255), 
 			ans INTEGER NOT NULL,
 			PRIMARY KEY (qus_bank_id),
-			CONSTRAINT coursefkqb FOREIGN KEY (course_id) REFERENCES courses (course_id), 
-			CONSTRAINT teacherfkqb FOREIGN KEY (teacher_id) REFERENCES teachers (teacher_id), 
+			CONSTRAINT coursefkqb FOREIGN KEY (course_id) REFERENCES courses (course_id) ON DELETE CASCADE ON UPDATE CASCADE, 
+			CONSTRAINT teacherfkqb FOREIGN KEY (teacher_id) REFERENCES teachers (teacher_id) ON DELETE SET NULL ON UPDATE CASCADE, 
 			CONSTRAINT CHK_book_ref CHECK ((book_id IS NOT NULL AND ref_id IS NULL) OR (book_id IS NULL AND ref_id IS NOT NULL))
 			);
 
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS exam_board (
 			total_mark INTEGER DEFAULT 100,
 			pass_mark INTEGER DEFAULT 33,
 			PRIMARY KEY (exam_id),
-			CONSTRAINT coursefk FOREIGN KEY (course_id) REFERENCES courses (course_id)
+			CONSTRAINT coursefk FOREIGN KEY (course_id) REFERENCES courses (course_id) ON DELETE CASCADE ON UPDATE CASCADE
 			);
 
 CREATE TABLE IF NOT EXISTS questioner_definations ( 
@@ -130,12 +130,12 @@ CREATE TABLE IF NOT EXISTS questioner_definations (
 			ref_id INTEGER ,
 			qus_limitation varchar(45) ,
 			PRIMARY KEY (defination_id),
-			CONSTRAINT booksId_FK_qd FOREIGN KEY (book_id) REFERENCES books (book_id), 
-			CONSTRAINT chID_FK_qd FOREIGN KEY (ch_id) REFERENCES chapters (ch_id), 
-			CONSTRAINT courseID_fk_qd FOREIGN KEY (course_id) REFERENCES courses (course_id),
-			CONSTRAINT examID_FK_qd FOREIGN KEY (exam_id) REFERENCES exam_board (exam_id),
-			CONSTRAINT refID_FK_qd FOREIGN KEY (ref_id) REFERENCES reference (ref_id), 
-			CONSTRAINT techerID_Fk_qd FOREIGN KEY (teacher_id) REFERENCES teachers (teacher_id)
+			CONSTRAINT booksId_FK_qd FOREIGN KEY (book_id) REFERENCES books (book_id) ON DELETE CASCADE ON UPDATE CASCADE, 
+			CONSTRAINT chID_FK_qd FOREIGN KEY (ch_id) REFERENCES chapters (ch_id) ON DELETE CASCADE ON UPDATE CASCADE, 
+			CONSTRAINT courseID_fk_qd FOREIGN KEY (course_id) REFERENCES courses (course_id) ON DELETE CASCADE ON UPDATE CASCADE,
+			CONSTRAINT examID_FK_qd FOREIGN KEY (exam_id) REFERENCES exam_board (exam_id) ON DELETE CASCADE ON UPDATE CASCADE,
+			CONSTRAINT refID_FK_qd FOREIGN KEY (ref_id) REFERENCES reference (ref_id) ON DELETE CASCADE ON UPDATE CASCADE, 
+			CONSTRAINT techerID_Fk_qd FOREIGN KEY (teacher_id) REFERENCES teachers (teacher_id) ON DELETE SET NULL ON UPDATE CASCADE
 			);
 
 CREATE TABLE IF NOT EXISTS question_paper ( 
@@ -146,9 +146,9 @@ CREATE TABLE IF NOT EXISTS question_paper (
 			mark_question varchar(15),
 			collected_ans INTEGER,
 			PRIMARY KEY (qus_id),
-			CONSTRAINT question_bankidFK_Qpaper FOREIGN KEY (qus_bank_id) REFERENCES questions_bank (qus_bank_id),
-			CONSTRAINT exam_ID_FK_Qpaper FOREIGN KEY (exam_id) REFERENCES exam_board (exam_id),
-			CONSTRAINT studentID_FK_Qpaper FOREIGN KEY (student_id) REFERENCES students (student_id)
+			CONSTRAINT question_bankidFK_Qpaper FOREIGN KEY (qus_bank_id) REFERENCES questions_bank (qus_bank_id) ON DELETE CASCADE ON UPDATE CASCADE,
+			CONSTRAINT exam_ID_FK_Qpaper FOREIGN KEY (exam_id) REFERENCES exam_board (exam_id) ON DELETE CASCADE ON UPDATE CASCADE,
+			CONSTRAINT studentID_FK_Qpaper FOREIGN KEY (student_id) REFERENCES students (student_id) ON DELETE CASCADE ON UPDATE CASCADE
 			);
 
 CREATE TABLE IF NOT EXISTS exam_info (
@@ -161,7 +161,7 @@ CREATE TABLE IF NOT EXISTS exam_info (
 			score varchar(255),
 			grade varchar(255), 
 			PRIMARY KEY (info_id),
-			CONSTRAINT studentIdFk_ES FOREIGN KEY (student_id) REFERENCES students (student_id) 
+			CONSTRAINT studentIdFk_ES FOREIGN KEY (student_id) REFERENCES students (student_id) ON DELETE CASCADE ON UPDATE CASCADE
 			);
 
 CREATE TABLE IF NOT EXISTS email_verification ( 
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS email_verification (
 			verification_code  varchar(255) NOT NULL,
             verification_status  varchar(255),
 			PRIMARY KEY (verification_id),
-			CONSTRAINT userd_fk_verification  FOREIGN KEY (user_id) REFERENCES users (user_id) 
+			CONSTRAINT userd_fk_verification  FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE
 			);
 
 CREATE TABLE IF NOT EXISTS persistent_logins (

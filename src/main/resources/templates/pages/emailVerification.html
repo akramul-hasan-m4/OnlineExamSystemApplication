@@ -83,7 +83,7 @@
 	<div class="container" ng-show="verified">
 		<h2>Please select one</h2>
 		<div class="btn-group btn-group-lg">
-			<button type="button" class="btn btn-primary" ng-click="clickTeacher()">I am a teacher</button>
+			<button type="button" class="btn btn-primary" ng-click="clickTeacher()" >I am a teacher</button>
 			<button type="button" class="btn btn-success" ng-click="clickStudent()">I am a student</button>
 		</div>
 	</div>
@@ -91,22 +91,25 @@
 		<h2><strong>Please contact with us</strong></h2>
 	</div>
 	<div class="container" ng-show="studentMsg">
-		<form id="vericationform" class="form-horizontal" role="form" method="post">
+		<form id="vericationform" name="myForm" class="form-horizontal" role="form" method="post">
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="courseId" th:text="#{commons.CourseName.label}"></label>
 				<div class="col-md-6">
-					<select requird = "true" id="selectedCourse" name="selectedCourse" ng-model="selectedCourse"  class="form-control" title="select course">
+					<select requird = "true" id="selectedCourse" name="selectedCourse" ng-model="selectedCourse"  class="form-control" title="select course" required="true">
+						<option></option>
 						<option ng-repeat="courses in allCourses" value="{{courses.courseName}}">{{courses.courseName}}</option>
 					</select>
+					<span style="color:red" >{{cmsg}}</span>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="batchNo" th:text="#{commons.BatchNo.label}"></label>
 				<div class="col-md-6">
-					<select id="batchNo" name="batchNo" class="form-control" ng-model="batchId">
+					<select id="batchNo" name="batchNo" class="form-control" ng-model="batchId" required="true">
 						<option></option>
 						<option ng-repeat="batch in allbatches" value="{{batch.batchId}}">{{batch.batchNo}}</option>
 					</select>
+					<span style="color:red" >{{bmsg}}</span>
 				</div>
 			</div>
 			<div class="form-group">

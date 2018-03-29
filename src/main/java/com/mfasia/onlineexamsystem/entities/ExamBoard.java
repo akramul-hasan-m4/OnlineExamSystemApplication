@@ -35,7 +35,7 @@ public class ExamBoard implements Serializable {
 
 	@JsonIgnoreProperties({"description"})
 	@JsonUnwrapped
-	@ManyToOne( cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "course_id")
 	private Course courses;
 

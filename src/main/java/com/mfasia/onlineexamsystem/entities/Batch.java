@@ -12,9 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -31,11 +29,9 @@ public class Batch implements Serializable {
 	private Long batchId;
 	
 	@Column
-	@NotEmpty
 	private Long batchNo;
 	
 	@Column
-	@NotEmpty
 	private Long seatLimit;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="batchs")

@@ -8,6 +8,7 @@ SELECT 2 ,'Teacher', 'Teacher', 'Teacher@gmail.com', '01919223355','$2a$10$wjy/s
 -- Initial Data for roles
 INSERT INTO roles(role_id,role_name) SELECT 1 ,'Admin' where NOT EXISTS (SELECT * FROM roles WHERE role_id = 1);
 INSERT INTO roles(role_id,role_name) SELECT 2,'Teacher' where NOT EXISTS (SELECT * FROM roles WHERE role_id = 2);
+INSERT INTO roles(role_id,role_name) SELECT 3,'Student' where NOT EXISTS (SELECT * FROM roles WHERE role_id = 3);
 
 -- Initial Data for users_role
 INSERT INTO users_roles(user_roleid, role_id, user_id) SELECT 1, 1, 1 where NOT EXISTS (SELECT * FROM users_roles WHERE user_roleid = 1);
@@ -101,7 +102,8 @@ SELECT 19, 1, null, 1, null, 1, '2018-02-20', 'In which of the following package
 INSERT INTO questions_bank (qus_bank_id, teacher_id, book_id, course_id, ch_id, ref_id, question_created_date, question_title, option1, option2, option3, option4, ans) 
 SELECT 20, 1, null, 1, null, 1, '2018-02-20', 'Exception generated in try block is caught in ........... block.', 'catch', 'throw', 'throws', 'finally', 1 where NOT EXISTS (SELECT * FROM questions_bank WHERE qus_bank_id = 20);
 
---initial data for exam board
+--initial data for batchs
+INSERT INTO batchs (batch_id, batch_no, seat_limit) SELECT 1, 1, 30 where NOT EXISTS (SELECT * FROM batchs WHERE batch_id = 1);
 
 
 

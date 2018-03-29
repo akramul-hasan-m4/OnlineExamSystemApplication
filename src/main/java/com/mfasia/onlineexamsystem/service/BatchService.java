@@ -1,6 +1,7 @@
 package com.mfasia.onlineexamsystem.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -28,5 +29,9 @@ public class BatchService {
 	@Transactional
 	public void deleteBatch (Long batchId) {
 		batchRepo.delete(batchId);
+	}
+	
+	public Optional<Batch> findByBatchId (Long batchId) {
+		return Optional.of(batchRepo.findOne(batchId));
 	}
 }

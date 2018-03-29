@@ -53,7 +53,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		boolean isAdmin = false;
 		boolean isStudent = false;
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-
 		for (GrantedAuthority grantedAuthority : authorities) {
 			if (grantedAuthority.getAuthority().equals("ROLE_TEACHER")) {
 				isTeacher = true;

@@ -1,5 +1,7 @@
 package com.mfasia.onlineexamsystem.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +18,10 @@ public class RolesService {
 	@Transactional
 	public Role findByRolename (String roleName) {
 		return rolesRepository.findByRoleName(roleName);
+	}
+	
+	@Transactional
+	public List<Role> getAllRole(){
+		return rolesRepository.findAll();
 	}
 }

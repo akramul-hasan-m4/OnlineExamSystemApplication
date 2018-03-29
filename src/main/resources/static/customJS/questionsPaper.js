@@ -82,7 +82,7 @@ todos.controller('quesPaperController', function($scope, $http) {
 				$scope.showResult = true ;
 				$scope.showQus = false ;
 				$scope.resultParcentage = ($scope.correctAns / $scope.totalQus) * 100;
-		});
+			});
 		}
 	}
 

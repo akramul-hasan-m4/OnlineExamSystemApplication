@@ -86,7 +86,6 @@ app.controller('myCtrl', function($scope, $http,$window, $location, multipartFor
 	}
 	
 	$scope.verify = function (verificationCode) {
-		console.log('verificationCode '+ verificationCode)
 		$http({
 			method : "GET",
 			url : "/user/code/"+verificationCode
@@ -123,9 +122,11 @@ app.controller('myCtrl', function($scope, $http,$window, $location, multipartFor
 	});
 	
 	$scope.clickTeacher = function () {
-		$scope.verified = false;
-		$scope.teacherMsg = true;
-		$scope.studentMsg = false;
+		if (confirm('Are you sure ?')) {
+			$scope.verified = false;
+			$scope.teacherMsg = true;
+			$scope.studentMsg = false;
+		}
 	}
 	
 	$scope.clickStudent = function () {
@@ -135,30 +136,39 @@ app.controller('myCtrl', function($scope, $http,$window, $location, multipartFor
 	}
 	
 	$scope.savestudentInfo = function (){
-		var typeObj = {
-				users : {
-					userId : $scope.userId
-				},
-				batchs :{
-					batchId : $scope.batchId
-				},
-				selectedCourse : $scope.selectedCourse
+		if ($scope.selectedCourse != "" && $scope.selectedCourse != undefined){
+			if ($scope.batchId != "" && $scope.batchId != undefined){
+					var typeObj = {
+							users 		: {
+								userId 	: $scope.userId
+							},
+							batchs 		:{
+								batchId : $scope.batchId
+							},
+							selectedCourse : $scope.selectedCourse
+					}
+					typeObj = JSON.stringify(typeObj);
+		console.log('userid'+$scope.userId);
+					$http({
+						method: 'POST',
+						url: '/student',
+						data: typeObj,
+						headers: {'Content-Type': 'application/json'}
+					}).then(function(response) {
+						$scope.SuccessMSG = response.headers('SuccessMSG');
+						$window.location.assign('/pages/login');
+						$scope.messageAlart();
+					}, function myError(response) {
+						$scope.ErrorMSG = response.headers('ErrorMSG');
+						$scope.messageAlart();
+					});
+				} else {
+					$scope.cmsg = '';
+					$scope.bmsg = 'Please Select a batch';
+				}
+		} else {
+			$scope.cmsg = 'Please Select a course';
 		}
-		typeObj = JSON.stringify(typeObj);
-		
-		$http({
-			method: 'POST',
-			url: '/student',
-			data: typeObj,
-			headers: {'Content-Type': 'application/json'}
-		}).then(function(response) {
-			$scope.SuccessMSG = response.headers('SuccessMSG');
-			$window.location.assign('/pages/login');
-			$scope.messageAlart();
-		}, function myError(response) {
-			$scope.ErrorMSG = response.headers('ErrorMSG');
-			$scope.messageAlart();
-		});
 	}
 	
 });
