@@ -13,9 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 
@@ -30,7 +28,6 @@ public class ExamInfo implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long infoId;
 
-	@JsonManagedReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "student_id")
 	private Student students;
@@ -39,15 +36,12 @@ public class ExamInfo implements Serializable {
 	private String generatedStId;
 
 	@Column
-	@NotEmpty
 	private String startTime;
 
 	@Column
-	@NotEmpty
 	private String endTime;
 
 	@Column
-	@NotEmpty
 	private Date date;
 
 	@Column

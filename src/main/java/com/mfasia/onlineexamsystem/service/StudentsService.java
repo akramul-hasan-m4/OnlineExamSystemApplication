@@ -28,4 +28,9 @@ public class StudentsService {
 	public List<Student> getAllStudents (){
 		return studentRepo.findAll();
 	}
+	
+	@Transactional
+	public Student findByStudentId (Long studentId) {
+		return studentRepo.findOne(studentId);
+	}
 }

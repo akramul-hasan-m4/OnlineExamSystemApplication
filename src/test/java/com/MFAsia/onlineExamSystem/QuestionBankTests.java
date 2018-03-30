@@ -23,4 +23,5 @@ public class QuestionBankTests {
 		ResponseEntity<List<QuestionsBank>> list =  qb.getAllQuesions();
 		((Iterable<QuestionsBank>) list).forEach(l -> System.out.println(l.getAns().toString()));
 	}
+
 }

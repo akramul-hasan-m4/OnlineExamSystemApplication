@@ -3,8 +3,6 @@ app.controller('myCtrl', function($scope, $http) {
 	
 	$scope.disableCombo = true ;
 	$scope.disableRef = true ;
-	$scope.SuccessMSG = '';
-	$scope.ErrorMSG = '';
 	
 	$http({
 		method : "GET",

@@ -148,7 +148,7 @@
 								 class="btn btn-primary" th:text="#{commons.Save.btn}"></button>
 								<button ng-show="rowData" type="submit" ng-click="updateDefinitionInfo()" data-dismiss="modal" 
 								class="btn btn-success" th:text="#{commons.update.btn}"></button>
-								<input type="reset" class="btn btn-danger"  th:value="#{commons.Reset.btn}"></input>
+								<input type="reset" class="btn btn-danger" ng-click="reset()" th:value="#{commons.Reset.btn}"></input>
 							</div>
 						</div>
 					</form>
