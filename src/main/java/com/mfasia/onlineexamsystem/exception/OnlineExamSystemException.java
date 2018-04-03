@@ -24,6 +24,5 @@ public class OnlineExamSystemException extends Exception{
 	public OnlineExamSystemException(Throwable cause) {
 		super(cause);
 	}
-
 	
 }

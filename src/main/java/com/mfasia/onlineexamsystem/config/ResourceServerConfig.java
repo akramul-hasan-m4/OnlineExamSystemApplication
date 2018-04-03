@@ -57,9 +57,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter{
 			.tokenRepository(persistentTokenRepository())
 		.and()
 			.csrf()
-			.disable()
-		;
-		
+			.disable();
 	}
 	
 	@Bean
@@ -74,8 +72,6 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter{
 		auth.parentAuthenticationManager(authenticationManager)
 		.userDetailsService(customUserDetailsService)
 		.passwordEncoder(bCryptPasswordEncoder);
-
 	}
-
 	
 }

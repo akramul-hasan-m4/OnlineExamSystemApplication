@@ -7,7 +7,7 @@
 	<meta name="description" content=""></meta>
 	<meta name="author" content=""></meta>
 
-	<title>Course Details</title>
+	<title>User details</title>
 	<span th:include="/includes/commons :: #commons"></span>
 	<script type="text/javascript" src="/customJS/userinfo.js" th:src="@{/customJS/userinfo.js}"/>
 	
@@ -29,7 +29,7 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header" style="color : green;"><label th:text="#{course.courseheader.title}"></label></h1>
+					<h1 class="page-header" style="color : green;"><label th:text="#{user.userheader.title}"></label></h1>
 				</div>
 			</div>
 			<div class="row">
@@ -49,8 +49,18 @@
 								<thead>
 									<tr>
 										<th th:text="#{commons.SlNo.label}"></th>
-										<th th:text="#{commons.CourseName.label}"></th>
-										<th th:text="#{course.description.label}"></th>
+										<th >Firstname</th>
+										<th>Lastname</th>
+										<th>Email</th>
+										<th>phone</th>
+										<th>photo</th>
+										<th>password</th>
+										<th>Gender</th>
+										<th>Current Address</th>
+										<th>Permanent Address</th>
+										<th>Status</th>
+										<th>Security Question</th>
+										<th>Answer</th>
 										<th th:text="#{commons.Action.label}"></th>
 										<th th:text="#{commons.Action.label}"></th>
 									</tr>
@@ -62,7 +72,7 @@
 										<td>{{x.lastName}}</td>
 										<td>{{x.email}}</td>
 										<td>{{x.phone}}</td>
-										<td>{{x.photo}}</td>
+										<td><img ng-src="/uploads/{{x.photo}}" class="avatar img-circle" alt="avatar" style="height: 100px; width: 100px" /></td>
 										<td>{{x.password}}</td>
 										<td>{{x.gender}}</td>
 										<td>{{x.currentAddress}}</td>

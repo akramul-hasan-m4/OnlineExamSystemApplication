@@ -25,4 +25,8 @@ public class ExamInfoService {
 		return examInfoRepository.findAll();
 	}
 
+	@Transactional
+	public ExamInfo findExamInfoByStudentId (Long studentId) {
+		return examInfoRepository.findByStudentsStudentId(studentId);
+	}
 }

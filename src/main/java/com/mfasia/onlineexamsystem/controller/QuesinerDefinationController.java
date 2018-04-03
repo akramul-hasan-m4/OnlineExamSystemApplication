@@ -33,7 +33,6 @@ import com.mfasia.onlineexamsystem.service.TeacherService;
 @RequestMapping("/questionerDefination")
 public class QuesinerDefinationController {
 	
-	
 	@Autowired private QuestionerDefinationService quseDefinationService;
 	@Autowired private MessageSource msgSource ;
 	@Autowired private TeacherService teacherService ;

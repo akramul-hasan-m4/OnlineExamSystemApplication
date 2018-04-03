@@ -12,5 +12,4 @@ public class PageController {
 	public String pageHandler (@PathVariable String page) {
 		return "/pages/"+page;
 	}
-	
 }

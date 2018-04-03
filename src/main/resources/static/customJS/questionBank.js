@@ -3,8 +3,6 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 	
 	$scope.disableCombo = true ;
 	$scope.disableRef = true ;
-	$scope.SuccessMSG = '';
-	$scope.ErrorMSG = '';
 	
 	$scope.allQuestion={};
 	$scope.loadTable = function (){
@@ -105,6 +103,8 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 	$scope.EditRow = function(data) {
 		$scope.rowData = data;
 		if (data != null) {
+			$scope.disableCombo = false ;
+			$scope.disableRef = false;
 			$scope.qusBankId = data.qusBankId;
 			$scope.courseId = data.courseId;
 			$scope.bookId = data.bookId
@@ -140,7 +140,7 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 		console.log(dataObj);
 		$http({
 			method : 'PUT',
-			url : '/quesionsBank/' + $scope.definationId,
+			url : '/quesionsBank/' + $scope.qusBankId,
 			data : dataObj,
 			headers : {
 				'Content-Type' : 'application/json'
@@ -190,12 +190,12 @@ app.controller('myCtrl', function($scope, $http, $timeout) {
 		$scope.bookId="";
 		$scope.chapterId="";
 		$scope.refId="";
-		$scope.questionTitle;
-		$scope.option1;
-		$scope.option2;
-		$scope.option3;
-		$scope.option4;
-		$scope.ans;
+		$scope.questionTitle = "";
+		$scope.option1 = "";
+		$scope.option2 = "";
+		$scope.option3 = "";
+		$scope.option4 = "";
+		$scope.ans = "";
 		$scope.disableCombo = true ;
 		$scope.disableRef = true ;
 	}

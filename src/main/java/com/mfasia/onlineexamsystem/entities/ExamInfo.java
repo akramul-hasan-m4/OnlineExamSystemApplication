@@ -1,6 +1,7 @@
 package com.mfasia.onlineexamsystem.entities;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -36,12 +37,13 @@ public class ExamInfo implements Serializable {
 	private String generatedStId;
 
 	@Column
-	private String startTime;
+	private Time startTime;
 
 	@Column
-	private String endTime;
+	private Time endTime;
 
 	@Column
+	@JsonFormat(pattern ="yyyy-MM-dd")
 	private Date date;
 
 	@Column

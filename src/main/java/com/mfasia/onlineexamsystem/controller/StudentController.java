@@ -41,7 +41,6 @@ public class StudentController {
 			headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.saveErrorMsg", null, null));
 			return ResponseEntity.noContent().headers(headers).build();
 		}
-		System.out.println("userid = "+student.getUsers().getUserId());
 		if(student.getUsers() !=null) {
 			User user = new User();
 			user.setUserId(student.getUsers().getUserId());
@@ -60,7 +59,6 @@ public class StudentController {
 				userRolesService.saveUserRole(userRole);
 				studentsService.saveStudent(students);
 			}
-		
 			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(student.getStudentId()).toUri();
 			headers.setLocation(location);

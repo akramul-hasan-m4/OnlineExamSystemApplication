@@ -6,9 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.mfasia.onlineexamsystem.entities.QuestionsBank;
 
+@Repository
 public interface QuestionBankRepository extends CrudRepository<QuestionsBank, Long>{
 
 	@Query(value ="SELECT b FROM QuestionsBank b WHERE "

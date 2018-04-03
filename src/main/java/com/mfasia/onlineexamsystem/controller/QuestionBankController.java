@@ -32,7 +32,6 @@ import com.mfasia.onlineexamsystem.service.TeacherService;
 @RequestMapping("/quesionsBank")
 public class QuestionBankController {
 	
-	
 	@Autowired private QuestionBankService quesService;
 	@Autowired private MessageSource msgSource ;
 	@Autowired private TeacherService teacherService ;
@@ -64,11 +63,17 @@ public class QuestionBankController {
 		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
 	
-	@PutMapping("/{id}")
-	public ResponseEntity<Object> updateQuestion (@RequestBody QuestionsBank questionbank, @PathVariable("id") Long qbid) {
-		Optional<QuestionsBank> findQus = quesService.findById(qbid);
+	@PutMapping("/{qbid}")
+	public ResponseEntity<Object> updateQuestion (@RequestBody QuestionsBank questionbank, @PathVariable Long qbid, Authentication authentication) {
+		Optional<QuestionsBank> qustion = quesService.findById(qbid);
+		User user = (User) authentication.getPrincipal();
+		Long userId = user.getUserId();
+		Teacher teacher = teacherService.findByuserId(userId);
+		if (teacher != null) {
+			questionbank.setTeachers(teacher);
+		}
 		HttpHeaders headers = new HttpHeaders();
-		if (!findQus.isPresent()) {
+		if (!qustion.isPresent()) {
 			headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.findByidErrorMsg", null, null)+qbid);
 			return ResponseEntity.notFound().headers(headers).build();
 		}
@@ -80,7 +85,7 @@ public class QuestionBankController {
 	}
 	
 	@DeleteMapping("/{bankId}")
-	public ResponseEntity<Void> deleteBook (@PathVariable Long bankId) {
+	public ResponseEntity<Void> deleteQuestion (@PathVariable Long bankId) {
 		Optional<QuestionsBank> findQusFromBank = quesService.findById(bankId);
 		HttpHeaders headers = new HttpHeaders();
 		if(bankId != null && findQusFromBank.isPresent()) {

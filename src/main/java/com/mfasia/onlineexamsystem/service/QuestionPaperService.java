@@ -122,4 +122,9 @@ public class QuestionPaperService {
 	public List<QuestionPaper> getAllQustions (){
 		return questionPaperRepo.findAll();
 	}
+	
+	@Transactional
+	public int countQuesforEachStudent (Long studentId) {
+		return  questionPaperRepo.countQuesForEachStudent(studentId);
+	}
 }

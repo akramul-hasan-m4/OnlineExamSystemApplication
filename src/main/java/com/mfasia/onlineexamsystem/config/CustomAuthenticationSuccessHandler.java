@@ -85,8 +85,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	protected RedirectStrategy getRedirectStrategy() {
 		return redirectStrategy;
 	}
-
-	
 	
 }
 

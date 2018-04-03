@@ -27,7 +27,6 @@ import com.mfasia.onlineexamsystem.service.ChapterService;
 @RestController
 @RequestMapping("/chapter")
 public class ChapterController {
-
 	
 	@Autowired private ChapterService chaterService;
 	@Autowired private MessageSource msgSource ;

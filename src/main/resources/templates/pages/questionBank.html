@@ -107,8 +107,7 @@
 							<label class="col-md-4 control-label" for="bookId" th:text="#{commons.BookName.label}"></label>
 							<div class="col-md-6">
 								<select id="bookId" name="bookId" class="form-control" ng-change="chapters(bookId)" ng-model="bookId" ng-disabled="disableCombo">
-									<option></option>
-									<option ng-repeat="books in booksFromSelectedCourse" value="{{books.bookId}}">{{books.bookName}}</option>
+									<option ng-repeat="books in booksFromSelectedCourse" ng-value="{{books.bookId}}">{{books.bookName}}</option>
 								</select>
 							</div>
 						</div> 
@@ -116,7 +115,7 @@
 							<label class="col-md-4 control-label" for="chapterId" th:text="#{commons.ChapterName.label}"></label>
 							<div class="col-md-6">
 								<select id="chapterId" name="chapterId" class="form-control" ng-model="chapterId" ng-disabled="disableCombo">
-									<option ng-repeat="chapters in chaptersFromSelectedBook" value="{{chapters.chId}}">{{chapters.chapterName}}</option>
+									<option ng-repeat="chapters in chaptersFromSelectedBook" ng-value="{{chapters.chId}}">{{chapters.chapterName}}</option>
 								</select>
 							</div>
 						</div>
@@ -124,7 +123,7 @@
 							<label class="col-md-4 control-label" for="refId" th:text="#{commons.Reference.label}"></label>
 							<div class="col-md-6">
 								<select id="refId" name="refId" ng-change="ref(refId)" class="form-control" ng-model="refId" ng-disabled="disableRef">
-									<option ng-repeat="ref in referenceFromSelectedCourse" value="{{ref.refId}}" >{{ref.referenceHeader}}</option>
+									<option ng-repeat="ref in referenceFromSelectedCourse" ng-value="{{ref.refId}}" >{{ref.referenceHeader}}</option>
 								</select>
 							</div>
 						</div>

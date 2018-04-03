@@ -1,6 +1,10 @@
 package com.mfasia.onlineexamsystem.controller;
 
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mfasia.onlineexamsystem.commons.Messages;
 import com.mfasia.onlineexamsystem.entities.Course;
 import com.mfasia.onlineexamsystem.entities.ExamBoard;
+import com.mfasia.onlineexamsystem.entities.ExamInfo;
 import com.mfasia.onlineexamsystem.entities.QuestionPaper;
 import com.mfasia.onlineexamsystem.entities.QuestionsBank;
 import com.mfasia.onlineexamsystem.entities.Student;
@@ -27,6 +32,7 @@ import com.mfasia.onlineexamsystem.entities.User;
 import com.mfasia.onlineexamsystem.models.ResultCounter;
 import com.mfasia.onlineexamsystem.service.CourseService;
 import com.mfasia.onlineexamsystem.service.ExamBoardService;
+import com.mfasia.onlineexamsystem.service.ExamInfoService;
 import com.mfasia.onlineexamsystem.service.QuestionBankService;
 import com.mfasia.onlineexamsystem.service.QuestionPaperService;
 import com.mfasia.onlineexamsystem.service.StudentsService;
@@ -41,6 +47,7 @@ public class QuestionPaperController {
 	@Autowired private StudentsService studentsService ;
 	@Autowired private ExamBoardService examBoardService;
 	@Autowired private CourseService courseService;
+	@Autowired private ExamInfoService examInfoService;
 
 	@GetMapping("/showCreatedQuestion")
 	public ResponseEntity<List<QuestionsBank>> createQuestionPaper( Authentication authentication) {
@@ -48,6 +55,10 @@ public class QuestionPaperController {
 		Long userId = user.getUserId();
 		Student studentInfo = studentsService.findStudentByUserId(userId);
 		Long studentId = studentInfo.getStudentId();
+		ExamInfo examinfo = examInfoService.findExamInfoByStudentId(studentId);
+		if (examinfo == null && studentId > 0) {
+			saveExamInfo(studentId);
+		}
 		Course courseinfo = courseService.findByCourseName(studentInfo.getSelectedCourse());
 		ExamBoard examBoard = examBoardService.findActiveExamBycourseId(courseinfo.getCourseId());
 		Long examid = examBoard.getExamId();
@@ -63,7 +74,7 @@ public class QuestionPaperController {
 	}
 
 	@PutMapping
-	private Map<String, Integer> collectAns (@RequestBody List<QuestionPaper> paper,  Authentication authentication) {
+	private Map<String, Integer> collectAns (@RequestBody List<QuestionPaper> paper, Authentication authentication) {
 		User user = (User) authentication.getPrincipal();
 		Long userId = user.getUserId();
 		Student studentInfo = studentsService.findStudentByUserId(userId);
@@ -81,10 +92,69 @@ public class QuestionPaperController {
 				}
 			});
 		}
-		resultStatus.put("CorrectAns", resultCounter.getCorrectResult());
-		resultStatus.put("wrongAns", resultCounter.getFalseResult());
+		int correctAns = resultCounter.getCorrectResult();
+		int falseAns = resultCounter.getFalseResult();
+		updateExaminfo(studentId, correctAns);
+		resultStatus.put("CorrectAns", correctAns);
+		resultStatus.put("wrongAns", falseAns);
 		
 		return resultStatus;
+	}
+	
+	private void saveExamInfo (Long studentId) {
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		String time = sdf.format(cal.getTime());
+		Time startTime = Time.valueOf(time) ;
+		Student studentinfo = studentsService.findByStudentId(studentId);
+		Student student = new Student();
+		student.setStudentId(studentinfo.getStudentId());
+		
+		ExamInfo examInfo = new ExamInfo();
+		examInfo.setStudents(student);
+		examInfo.setGeneratedStId(studentinfo.getGeneratedStId());
+		examInfo.setStartTime(startTime);
+		examInfo.setDate(new Date());
+		examInfoService.saveExamInfo(examInfo);
+	}
+	
+	private void updateExaminfo (Long studentId, int correctAns) {
+		ExamInfo examinfo = examInfoService.findExamInfoByStudentId(studentId);
+		int totalQues = questionPaperService.countQuesforEachStudent(studentId);
+		Student student = new Student();
+		student.setStudentId(studentId);
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		String time = sdf.format(cal.getTime());
+		Time endTime = Time.valueOf(time) ;
+		float mark = (correctAns * 100.0f) / totalQues;
+		String score = String.valueOf(mark)+"%" ;
+		String grade = null ;
+		if (mark >= 80) {
+			grade = "A+";
+		}else if (mark >= 70) {
+			grade = "A";
+		}else if (mark >= 60) {
+			grade = "A-";
+		}else if (mark >= 50) {
+			grade = "B";
+		}else if (mark >= 33) {
+			grade = "C";
+		}else if (mark < 33) {
+			grade = "F";
+		}
+		if (examinfo != null) {
+			ExamInfo info = new ExamInfo();
+			info.setInfoId(examinfo.getInfoId());
+			info.setStudents(student);
+			info.setGeneratedStId(examinfo.getGeneratedStId());
+			info.setStartTime(examinfo.getStartTime());
+			info.setEndTime(endTime);
+			info.setDate(examinfo.getDate());
+			info.setScore(score);
+			info.setGrade(grade);
+			examInfoService.saveExamInfo(info);
+		}
 	}
 	
 	@GetMapping

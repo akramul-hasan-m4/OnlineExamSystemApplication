@@ -7,25 +7,14 @@
 <meta name="description" content=""></meta>
 <meta name="author" content=""></meta>
 
-<title>Question Definition</title>
+<title>profile</title>
 <span th:include="/includes/commons :: #commons"></span>
-<script type="text/javascript" src="/customJS/questionerDefination.js"
-	th:src="@{/customJS/questionerDefination.js}" />
+<script type="text/javascript" src="/customJS/userinfo.js" th:src="@{/customJS/userinfo.js}" />
 </head>
 
 <body ng-controller="myCtrl" ng-init="loadDefination()">
 	<div id="wrapper">
 		<!-- Navigation -->
-		<div sec:authorize="hasRole('ROLE_ADMIN')">
-			<span th:include="/includes/adminPanelNav :: #adminNav"></span>
-		</div>
-		<div sec:authorize="hasRole('ROLE_TEACHER')">
-			<span th:include="/includes/teachersNav :: #teachersNav"></span>
-		</div>
-		<div sec:authorize="hasRole('ROLE_STUDENT')">
-			<span th:include="/includes/studentNav :: #studentNav"></span>
-		</div>
-		
 		<!-- Message -->
 		<div ng-show="SuccessMSG" class="alert alert-success"
 			id="success-alert">
@@ -48,16 +37,13 @@
 				<div class="container">
 					<div class="row">
 						<!-- left column -->
-
-
 						<!-- edit form column -->
 						<div class="col-md-9 personal-info">
 							<form class="form-horizontal" role="form">
 								<div class="form-group">
 									<div class="text-center">
-										<img src="/images/world-lit1.jpg" class="avatar img-circle"
-											alt="avatar" style="height: 150px; width: 150px" />
-											<hr/>
+										<img ng-src="/images/{{photo}}" class="avatar img-circle" alt="avatar" style="height: 150px; width: 150px" />
+										<hr/>
 										<label class="col-lg-3 control-label">Upload a different photo</label>
 										<div class="col-lg-8">
 											<input type="file" class="form-control" />
@@ -65,57 +51,94 @@
 									</div>
 								</div>
 								<div class="form-group">
+									<div class="col-lg-8">
+										<input class="form-control" type="hidden"  />
+									</div>
+								</div>
+								<div class="form-group">
 									<label class="col-lg-3 control-label">First name:</label>
 									<div class="col-lg-8">
-										<input class="form-control" type="text" value="Jane" />
+										<input class="form-control" type="text" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-lg-3 control-label">Last name:</label>
 									<div class="col-lg-8">
-										<input class="form-control" type="text" value="Bishop" />
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-lg-3 control-label">Company:</label>
-									<div class="col-lg-8">
-										<input class="form-control" type="text" value="" />
+										<input class="form-control" type="text" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-lg-3 control-label">Email:</label>
 									<div class="col-lg-8">
-										<input class="form-control" type="text"
-											value="janesemail@gmail.com" />
+										<input class="form-control" type="email" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-lg-3 control-label">Phone:</label>
+									<div class="col-lg-8">
+										<input class="form-control" type="text"/>
 									</div>
 								</div>
 
-								<div class="form-group">
-									<label class="col-md-3 control-label">Username:</label>
-									<div class="col-md-8">
-										<input class="form-control" type="text" value="janeuser" />
+								<div style="margin-bottom: 25px" class="form-group">
+									<label class="col-md-4 control-label" for="radios">Gender</label>
+									<div class="col-md-4" >
+										<label class="radio-inline" for="radios-0"> 
+											<input type="radio" ng-model="userInfo.gender" name="radios" id="radios-0" ng-value="'Male'" /> Male
+										</label> 
+										<label class="radio-inline" for="radios-1"> 
+											<input type="radio" ng-model="userInfo.gender" name="radios" id="radios-1" ng-value="'Female'" /> Female
+										</label>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-3 control-label">Password:</label>
 									<div class="col-md-8">
-										<input class="form-control" type="password"
-											value="11111122333" />
+										<input class="form-control" type="password"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-3 control-label">Confirm password:</label>
 									<div class="col-md-8">
-										<input class="form-control" type="password"
-											value="11111122333" />
+										<input class="form-control" type="password"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Current Address:</label>
+									<div class="col-md-8">
+										<input class="form-control" type="text"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Permanent Address:</label>
+									<div class="col-md-8">
+										<input class="form-control" type="text"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Status:</label>
+									<div class="col-md-8">
+										<input class="form-control" type="text"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Security Question:</label>
+									<div class="col-md-8">
+										<select ng-required="true" id="securityQuestion" name="securityQuestion"  ng-options="x for x in securityQuestions" ng-model="userInfo.securityQuestion" class="form-control" title="select Security Question">
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Security Answer:</label>
+									<div class="col-md-8">
+										<input class="form-control" type="text"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-3 control-label"></label>
 									<div class="col-md-8">
-										<input type="button" class="btn btn-primary"
-											value="Save Changes" /> <span></span> <input type="reset"
-											class="btn btn-default" value="Cancel" />
+										<input type="button" class="btn btn-primary" value="Save Changes" /> <span></span> 
+										<input type="reset" class="btn btn-default" onclick="history.back(-1)" value="Cancel" />
 									</div>
 								</div>
 							</form>
@@ -123,11 +146,8 @@
 					</div>
 				</div>
 				<hr />
-
 			</div>
 		</div>
 	</div>
-
-
 </body>
 </html>
