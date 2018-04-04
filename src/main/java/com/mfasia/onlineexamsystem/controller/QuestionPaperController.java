@@ -55,15 +55,14 @@ public class QuestionPaperController {
 		Long userId = user.getUserId();
 		Student studentInfo = studentsService.findStudentByUserId(userId);
 		Long studentId = studentInfo.getStudentId();
-		ExamInfo examinfo = examInfoService.findExamInfoByStudentId(studentId);
-		if (examinfo == null && studentId > 0) {
-			saveExamInfo(studentId);
-		}
 		Course courseinfo = courseService.findByCourseName(studentInfo.getSelectedCourse());
 		ExamBoard examBoard = examBoardService.findActiveExamBycourseId(courseinfo.getCourseId());
 		Long examid = examBoard.getExamId();
 		Long studentIdfromQpaper = questionPaperService.findStudentIdFromQusPaper(studentId);
-		
+		ExamInfo examinfo = examInfoService.findExamInfoByStudentId(studentId);
+		if (examinfo == null && studentId > 0) {
+			saveExamInfo(studentId);
+		}
 		List<QuestionsBank> qusListForExam = questionPaperService.showgeneratedQusList(examid, studentId, studentIdfromQpaper);
 		if (qusListForExam.isEmpty()) {
 			HttpHeaders headers = new HttpHeaders();

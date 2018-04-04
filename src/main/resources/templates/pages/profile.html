@@ -9,10 +9,10 @@
 
 <title>profile</title>
 <span th:include="/includes/commons :: #commons"></span>
-<script type="text/javascript" src="/customJS/userinfo.js" th:src="@{/customJS/userinfo.js}" />
+<script type="text/javascript" src="/customJS/profile.js" th:src="@{/customJS/profile.js}" />
 </head>
 
-<body ng-controller="myCtrl" ng-init="loadDefination()">
+<body ng-controller="myCtrl" ng-init="loadUserInfo()">
 	<div id="wrapper">
 		<!-- Navigation -->
 		<!-- Message -->
@@ -42,7 +42,7 @@
 							<form class="form-horizontal" role="form">
 								<div class="form-group">
 									<div class="text-center">
-										<img ng-src="/images/{{photo}}" class="avatar img-circle" alt="avatar" style="height: 150px; width: 150px" />
+										<img ng-src="/uploads/{{photo}}" class="avatar img-circle" alt="avatar" style="height: 150px; width: 150px" />
 										<hr/>
 										<label class="col-lg-3 control-label">Upload a different photo</label>
 										<div class="col-lg-8">
@@ -58,25 +58,25 @@
 								<div class="form-group">
 									<label class="col-lg-3 control-label">First name:</label>
 									<div class="col-lg-8">
-										<input class="form-control" type="text" />
+										<input class="form-control" type="text" ng-model="firstName"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-lg-3 control-label">Last name:</label>
 									<div class="col-lg-8">
-										<input class="form-control" type="text" />
+										<input class="form-control" type="text" ng-model="lastName"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-lg-3 control-label">Email:</label>
 									<div class="col-lg-8">
-										<input class="form-control" type="email" />
+										<input class="form-control" type="email" ng-model="email"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-lg-3 control-label">Phone:</label>
 									<div class="col-lg-8">
-										<input class="form-control" type="text"/>
+										<input class="form-control" type="text" ng-model="phone"/>
 									</div>
 								</div>
 
@@ -84,17 +84,17 @@
 									<label class="col-md-4 control-label" for="radios">Gender</label>
 									<div class="col-md-4" >
 										<label class="radio-inline" for="radios-0"> 
-											<input type="radio" ng-model="userInfo.gender" name="radios" id="radios-0" ng-value="'Male'" /> Male
+											<input type="radio" ng-model="gender" name="radios" id="radios-0" ng-value="'Male'" /> Male
 										</label> 
 										<label class="radio-inline" for="radios-1"> 
-											<input type="radio" ng-model="userInfo.gender" name="radios" id="radios-1" ng-value="'Female'" /> Female
+											<input type="radio" ng-model="gender" name="radios" id="radios-1" ng-value="'Female'" /> Female
 										</label>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-3 control-label">Password:</label>
 									<div class="col-md-8">
-										<input class="form-control" type="password"/>
+										<input class="form-control" type="password" ng-model="password"/>
 									</div>
 								</div>
 								<div class="form-group">
@@ -106,32 +106,32 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label">Current Address:</label>
 									<div class="col-md-8">
-										<input class="form-control" type="text"/>
+										<input class="form-control" type="text" ng-model="currentAddress"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-3 control-label">Permanent Address:</label>
 									<div class="col-md-8">
-										<input class="form-control" type="text"/>
+										<input class="form-control" type="text" ng-model="permanentAddress"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-3 control-label">Status:</label>
 									<div class="col-md-8">
-										<input class="form-control" type="text"/>
+										<input class="form-control" type="text" ng-model="status" ng-disabled="true"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-3 control-label">Security Question:</label>
 									<div class="col-md-8">
-										<select ng-required="true" id="securityQuestion" name="securityQuestion"  ng-options="x for x in securityQuestions" ng-model="userInfo.securityQuestion" class="form-control" title="select Security Question">
+										<select ng-required="true" id="securityQuestion" name="securityQuestion"  ng-options="x for x in securityQuestions" ng-model="securityQuestion" class="form-control" title="select Security Question">
 										</select>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-3 control-label">Security Answer:</label>
 									<div class="col-md-8">
-										<input class="form-control" type="text"/>
+										<input class="form-control" type="text" ng-model="securityAns"/>
 									</div>
 								</div>
 								<div class="form-group">
