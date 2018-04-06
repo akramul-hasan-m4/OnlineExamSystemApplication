@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -100,10 +103,31 @@ public class UserController {
 		return new File(pathArr[0]).getPath()+mainPath;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("/userInfo")
-	public ResponseEntity<User> userProfileInfo (Authentication authentication){
-		User user = (User) authentication.getPrincipal();
+	public ResponseEntity<User> userProfileInfo (Authentication authentication, OAuth2Authentication oauthentication){
+		User user = null;
+		try {
+			user = (User) authentication.getPrincipal();
+		}catch (Exception e) {
+			LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) oauthentication.getUserAuthentication().getDetails();
+			String email = (String) properties.get("email");
+			user = userService.findByEmailAddress(email);
+		}
 		return new ResponseEntity<>(user,HttpStatus.OK);
 		
+	}
+	
+	@DeleteMapping("/{userId}")
+	public ResponseEntity<Void> deleteUser (@PathVariable Long userId) {
+		User user = userService.findByuserId(userId);
+		HttpHeaders headers = new HttpHeaders();
+		if(user != null) {
+			headers.add(Messages.SUCCESS_MSG, msgSource.getMessage("commons.deleteSuccessMsg", null, null));
+			userService.deleteUser(userId);
+			return ResponseEntity.noContent().headers(headers).build();
+		}
+		headers.add(Messages.ERROR_MSG, msgSource.getMessage("commons.deleteFailedMsg ", null, null));
+		return ResponseEntity.notFound().headers(headers).build();
 	}
 }

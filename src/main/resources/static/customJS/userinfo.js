@@ -171,4 +171,20 @@ app.controller('myCtrl', function($scope, $http,$window, $location, multipartFor
 		}
 	}
 	
+	$scope.DeleteRow = function(userId) {
+		if (confirm('Are you sure to delete this User ?')) {
+			$http({
+				method : 'DELETE',
+				url : '/user/' + userId
+			}).then(function(response) {
+				$scope.SuccessMSG = response.headers('SuccessMSG');
+				$scope.messageAlart();
+				$scope.loadTable();
+			}, function myError(response) {
+				$scope.ErrorMSG = response.headers('ErrorMSG');
+				$scope.messageAlart();
+			});
+		}
+	}
+	
 });

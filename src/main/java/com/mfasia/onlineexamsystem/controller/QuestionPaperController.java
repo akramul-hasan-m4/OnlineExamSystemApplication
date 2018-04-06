@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +38,7 @@ import com.mfasia.onlineexamsystem.service.ExamInfoService;
 import com.mfasia.onlineexamsystem.service.QuestionBankService;
 import com.mfasia.onlineexamsystem.service.QuestionPaperService;
 import com.mfasia.onlineexamsystem.service.StudentsService;
+import com.mfasia.onlineexamsystem.service.UserService;
 
 @RestController
 @RequestMapping("/questionPaper")
@@ -48,11 +51,21 @@ public class QuestionPaperController {
 	@Autowired private ExamBoardService examBoardService;
 	@Autowired private CourseService courseService;
 	@Autowired private ExamInfoService examInfoService;
+	@Autowired private UserService userService;
 
+	@SuppressWarnings("unchecked")
 	@GetMapping("/showCreatedQuestion")
-	public ResponseEntity<List<QuestionsBank>> createQuestionPaper( Authentication authentication) {
-		User user = (User) authentication.getPrincipal();
-		Long userId = user.getUserId();
+	public ResponseEntity<List<QuestionsBank>> createQuestionPaper( Authentication authentication, OAuth2Authentication oauthentication) {
+		Long userId = null;
+		try {
+			User user = (User) authentication.getPrincipal();
+			userId = user.getUserId();
+		}catch (Exception e) {
+			LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) oauthentication.getUserAuthentication().getDetails();
+			String email = (String) properties.get("email");
+			User usr = userService.findByEmailAddress(email);
+			userId = usr.getUserId();
+		}
 		Student studentInfo = studentsService.findStudentByUserId(userId);
 		Long studentId = studentInfo.getStudentId();
 		Course courseinfo = courseService.findByCourseName(studentInfo.getSelectedCourse());
@@ -72,10 +85,19 @@ public class QuestionPaperController {
 		return new ResponseEntity<>(qusListForExam, HttpStatus.OK);
 	}
 
+	@SuppressWarnings("unchecked")
 	@PutMapping
-	private Map<String, Integer> collectAns (@RequestBody List<QuestionPaper> paper, Authentication authentication) {
-		User user = (User) authentication.getPrincipal();
-		Long userId = user.getUserId();
+	private Map<String, Integer> collectAns (@RequestBody List<QuestionPaper> paper, Authentication authentication, OAuth2Authentication oauthentication) {
+		Long userId = null;
+		try {
+			User user = (User) authentication.getPrincipal();
+			userId = user.getUserId();
+		}catch (Exception e) {
+			LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) oauthentication.getUserAuthentication().getDetails();
+			String email = (String) properties.get("email");
+			User usr = userService.findByEmailAddress(email);
+			userId = usr.getUserId();
+		}
 		Student studentInfo = studentsService.findStudentByUserId(userId);
 		Long studentId = studentInfo.getStudentId();
 		Map<String, Integer> resultStatus = new HashMap<>();

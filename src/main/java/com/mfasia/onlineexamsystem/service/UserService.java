@@ -65,6 +65,11 @@ public class UserService {
 	}
 	
 	@Transactional
+	public void saveGoogleUserInfo (User user) {
+		userRepo.save(user);
+	}
+	
+	@Transactional
 	public List<User> getAllUser (){
 		return userRepo.findAll();
 	}
@@ -106,6 +111,11 @@ public class UserService {
 		user.setStatus("Active");
 		
 		userRepo.save(user);
+	}
+	
+	@Transactional
+	public void deleteUser (Long userId) {
+		userRepo.delete(userId);
 	}
 }
 
