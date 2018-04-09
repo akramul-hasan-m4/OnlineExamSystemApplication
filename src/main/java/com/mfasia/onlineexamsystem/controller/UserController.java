@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -105,14 +106,15 @@ public class UserController {
 	
 	@SuppressWarnings("unchecked")
 	@GetMapping("/userInfo")
-	public ResponseEntity<User> userProfileInfo (Authentication authentication, OAuth2Authentication oauthentication){
+	public ResponseEntity<User> userProfileInfo (Authentication authentication, Principal principal){
 		User user = null;
 		try {
-			user = (User) authentication.getPrincipal();
+			 user = (User) authentication.getPrincipal();
 		}catch (Exception e) {
+			OAuth2Authentication oauthentication = (OAuth2Authentication) principal;
 			LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) oauthentication.getUserAuthentication().getDetails();
 			String email = (String) properties.get("email");
-			user = userService.findByEmailAddress(email);
+			 user = userService.findByEmailAddress(email);
 		}
 		return new ResponseEntity<>(user,HttpStatus.OK);
 		

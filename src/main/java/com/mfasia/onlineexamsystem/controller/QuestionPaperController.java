@@ -1,6 +1,7 @@
 package com.mfasia.onlineexamsystem.controller;
 
 
+import java.security.Principal;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -55,12 +56,13 @@ public class QuestionPaperController {
 
 	@SuppressWarnings("unchecked")
 	@GetMapping("/showCreatedQuestion")
-	public ResponseEntity<List<QuestionsBank>> createQuestionPaper( Authentication authentication, OAuth2Authentication oauthentication) {
+	public ResponseEntity<List<QuestionsBank>> createQuestionPaper(Principal principal, Authentication authentication) {
 		Long userId = null;
 		try {
 			User user = (User) authentication.getPrincipal();
 			userId = user.getUserId();
 		}catch (Exception e) {
+			OAuth2Authentication oauthentication = (OAuth2Authentication) principal;
 			LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) oauthentication.getUserAuthentication().getDetails();
 			String email = (String) properties.get("email");
 			User usr = userService.findByEmailAddress(email);
@@ -87,12 +89,13 @@ public class QuestionPaperController {
 
 	@SuppressWarnings("unchecked")
 	@PutMapping
-	private Map<String, Integer> collectAns (@RequestBody List<QuestionPaper> paper, Authentication authentication, OAuth2Authentication oauthentication) {
+	private Map<String, Integer> collectAns (@RequestBody List<QuestionPaper> paper, Authentication authentication, Principal principal) {
 		Long userId = null;
 		try {
 			User user = (User) authentication.getPrincipal();
 			userId = user.getUserId();
 		}catch (Exception e) {
+			OAuth2Authentication oauthentication = (OAuth2Authentication) principal;
 			LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) oauthentication.getUserAuthentication().getDetails();
 			String email = (String) properties.get("email");
 			User usr = userService.findByEmailAddress(email);

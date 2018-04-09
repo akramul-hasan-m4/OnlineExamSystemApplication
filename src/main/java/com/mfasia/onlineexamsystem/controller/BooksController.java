@@ -1,19 +1,14 @@
 package com.mfasia.onlineexamsystem.controller;
 
 import java.net.URI;
-import java.security.Principal;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,19 +30,6 @@ public class BooksController {
 	
 	@Autowired private BooksService booksService;
 	@Autowired private MessageSource msgSource ;
-	
-	@GetMapping("/principal")
-	public Principal prin (Principal principle) {
-		return principle;
-	}
-	
-	   @RequestMapping("/user")
-	   @SuppressWarnings("unchecked")
-	    public String user(OAuth2Authentication authentication) {
-			LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
-	       
-			return (String) properties.get("email")+","+properties.get("name")+","+properties.get("picture");
-	    }
 	
 	@GetMapping
 	public ResponseEntity<List<Book>> getAllBooks () {

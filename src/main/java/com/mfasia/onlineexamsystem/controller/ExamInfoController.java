@@ -1,5 +1,6 @@
 package com.mfasia.onlineexamsystem.controller;
 
+import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -45,12 +46,13 @@ public class ExamInfoController {
 	
 	@SuppressWarnings("unchecked")
 	@GetMapping("/singleResult")
-	public ResponseEntity<ExamInfo> getSingleResult (Authentication authentication, OAuth2Authentication oauthentication) {
+	public ResponseEntity<ExamInfo> getSingleResult (Authentication authentication, Principal principal) {
 		Long userId = null;
 		try {
 			User user = (User) authentication.getPrincipal();
 			userId = user.getUserId();
 		}catch (Exception e) {
+			OAuth2Authentication oauthentication = (OAuth2Authentication) principal;
 			LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) oauthentication.getUserAuthentication().getDetails();
 			String email = (String) properties.get("email");
 			User usr = userService.findByEmailAddress(email);
