@@ -36,10 +36,14 @@ import com.mfasia.onlineexamsystem.service.EmailVerificationService;
 import com.mfasia.onlineexamsystem.service.MailService;
 import com.mfasia.onlineexamsystem.service.UserService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/user")
+@RequestMapping(UserController.USER_MAPPING)
 public class UserController {
-
+	
+	public static final String USER_MAPPING= "/user";
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired private UserService userService;

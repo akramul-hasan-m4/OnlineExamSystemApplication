@@ -25,9 +25,14 @@ import com.mfasia.onlineexamsystem.service.RolesService;
 import com.mfasia.onlineexamsystem.service.StudentsService;
 import com.mfasia.onlineexamsystem.service.UserRolesService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/student")
+@RequestMapping(StudentController.STUDENT_MAPPING)
 public class StudentController {
+	
+	public static final String STUDENT_MAPPING= "/student";
 	
 	@Autowired private StudentsService studentsService;
 	@Autowired private MessageSource msgSource ;

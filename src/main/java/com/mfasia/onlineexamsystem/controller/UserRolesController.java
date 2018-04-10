@@ -24,10 +24,15 @@ import com.mfasia.onlineexamsystem.commons.Messages;
 import com.mfasia.onlineexamsystem.entities.UserRole;
 import com.mfasia.onlineexamsystem.service.UserRolesService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/users_roles")
+@RequestMapping(UserRolesController.USERS_ROLES_MAPPING)
 public class UserRolesController {
 
+	public static final String USERS_ROLES_MAPPING= "/users_roles";
+	
 	@Autowired private UserRolesService userRoleService ;
 	@Autowired private MessageSource msgSource ;
 	

@@ -23,10 +23,15 @@ import com.mfasia.onlineexamsystem.commons.Messages;
 import com.mfasia.onlineexamsystem.entities.ExamBoard;
 import com.mfasia.onlineexamsystem.service.ExamBoardService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/examboard")
+@RequestMapping(ExamBoardController.EXAMBOARD_MAPPING)
 public class ExamBoardController {
 
+	public static final String EXAMBOARD_MAPPING= "/examboard";
+	
 	@Autowired private ExamBoardService examBoardService;
 	@Autowired private MessageSource msgSource ;
 	

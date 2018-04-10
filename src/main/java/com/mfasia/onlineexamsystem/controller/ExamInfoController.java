@@ -23,15 +23,19 @@ import com.mfasia.onlineexamsystem.service.ExamInfoService;
 import com.mfasia.onlineexamsystem.service.StudentsService;
 import com.mfasia.onlineexamsystem.service.UserService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/examInfo")
+@RequestMapping(ExamInfoController.EXAMINFO_MAPPING)
 public class ExamInfoController {
 
+	public static final String EXAMINFO_MAPPING= "/examInfo";
+	
 	@Autowired private ExamInfoService examInfoService;
 	@Autowired private MessageSource msgSource ;
 	@Autowired private StudentsService studentsService ;
 	@Autowired private UserService userService;
-
 	
 	@GetMapping
 	public ResponseEntity<List<ExamInfo>> getAllExamInfo () {

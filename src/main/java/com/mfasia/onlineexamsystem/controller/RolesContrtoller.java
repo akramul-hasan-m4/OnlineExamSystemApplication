@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mfasia.onlineexamsystem.entities.Role;
 import com.mfasia.onlineexamsystem.service.RolesService;
 
-
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/roles")
+@RequestMapping(RolesContrtoller.ROLES_MAPPING)
 public class RolesContrtoller {
+	
+	public static final String ROLES_MAPPING= "/roles";
 
 	@Autowired private RolesService rolesService;
 	

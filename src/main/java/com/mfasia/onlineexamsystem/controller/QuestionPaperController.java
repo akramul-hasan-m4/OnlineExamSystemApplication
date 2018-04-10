@@ -41,9 +41,15 @@ import com.mfasia.onlineexamsystem.service.QuestionPaperService;
 import com.mfasia.onlineexamsystem.service.StudentsService;
 import com.mfasia.onlineexamsystem.service.UserService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/questionPaper")
+@RequestMapping(QuestionPaperController.QUESTION_PAPER_MAPPING)
 public class QuestionPaperController {
+	
+	public static final String QUESTION_PAPER_MAPPING= "/questionPaper";
+	public static final String CREATE_QUESTION_PAPER_URL= "/showCreatedQuestion";
 
 	@Autowired private QuestionPaperService questionPaperService;
 	@Autowired private QuestionBankService quesBankservice;
@@ -55,7 +61,7 @@ public class QuestionPaperController {
 	@Autowired private UserService userService;
 
 	@SuppressWarnings("unchecked")
-	@GetMapping("/showCreatedQuestion")
+	@GetMapping(QuestionPaperController.CREATE_QUESTION_PAPER_URL)
 	public ResponseEntity<List<QuestionsBank>> createQuestionPaper(Principal principal, Authentication authentication) {
 		Long userId = null;
 		try {

@@ -24,9 +24,14 @@ import com.mfasia.onlineexamsystem.commons.Messages;
 import com.mfasia.onlineexamsystem.entities.Chapter;
 import com.mfasia.onlineexamsystem.service.ChapterService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/chapter")
+@RequestMapping(ChapterController.CHAPTER_MAPPING)
 public class ChapterController {
+	
+	public static final String CHAPTER_MAPPING= "/chapter";
 	
 	@Autowired private ChapterService chaterService;
 	@Autowired private MessageSource msgSource ;

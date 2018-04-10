@@ -24,11 +24,15 @@ import com.mfasia.onlineexamsystem.commons.Messages;
 import com.mfasia.onlineexamsystem.entities.Course;
 import com.mfasia.onlineexamsystem.service.CourseService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/courses")
-
+@RequestMapping(CourseController.COURSE_MAPPING)
 public class CourseController {
 
+	public static final String COURSE_MAPPING= "/courses";
+	
 	@Autowired private CourseService courseService;
 	@Autowired private MessageSource msgSource ;
 	

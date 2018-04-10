@@ -24,9 +24,14 @@ import com.mfasia.onlineexamsystem.commons.Messages;
 import com.mfasia.onlineexamsystem.entities.Book;
 import com.mfasia.onlineexamsystem.service.BooksService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/books")
+@RequestMapping(BooksController.BOOKS_MAPPING)
 public class BooksController {
+	
+	public static final String BOOKS_MAPPING= "/books";
 	
 	@Autowired private BooksService booksService;
 	@Autowired private MessageSource msgSource ;

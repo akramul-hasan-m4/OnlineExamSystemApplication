@@ -24,9 +24,14 @@ import com.mfasia.onlineexamsystem.commons.Messages;
 import com.mfasia.onlineexamsystem.entities.Reference;
 import com.mfasia.onlineexamsystem.service.ReferencesService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/reference")
+@RequestMapping(ReferencesController.REFERENCE_MAPPING)
 public class ReferencesController {
+	
+	public static final String REFERENCE_MAPPING= "/reference";
 	
 	@Autowired private ReferencesService refService;
 	@Autowired private MessageSource msgSource ;

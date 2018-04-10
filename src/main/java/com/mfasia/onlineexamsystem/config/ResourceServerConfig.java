@@ -31,6 +31,9 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+/**
+ * @author Akramul
+ */
 @Configuration
 @EnableOAuth2Client
 public class ResourceServerConfig extends WebSecurityConfigurerAdapter{

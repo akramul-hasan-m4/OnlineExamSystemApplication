@@ -17,6 +17,9 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+/**
+ * @author Akramul
+ */
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 	
 	protected Logger logger = LoggerFactory.getLogger(CustomAuthenticationSuccessHandler.class);

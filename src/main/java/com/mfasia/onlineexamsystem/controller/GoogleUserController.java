@@ -15,10 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mfasia.onlineexamsystem.entities.User;
 import com.mfasia.onlineexamsystem.service.UserService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/googleUser")
+@RequestMapping(GoogleUserController.GOOGLE_USER_MAPPING)
 public class GoogleUserController {
 
+	public static final String GOOGLE_USER_MAPPING= "/googleUser";
+	
 	@Autowired private UserService userService;
 	
 	@GetMapping

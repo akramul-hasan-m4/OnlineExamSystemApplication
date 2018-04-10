@@ -28,9 +28,14 @@ import com.mfasia.onlineexamsystem.entities.User;
 import com.mfasia.onlineexamsystem.service.QuestionBankService;
 import com.mfasia.onlineexamsystem.service.TeacherService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/quesionsBank")
+@RequestMapping(QuestionBankController.QUESTION_BANK_MAPPING)
 public class QuestionBankController {
+	
+	public static final String QUESTION_BANK_MAPPING= "/quesionsBank";
 	
 	@Autowired private QuestionBankService quesService;
 	@Autowired private MessageSource msgSource ;

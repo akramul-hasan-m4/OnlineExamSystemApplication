@@ -24,9 +24,14 @@ import com.mfasia.onlineexamsystem.commons.Messages;
 import com.mfasia.onlineexamsystem.entities.Batch;
 import com.mfasia.onlineexamsystem.service.BatchService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/batch")
+@RequestMapping(BatchController.BATCH_MAPPING)
 public class BatchController {
+	
+	public static final String BATCH_MAPPING= "/batch";
 
 	@Autowired private BatchService batchService;
 	@Autowired private MessageSource msgSource ;

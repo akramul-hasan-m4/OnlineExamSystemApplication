@@ -29,9 +29,14 @@ import com.mfasia.onlineexamsystem.entities.User;
 import com.mfasia.onlineexamsystem.service.QuestionerDefinationService;
 import com.mfasia.onlineexamsystem.service.TeacherService;
 
+/**
+ * @author Akramul
+ */
 @RestController
-@RequestMapping("/questionerDefination")
+@RequestMapping(QuesinerDefinationController.QUESTIONER_DEFINITION_MAPPING)
 public class QuesinerDefinationController {
+	
+	public static final String QUESTIONER_DEFINITION_MAPPING= "/questionerDefination";
 	
 	@Autowired private QuestionerDefinationService quseDefinationService;
 	@Autowired private MessageSource msgSource ;
